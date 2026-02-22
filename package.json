@@ -2,6 +2,10 @@
   "name": "cognitive-biases",
   "type": "module",
   "version": "0.0.1",
+  "volta": {
+    "node": "24.13.1",
+    "pnpm": "10.30.1"
+  },
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
