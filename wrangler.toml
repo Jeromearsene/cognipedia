@@ -1,7 +1,9 @@
 name = "cognipedia"
 compatibility_date = "2025-01-01"
 
+# Create the database: wrangler d1 create cognipedia-db
+# Then replace the database_id below with the returned ID.
 [[d1_databases]]
 binding = "DB"
 database_name = "cognipedia-db"
-database_id = "placeholder-replace-with-real-id"
+database_id = "TODO"
