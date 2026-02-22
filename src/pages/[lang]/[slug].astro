@@ -29,6 +29,13 @@ const situation = parseSituation(rawBody);
 const quiz = parseQuiz(rawBody);
 
 const title = `${entry.data.title} — ${t(locale, "site.title")}`;
+
+const quizLabels = {
+	next: t(locale, "quiz.next"),
+	results: t(locale, "quiz.results"),
+	correct: t(locale, "quiz.correct"),
+	incorrect: t(locale, "quiz.incorrect"),
+};
 ---
 
 <BaseLayout title={title} lang={locale}>
@@ -36,6 +43,6 @@ const title = `${entry.data.title} — ${t(locale, "site.title")}`;
 		<h1>{entry.data.title}</h1>
 		<Content />
 		{situation && <Situation data={situation} client:visible />}
-		{quiz && <Quiz data={quiz} client:visible />}
+		{quiz && <Quiz data={quiz} labels={quizLabels} client:visible />}
 	</article>
 </BaseLayout>

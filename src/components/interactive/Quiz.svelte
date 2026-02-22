@@ -2,12 +2,20 @@
 import type { Quiz } from "@/lib/schemas";
 import { computeQuizScore } from "@/lib/scoring";
 
+interface Labels {
+	next: string;
+	results: string;
+	correct: string;
+	incorrect: string;
+}
+
 interface Props {
 	data: Quiz;
+	labels: Labels;
 	onComplete?: (correct: number, total: number) => void;
 }
 
-let { data, onComplete }: Props = $props();
+let { data, labels, onComplete }: Props = $props();
 let currentIndex = $state(0);
 let answers: number[] = $state([]);
 let selectedAnswer: number | null = $state(null);
@@ -75,7 +83,7 @@ const handleNext = () => {
       <div class="explanation" class:is-correct={isCorrect}>
         <p><strong>{isCorrect ? '✓' : '✗'}</strong> {currentQuestion.explanation}</p>
         <button class="next-btn" onclick={handleNext}>
-          {currentIndex + 1 < data.questions.length ? 'Suivant' : 'Resultats'}
+          {currentIndex + 1 < data.questions.length ? labels.next : labels.results}
         </button>
       </div>
     {/if}
