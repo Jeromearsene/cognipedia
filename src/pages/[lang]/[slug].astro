@@ -1,8 +1,11 @@
 ---
 import { getCollection } from "astro:content";
+import Quiz from "../../components/interactive/Quiz.svelte";
+import Situation from "../../components/interactive/Situation.svelte";
 import type { Locale } from "../../i18n/i18n.ts";
 import { isLocale, t } from "../../i18n/i18n.ts";
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import { parseQuiz, parseSituation } from "../../lib/parse-bias-content";
 
 const { lang, slug } = Astro.params;
 
@@ -21,6 +24,9 @@ if (!entry) {
 }
 
 const { Content } = await entry.render();
+const rawBody = entry.body ?? "";
+const situation = parseSituation(rawBody);
+const quiz = parseQuiz(rawBody);
 
 const title = `${entry.data.title} — ${t(locale, "site.title")}`;
 ---
@@ -29,5 +35,7 @@ const title = `${entry.data.title} — ${t(locale, "site.title")}`;
 	<article>
 		<h1>{entry.data.title}</h1>
 		<Content />
+		{situation && <Situation data={situation} client:visible />}
+		{quiz && <Quiz data={quiz} client:visible />}
 	</article>
 </BaseLayout>
