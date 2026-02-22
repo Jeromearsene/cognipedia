@@ -1,3 +1,3 @@
-import { defineCollection } from 'astro:content';
+import { defineCollection } from "astro:content";
 
 export const collections = {};
