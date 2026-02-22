@@ -2,6 +2,7 @@ import type { APIRoute } from "astro";
 import { getD1 } from "@/lib/d1";
 import { computeTotalScore } from "@/lib/scoring";
 
+/** POST /api/scores — Save or update a user's score for a given bias (upsert). */
 export const POST: APIRoute = async (context) => {
 	const jsonHeaders = { "Content-Type": "application/json" };
 

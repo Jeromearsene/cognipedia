@@ -1,6 +1,7 @@
 import type { APIRoute } from "astro";
 import { getD1 } from "@/lib/d1";
 
+/** GET /api/leaderboard?limit=10 — Return top users ranked by total score. */
 export const GET: APIRoute = async (context) => {
 	const jsonHeaders = { "Content-Type": "application/json" };
 

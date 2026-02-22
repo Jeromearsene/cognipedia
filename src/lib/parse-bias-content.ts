@@ -1,6 +1,7 @@
 import type { Quiz, Situation } from "./schemas";
 import { quizSchema, situationSchema } from "./schemas";
 
+/** Matches a fenced ```json code block and captures its content. */
 const JSON_BLOCK_RE = /```json\s*\n([\s\S]*?)\n```/;
 
 /**

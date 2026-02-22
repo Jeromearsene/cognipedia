@@ -2,6 +2,7 @@ import type { APIRoute } from "astro";
 import { getD1 } from "@/lib/d1";
 import { isValidRecoveryCode } from "@/lib/identity";
 
+/** POST /api/recover — Look up a user account by their recovery code. */
 export const POST: APIRoute = async (context) => {
 	const jsonHeaders = { "Content-Type": "application/json" };
 
