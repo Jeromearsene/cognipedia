@@ -1,0 +1,33 @@
+---
+import { getCollection } from "astro:content";
+import type { Locale } from "../../i18n/i18n.ts";
+import { isLocale, t } from "../../i18n/i18n.ts";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+const { lang, slug } = Astro.params;
+
+if (!lang || !isLocale(lang)) {
+	return Astro.redirect("/fr/");
+}
+
+const locale = lang as Locale;
+
+const allBiases = await getCollection("biases");
+const biases = allBiases.filter((entry) => entry.id.endsWith(`/${locale}`));
+const entry = biases.find((e) => e.data.slug === slug);
+
+if (!entry) {
+	return new Response(null, { status: 404, statusText: "Not Found" });
+}
+
+const { Content } = await entry.render();
+
+const title = `${entry.data.title} — ${t(locale, "site.title")}`;
+---
+
+<BaseLayout title={title} lang={locale}>
+	<article>
+		<h1>{entry.data.title}</h1>
+		<Content />
+	</article>
+</BaseLayout>
