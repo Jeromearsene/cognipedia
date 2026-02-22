@@ -1,6 +1,6 @@
 import type { APIRoute } from "astro";
-import { getD1 } from "../../lib/d1";
-import { isValidRecoveryCode } from "../../lib/identity";
+import { getD1 } from "@/lib/d1";
+import { isValidRecoveryCode } from "@/lib/identity";
 
 export const POST: APIRoute = async (context) => {
 	const jsonHeaders = { "Content-Type": "application/json" };

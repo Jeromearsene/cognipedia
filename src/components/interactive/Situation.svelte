@@ -1,5 +1,5 @@
 <script lang="ts">
-import type { Situation } from "../../lib/schemas";
+import type { Situation } from "@/lib/schemas";
 
 interface Props {
 	data: Situation;

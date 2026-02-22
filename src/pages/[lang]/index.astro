@@ -1,8 +1,8 @@
 ---
 import { getCollection } from "astro:content";
-import type { Locale } from "../../i18n/i18n.ts";
-import { isLocale, t } from "../../i18n/i18n.ts";
-import BaseLayout from "../../layouts/BaseLayout.astro";
+import type { Locale } from "@/i18n/i18n";
+import { isLocale, t } from "@/i18n/i18n";
+import BaseLayout from "@/layouts/BaseLayout.astro";
 
 const { lang } = Astro.params;
 

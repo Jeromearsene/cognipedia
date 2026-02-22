@@ -1,11 +1,11 @@
 ---
 import { getCollection } from "astro:content";
-import Quiz from "../../components/interactive/Quiz.svelte";
-import Situation from "../../components/interactive/Situation.svelte";
-import type { Locale } from "../../i18n/i18n.ts";
-import { isLocale, t } from "../../i18n/i18n.ts";
-import BaseLayout from "../../layouts/BaseLayout.astro";
-import { parseQuiz, parseSituation } from "../../lib/parse-bias-content";
+import Quiz from "@/components/interactive/Quiz.svelte";
+import Situation from "@/components/interactive/Situation.svelte";
+import type { Locale } from "@/i18n/i18n";
+import { isLocale, t } from "@/i18n/i18n";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { parseQuiz, parseSituation } from "@/lib/parse-bias-content";
 
 const { lang, slug } = Astro.params;
 

@@ -1,6 +1,6 @@
 <script lang="ts">
-import type { Quiz } from "../../lib/schemas";
-import { computeQuizScore } from "../../lib/scoring";
+import type { Quiz } from "@/lib/schemas";
+import { computeQuizScore } from "@/lib/scoring";
 
 interface Props {
 	data: Quiz;

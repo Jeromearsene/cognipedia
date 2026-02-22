@@ -1,6 +1,6 @@
 import type { APIRoute } from "astro";
-import { getD1 } from "../../lib/d1";
-import { computeTotalScore } from "../../lib/scoring";
+import { getD1 } from "@/lib/d1";
+import { computeTotalScore } from "@/lib/scoring";
 
 export const POST: APIRoute = async (context) => {
 	const jsonHeaders = { "Content-Type": "application/json" };

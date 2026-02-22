@@ -1,5 +1,5 @@
 import type { APIRoute } from "astro";
-import { getD1 } from "../../lib/d1";
+import { getD1 } from "@/lib/d1";
 
 export const GET: APIRoute = async (context) => {
 	const jsonHeaders = { "Content-Type": "application/json" };
