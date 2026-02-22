@@ -1,8 +1,11 @@
 <script lang="ts">
+import { cn } from "@/lib/cn";
 import type { Situation } from "@/lib/schemas";
 
 interface Props {
+	/** Situation data parsed from the bias markdown. */
 	data: Situation;
+	/** Called after the user picks a choice. `true` if the biased option was selected. */
 	onComplete?: (choseBiased: boolean) => void;
 }
 
@@ -24,11 +27,14 @@ const handleChoice = (index: number) => {
   <div class="flex flex-col gap-2">
     {#each data.choices as choice, i}
       <button
-        class="cursor-pointer rounded-lg border-2 border-border bg-surface p-4 text-left text-base transition-colors hover:not-disabled:border-accent disabled:cursor-default disabled:opacity-70"
-        class:!border-red-500={revealed && choice.bias && selectedIndex === i}
-        class:!bg-red-50={revealed && choice.bias && selectedIndex === i}
-        class:!border-emerald-500={revealed && !choice.bias && selectedIndex === i}
-        class:!bg-emerald-50={revealed && !choice.bias && selectedIndex === i}
+        class={cn(
+          "cursor-pointer rounded-lg border-2 border-border bg-surface p-4 text-left text-base transition-colors",
+          "hover:not-disabled:border-accent disabled:cursor-default disabled:opacity-70",
+          revealed && selectedIndex === i && {
+            "border-red-500 bg-red-50": choice.bias,
+            "border-emerald-500 bg-emerald-50": !choice.bias,
+          },
+        )}
         disabled={revealed}
         onclick={() => handleChoice(i)}
       >

@@ -1,4 +1,5 @@
 <script lang="ts">
+import { cn } from "@/lib/cn";
 import type { Quiz } from "@/lib/schemas";
 import { computeQuizScore } from "@/lib/scoring";
 
@@ -10,8 +11,11 @@ interface Labels {
 }
 
 interface Props {
+	/** Quiz data parsed from the bias markdown. */
 	data: Quiz;
+	/** Translated UI labels, passed from the Astro page via t(). */
 	labels: Labels;
+	/** Called when all questions are answered, with the final correct/total counts. */
 	onComplete?: (correct: number, total: number) => void;
 }
 
@@ -30,6 +34,7 @@ const score = $derived(
 		data.questions.map((q) => q.correct),
 	),
 );
+const isLastQuestion = $derived(currentIndex + 1 >= data.questions.length);
 
 const handleAnswer = (index: number) => {
 	if (showExplanation) return;
@@ -43,11 +48,10 @@ const handleNext = () => {
 	selectedAnswer = null;
 	showExplanation = false;
 
-	if (currentIndex + 1 >= data.questions.length) {
+	if (isLastQuestion) {
 		finished = true;
-		const finalAnswers = [...answers];
 		const finalScore = computeQuizScore(
-			finalAnswers,
+			answers,
 			data.questions.map((q) => q.correct),
 		);
 		onComplete?.(finalScore.correct, finalScore.total);
@@ -68,11 +72,14 @@ const handleNext = () => {
     <div class="flex flex-col gap-2">
       {#each currentQuestion.choices as choice, i}
         <button
-          class="cursor-pointer rounded-lg border-2 border-border bg-surface p-4 text-left text-base transition-colors hover:not-disabled:border-accent disabled:cursor-default"
-          class:!border-emerald-500={showExplanation && i === currentQuestion.correct}
-          class:!bg-emerald-50={showExplanation && i === currentQuestion.correct}
-          class:!border-red-500={showExplanation && selectedAnswer === i && i !== currentQuestion.correct}
-          class:!bg-red-50={showExplanation && selectedAnswer === i && i !== currentQuestion.correct}
+          class={cn(
+            "cursor-pointer rounded-lg border-2 border-border bg-surface p-4 text-left text-base transition-colors",
+            "hover:not-disabled:border-accent disabled:cursor-default",
+            showExplanation && {
+              "border-emerald-500 bg-emerald-50": i === currentQuestion.correct,
+              "border-red-500 bg-red-50": selectedAnswer === i && i !== currentQuestion.correct,
+            },
+          )}
           disabled={showExplanation}
           onclick={() => handleAnswer(i)}
         >
@@ -88,7 +95,7 @@ const handleNext = () => {
           class="mt-4 cursor-pointer rounded bg-accent px-4 py-2 text-sm text-white"
           onclick={handleNext}
         >
-          {currentIndex + 1 < data.questions.length ? labels.next : labels.results}
+          {isLastQuestion ? labels.results : labels.next}
         </button>
       </div>
     {/if}

@@ -23,7 +23,9 @@
 		"@astrojs/svelte": "^7.2.5",
 		"@tailwindcss/vite": "^4.2.0",
 		"astro": "^5.14.7",
+		"clsx": "^2.1.1",
 		"svelte": "^5.53.2",
+		"tailwind-merge": "^3.5.0",
 		"tailwindcss": "^4.2.0",
 		"zod": "^3.25.76"
 	},
