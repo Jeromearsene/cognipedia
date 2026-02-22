@@ -18,16 +18,17 @@ const handleChoice = (index: number) => {
 };
 </script>
 
-<section class="situation">
-  <p class="scenario">{data.scenario}</p>
+<section class="rounded-lg border border-border bg-surface p-8">
+  <p class="mb-8 text-lg">{data.scenario}</p>
 
-  <div class="choices">
+  <div class="flex flex-col gap-2">
     {#each data.choices as choice, i}
       <button
-        class="choice"
-        class:selected={selectedIndex === i}
-        class:biased={revealed && choice.bias && selectedIndex === i}
-        class:correct={revealed && !choice.bias && selectedIndex === i}
+        class="cursor-pointer rounded-lg border-2 border-border bg-surface p-4 text-left text-base transition-colors hover:not-disabled:border-accent disabled:cursor-default disabled:opacity-70"
+        class:!border-red-500={revealed && choice.bias && selectedIndex === i}
+        class:!bg-red-50={revealed && choice.bias && selectedIndex === i}
+        class:!border-emerald-500={revealed && !choice.bias && selectedIndex === i}
+        class:!bg-emerald-50={revealed && !choice.bias && selectedIndex === i}
         disabled={revealed}
         onclick={() => handleChoice(i)}
       >
@@ -37,66 +38,8 @@ const handleChoice = (index: number) => {
   </div>
 
   {#if revealed}
-    <div class="reveal">
+    <div class="mt-8 rounded-r-lg border-l-4 border-amber-500 bg-amber-50 p-4">
       <p>{data.reveal}</p>
     </div>
   {/if}
 </section>
-
-<style>
-  .situation {
-    padding: var(--space-lg);
-    background: var(--color-surface);
-    border-radius: 0.5rem;
-    border: 1px solid var(--color-border);
-  }
-
-  .scenario {
-    font-size: 1.125rem;
-    margin-block-end: var(--space-lg);
-  }
-
-  .choices {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-sm);
-  }
-
-  .choice {
-    padding: var(--space-md);
-    border: 2px solid var(--color-border);
-    border-radius: 0.5rem;
-    background: var(--color-surface);
-    cursor: pointer;
-    text-align: left;
-    font-size: 1rem;
-    transition: border-color 0.2s;
-  }
-
-  .choice:hover:not(:disabled) {
-    border-color: var(--color-accent);
-  }
-
-  .choice:disabled {
-    cursor: default;
-    opacity: 0.7;
-  }
-
-  .biased {
-    border-color: #ef4444;
-    background: #fef2f2;
-  }
-
-  .correct {
-    border-color: #10b981;
-    background: #f0fdf4;
-  }
-
-  .reveal {
-    margin-block-start: var(--space-lg);
-    padding: var(--space-md);
-    background: #fffbeb;
-    border-left: 4px solid #f59e0b;
-    border-radius: 0 0.5rem 0.5rem 0;
-  }
-</style>

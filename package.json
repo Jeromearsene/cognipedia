@@ -21,8 +21,10 @@
 	"dependencies": {
 		"@astrojs/cloudflare": "^12.6.12",
 		"@astrojs/svelte": "^7.2.5",
+		"@tailwindcss/vite": "^4.2.0",
 		"astro": "^5.14.7",
 		"svelte": "^5.53.2",
+		"tailwindcss": "^4.2.0",
 		"zod": "^3.25.76"
 	},
 	"pnpm": {

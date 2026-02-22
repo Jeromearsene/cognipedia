@@ -38,7 +38,8 @@ const handleAnswer = (index: number) => {
 };
 
 const handleNext = () => {
-	answers = [...answers, selectedAnswer as number];
+	if (selectedAnswer === null) return;
+	answers = [...answers, selectedAnswer];
 	selectedAnswer = null;
 	showExplanation = false;
 
@@ -56,21 +57,22 @@ const handleNext = () => {
 };
 </script>
 
-<section class="quiz">
+<section class="rounded-lg border border-border bg-surface p-8">
   {#if !finished}
-    <div class="progress">
+    <div class="mb-2 text-sm text-text-secondary">
       {currentIndex + 1} / {data.questions.length}
     </div>
 
-    <p class="question">{currentQuestion.question}</p>
+    <p class="mb-8 text-lg font-semibold">{currentQuestion.question}</p>
 
-    <div class="answers">
+    <div class="flex flex-col gap-2">
       {#each currentQuestion.choices as choice, i}
         <button
-          class="answer"
-          class:selected={selectedAnswer === i}
-          class:correct={showExplanation && i === currentQuestion.correct}
-          class:wrong={showExplanation && selectedAnswer === i && i !== currentQuestion.correct}
+          class="cursor-pointer rounded-lg border-2 border-border bg-surface p-4 text-left text-base transition-colors hover:not-disabled:border-accent disabled:cursor-default"
+          class:!border-emerald-500={showExplanation && i === currentQuestion.correct}
+          class:!bg-emerald-50={showExplanation && i === currentQuestion.correct}
+          class:!border-red-500={showExplanation && selectedAnswer === i && i !== currentQuestion.correct}
+          class:!bg-red-50={showExplanation && selectedAnswer === i && i !== currentQuestion.correct}
           disabled={showExplanation}
           onclick={() => handleAnswer(i)}
         >
@@ -80,105 +82,19 @@ const handleNext = () => {
     </div>
 
     {#if showExplanation}
-      <div class="explanation" class:is-correct={isCorrect}>
+      <div class="mt-8 rounded-lg border-l-4 border-emerald-500 bg-emerald-50 p-4">
         <p><strong>{isCorrect ? '✓' : '✗'}</strong> {currentQuestion.explanation}</p>
-        <button class="next-btn" onclick={handleNext}>
+        <button
+          class="mt-4 cursor-pointer rounded bg-accent px-4 py-2 text-sm text-white"
+          onclick={handleNext}
+        >
           {currentIndex + 1 < data.questions.length ? labels.next : labels.results}
         </button>
       </div>
     {/if}
   {:else}
-    <div class="results">
-      <p class="score-display">{score.correct} / {score.total}</p>
+    <div class="text-center">
+      <p class="text-3xl font-bold">{score.correct} / {score.total}</p>
     </div>
   {/if}
 </section>
-
-<style>
-  .quiz {
-    padding: var(--space-lg);
-    background: var(--color-surface);
-    border-radius: 0.5rem;
-    border: 1px solid var(--color-border);
-  }
-
-  .progress {
-    font-size: 0.875rem;
-    color: var(--color-text-secondary);
-    margin-block-end: var(--space-sm);
-  }
-
-  .question {
-    font-size: 1.125rem;
-    font-weight: 600;
-    margin-block-end: var(--space-lg);
-  }
-
-  .answers {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-sm);
-  }
-
-  .answer {
-    padding: var(--space-md);
-    border: 2px solid var(--color-border);
-    border-radius: 0.5rem;
-    background: var(--color-surface);
-    cursor: pointer;
-    text-align: left;
-    font-size: 1rem;
-    transition: border-color 0.2s;
-  }
-
-  .answer:hover:not(:disabled) {
-    border-color: var(--color-accent);
-  }
-
-  .answer:disabled {
-    cursor: default;
-  }
-
-  .correct {
-    border-color: #10b981;
-    background: #f0fdf4;
-  }
-
-  .wrong {
-    border-color: #ef4444;
-    background: #fef2f2;
-  }
-
-  .explanation {
-    margin-block-start: var(--space-lg);
-    padding: var(--space-md);
-    border-radius: 0.5rem;
-    background: #f0fdf4;
-    border-left: 4px solid #10b981;
-  }
-
-  .explanation.is-correct {
-    background: #f0fdf4;
-    border-left-color: #10b981;
-  }
-
-  .next-btn {
-    margin-block-start: var(--space-md);
-    padding: var(--space-sm) var(--space-md);
-    background: var(--color-accent);
-    color: white;
-    border: none;
-    border-radius: 0.25rem;
-    cursor: pointer;
-    font-size: 0.875rem;
-  }
-
-  .results {
-    text-align: center;
-  }
-
-  .score-display {
-    font-size: 2rem;
-    font-weight: 700;
-  }
-</style>
