@@ -18,19 +18,6 @@ const sourcesSchema = z.object({
 	videos: z.array(videoSchema).optional(),
 });
 
-export const biasSchema = z.object({
-	slug: z.string().min(1),
-	title: z.string().min(1),
-	originalName: z.string().min(1),
-	family: z.enum(FAMILIES),
-	tags: z.array(z.string().min(1)).min(1),
-	difficulty: z.enum(DIFFICULTIES),
-	sources: sourcesSchema,
-	relatedBiases: z.array(z.string()).optional().default([]),
-});
-
-export type BiasFrontmatter = z.infer<typeof biasSchema>;
-
 const choiceSchema = z.object({
 	label: z.string().min(1),
 	bias: z.boolean(),
@@ -57,3 +44,18 @@ export const quizSchema = z.object({
 });
 
 export type Quiz = z.infer<typeof quizSchema>;
+
+export const biasSchema = z.object({
+	slug: z.string().min(1),
+	title: z.string().min(1),
+	originalName: z.string().min(1),
+	family: z.enum(FAMILIES),
+	tags: z.array(z.string().min(1)).min(1),
+	difficulty: z.enum(DIFFICULTIES),
+	sources: sourcesSchema,
+	relatedBiases: z.array(z.string()).optional().default([]),
+	situation: situationSchema.optional(),
+	quiz: quizSchema.optional(),
+});
+
+export type BiasFrontmatter = z.infer<typeof biasSchema>;

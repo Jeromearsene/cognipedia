@@ -5,7 +5,6 @@ import Situation from "@/components/interactive/Situation.svelte";
 import type { Locale } from "@/i18n/i18n";
 import { isLocale, t } from "@/i18n/i18n";
 import BaseLayout from "@/layouts/BaseLayout.astro";
-import { parseQuiz, parseSituation } from "@/lib/parse-bias-content";
 
 const { lang, slug } = Astro.params;
 
@@ -24,9 +23,7 @@ if (!entry) {
 }
 
 const { Content } = await render(entry);
-const rawBody = entry.body ?? "";
-const situation = parseSituation(rawBody);
-const quiz = parseQuiz(rawBody);
+const { situation, quiz } = entry.data;
 
 const title = `${entry.data.title} — ${t(locale, "site.title")}`;
 
