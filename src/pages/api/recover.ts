@@ -1,22 +1,22 @@
 import type { APIRoute } from "astro";
 import { getD1 } from "@/lib/d1";
-import { isValidRecoveryCode } from "@/lib/identity";
+import { recoverBodySchema } from "@/lib/schemas";
 
 /** POST /api/recover — Look up a user account by their recovery code. */
 export const POST: APIRoute = async (context) => {
 	const jsonHeaders = { "Content-Type": "application/json" };
 
 	try {
-		const body = await context.request.json();
-		const { recoveryCode } = body;
+		const result = recoverBodySchema.safeParse(await context.request.json());
 
-		if (!recoveryCode || !isValidRecoveryCode(recoveryCode)) {
-			return new Response(JSON.stringify({ error: "Missing or invalid recovery code" }), {
+		if (!result.success) {
+			return new Response(JSON.stringify({ error: result.error.flatten().fieldErrors }), {
 				status: 400,
 				headers: jsonHeaders,
 			});
 		}
 
+		const { recoveryCode } = result.data;
 		const db = getD1(context.locals);
 
 		const user = await db

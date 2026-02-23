@@ -59,3 +59,25 @@ export const biasSchema = z.object({
 });
 
 export type BiasFrontmatter = z.infer<typeof biasSchema>;
+
+// --- API request body schemas ---
+
+const recoveryCodeSchema = z.string().regex(/^COGNI-[A-Z0-9]{4}-[A-Z0-9]{4}$/);
+
+export const registerBodySchema = z.object({
+	uuid: z.string().uuid(),
+	pseudo: z.string().min(1),
+	recoveryCode: recoveryCodeSchema,
+});
+
+export const scoreBodySchema = z.object({
+	userUuid: z.string().uuid(),
+	biasSlug: z.string().min(1),
+	situationScore: z.number(),
+	quizCorrect: z.number().int().min(0),
+	quizTotal: z.number().int().min(1),
+});
+
+export const recoverBodySchema = z.object({
+	recoveryCode: recoveryCodeSchema,
+});

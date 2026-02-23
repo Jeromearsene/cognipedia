@@ -1,36 +1,22 @@
 import type { APIRoute } from "astro";
 import { getD1 } from "@/lib/d1";
-import { isValidRecoveryCode } from "@/lib/identity";
+import { registerBodySchema } from "@/lib/schemas";
 
 /** POST /api/register — Create a new anonymous user with a pseudo and recovery code. */
 export const POST: APIRoute = async (context) => {
 	const jsonHeaders = { "Content-Type": "application/json" };
 
 	try {
-		const body = await context.request.json();
-		const { uuid, pseudo, recoveryCode } = body;
+		const result = registerBodySchema.safeParse(await context.request.json());
 
-		if (!uuid || typeof uuid !== "string") {
-			return new Response(JSON.stringify({ error: "Missing or invalid uuid" }), {
+		if (!result.success) {
+			return new Response(JSON.stringify({ error: result.error.flatten().fieldErrors }), {
 				status: 400,
 				headers: jsonHeaders,
 			});
 		}
 
-		if (!pseudo || typeof pseudo !== "string") {
-			return new Response(JSON.stringify({ error: "Missing or invalid pseudo" }), {
-				status: 400,
-				headers: jsonHeaders,
-			});
-		}
-
-		if (!recoveryCode || !isValidRecoveryCode(recoveryCode)) {
-			return new Response(JSON.stringify({ error: "Missing or invalid recovery code" }), {
-				status: 400,
-				headers: jsonHeaders,
-			});
-		}
-
+		const { uuid, pseudo, recoveryCode } = result.data;
 		const db = getD1(context.locals);
 
 		await db

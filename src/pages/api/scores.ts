@@ -1,5 +1,6 @@
 import type { APIRoute } from "astro";
 import { getD1 } from "@/lib/d1";
+import { scoreBodySchema } from "@/lib/schemas";
 import { computeTotalScore } from "@/lib/scoring";
 
 /** POST /api/scores — Save or update a user's score for a given bias (upsert). */
@@ -7,36 +8,17 @@ export const POST: APIRoute = async (context) => {
 	const jsonHeaders = { "Content-Type": "application/json" };
 
 	try {
-		const body = await context.request.json();
-		const { userUuid, biasSlug, situationScore, quizCorrect, quizTotal } = body;
+		const result = scoreBodySchema.safeParse(await context.request.json());
 
-		if (!userUuid || typeof userUuid !== "string") {
-			return new Response(JSON.stringify({ error: "Missing or invalid userUuid" }), {
+		if (!result.success) {
+			return new Response(JSON.stringify({ error: result.error.flatten().fieldErrors }), {
 				status: 400,
 				headers: jsonHeaders,
 			});
 		}
 
-		if (!biasSlug || typeof biasSlug !== "string") {
-			return new Response(JSON.stringify({ error: "Missing or invalid biasSlug" }), {
-				status: 400,
-				headers: jsonHeaders,
-			});
-		}
-
-		if (
-			typeof situationScore !== "number" ||
-			typeof quizCorrect !== "number" ||
-			typeof quizTotal !== "number"
-		) {
-			return new Response(
-				JSON.stringify({ error: "situationScore, quizCorrect, and quizTotal must be numbers" }),
-				{ status: 400, headers: jsonHeaders },
-			);
-		}
-
+		const { userUuid, biasSlug, situationScore, quizCorrect, quizTotal } = result.data;
 		const totalScore = computeTotalScore({ situationScore, quizCorrect, quizTotal });
-
 		const db = getD1(context.locals);
 
 		await db
