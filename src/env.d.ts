@@ -1,0 +1,12 @@
+/// <reference types="astro/client" />
+
+declare namespace App {
+	interface Locals {
+		/** Current locale detected from URL path. */
+		locale: import("./i18n/i18n").Locale;
+		/** Current URL pathname (e.g. `/fr/biais-ancrage`). */
+		currentPath: string;
+		/** Alternate-language URLs for the current page, used by the language switcher. */
+		altLangHrefs?: Partial<Record<import("./i18n/i18n").Locale, string>>;
+	}
+}

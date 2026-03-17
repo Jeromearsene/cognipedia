@@ -3,9 +3,8 @@
  * Usage in API routes: `const db = getD1(context.locals);`
  */
 export const getD1 = (locals: App.Locals): D1Database => {
-	const runtime = (locals as Record<string, unknown>).runtime as
-		| { env?: { DB?: D1Database } }
-		| undefined;
+	const runtime =
+		"runtime" in locals ? (locals.runtime as { env?: { DB?: D1Database } }) : undefined;
 	if (!runtime?.env?.DB) {
 		throw new Error("D1 database binding not found. Is the Cloudflare runtime available?");
 	}

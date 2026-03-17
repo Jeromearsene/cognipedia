@@ -26,5 +26,15 @@
 	"user.recovery.copy": "Copier",
 	"sources.wikipedia": "Wikipedia",
 	"sources.papers": "Articles scientifiques",
-	"sources.videos": "Videos"
+	"sources.videos": "Videos",
+	"slug.leaderboard": "classement",
+	"slug.about": "a-propos",
+	"error.404.back": "Retour a l'accueil",
+	"error.404.messages": [
+		"Biais de l'angle mort — vous etiez convaincu que cette page existait.",
+		"Effet Dunning-Kruger — cette URL etait sure d'elle, mais elle avait tort.",
+		"Biais de confirmation — vous vouliez y croire, mais cette page n'existe pas.",
+		"Illusion de frequence — non, vous n'avez pas deja vu cette page quelque part.",
+		"Effet de halo — ce lien avait l'air fiable, pourtant il ne mene nulle part."
+	]
 }

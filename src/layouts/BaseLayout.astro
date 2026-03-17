@@ -1,13 +1,17 @@
 ---
 import "@/styles/global.css";
+import Footer from "@/components/Footer.astro";
+import Header from "@/components/Header.astro";
+import type { Locale } from "@/i18n/i18n";
+import { DEFAULT_LOCALE } from "@/i18n/i18n";
 
 interface Props {
 	title: string;
 	description?: string;
-	lang?: string;
+	lang?: Locale;
 }
 
-const { title, description = "", lang = "fr" } = Astro.props;
+const { title, description = "", lang = DEFAULT_LOCALE } = Astro.props;
 ---
 
 <!doctype html>
@@ -20,10 +24,10 @@ const { title, description = "", lang = "fr" } = Astro.props;
     <title>{title}</title>
   </head>
   <body class="flex min-h-dvh flex-col">
-    <slot name="header" />
+    <Header />
     <main class="mx-auto w-full max-w-6xl flex-1 p-8">
       <slot />
     </main>
-    <slot name="footer" />
+    <Footer />
   </body>
 </html>

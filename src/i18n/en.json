@@ -26,5 +26,15 @@
 	"user.recovery.copy": "Copy",
 	"sources.wikipedia": "Wikipedia",
 	"sources.papers": "Scientific papers",
-	"sources.videos": "Videos"
+	"sources.videos": "Videos",
+	"slug.leaderboard": "leaderboard",
+	"slug.about": "about",
+	"error.404.back": "Back to home",
+	"error.404.messages": [
+		"Blind spot bias — you were convinced this page existed.",
+		"Dunning-Kruger effect — this URL was confident, but wrong.",
+		"Confirmation bias — you wanted to believe, but this page doesn't exist.",
+		"Frequency illusion — no, you haven't seen this page before.",
+		"Halo effect — that link looked trustworthy, yet it leads nowhere."
+	]
 }
