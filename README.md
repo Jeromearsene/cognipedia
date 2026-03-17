@@ -1,30 +1,57 @@
-# Astro Starter Kit: Portfolio
+# Cognipedia
+
+[![CI](https://github.com/Jeromearsene/cognipedia/actions/workflows/ci.yml/badge.svg)](https://github.com/Jeromearsene/cognipedia/actions/workflows/ci.yml)
+
+Encyclopedie ludique des biais cognitifs. Decouvrez, testez et comprenez les biais qui influencent vos decisions au quotidien.
+
+## Stack
+
+- [Astro](https://astro.build) + [Svelte 5](https://svelte.dev) + TypeScript
+- [Tailwind CSS 4](https://tailwindcss.com)
+- [Cloudflare Pages](https://pages.cloudflare.com) + D1
+- [Levita](https://github.com/Jeromearsene/levita) pour les effets tilt/parallax
+- [Biome](https://biomejs.dev) (lint/format) + [Vitest](https://vitest.dev) (tests)
+
+## Fonctionnalites
+
+- Catalogue de biais cognitifs organise par famille (les 4 quadrants du codex)
+- Situations interactives et quiz pour chaque biais
+- Systeme de scoring avec leaderboard
+- i18n francais/anglais avec detection automatique de la langue du navigateur
+- Page 404 thematique avec messages humoristiques liés aux biais
+
+## Demarrage
 
 ```sh
-pnpm create astro@latest -- --template portfolio
+# Prerequis : Node 24+ et pnpm (via Volta)
+pnpm install
+pnpm dev
 ```
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/portfolio)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/portfolio)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/portfolio/devcontainer.json)
+## Commandes
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+| Commande | Description |
+| :--- | :--- |
+| `pnpm dev` | Serveur de developpement (`localhost:4321`) |
+| `pnpm build` | Build de production |
+| `pnpm preview` | Preview du build en local |
+| `pnpm lint` | Lint avec Biome |
+| `pnpm test` | Tests avec Vitest |
+| `pnpm check` | Type check (Astro + Svelte) |
 
-![portfolio](https://user-images.githubusercontent.com/357379/210779178-a98f0fb7-6b1a-4068-894c-8e1403e26654.jpg)
+## Structure du contenu
 
-## 🧞 Commands
+Chaque biais cognitif vit dans `src/content/biases/<nom>/` avec un fichier markdown par langue :
 
-All commands are run from the root of the project, from a terminal:
+```
+src/content/biases/
+  anchoring-bias/
+    fr.md
+    en.md
+```
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `pnpm install`             | Installs dependencies                            |
-| `pnpm dev`             | Starts local dev server at `localhost:4321`      |
-| `pnpm build`           | Build your production site to `./dist/`          |
-| `pnpm preview`         | Preview your build locally, before deploying     |
-| `pnpm astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `pnpm astro -- --help` | Get help using the Astro CLI                     |
+Le frontmatter definit le titre, la famille, la difficulte, les sources, la situation interactive et le quiz.
 
-## 👀 Want to learn more?
+## Licence
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+MIT
