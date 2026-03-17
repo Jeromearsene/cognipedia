@@ -1,0 +1,59 @@
+---
+import { DEFAULT_LOCALE, SUPPORTED_LOCALES, t, tRaw } from "@/i18n/i18n";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+
+/**
+ * i18n data serialized for the client-side script.
+ * The 404 page is statically generated (no locale in URL), so we ship
+ * all translations and detect the locale client-side from the URL path.
+ */
+const localesList = JSON.stringify(SUPPORTED_LOCALES);
+const defaultLocale = DEFAULT_LOCALE;
+
+const messagesMap = JSON.stringify(
+	Object.fromEntries(
+		SUPPORTED_LOCALES.map((locale) => [locale, tRaw(locale, "error.404.messages")]),
+	),
+);
+const backMap = JSON.stringify(
+	Object.fromEntries(SUPPORTED_LOCALES.map((locale) => [locale, t(locale, "error.404.back")])),
+);
+
+/** Default-locale fallback text, displayed if JS is disabled or slow to load. */
+const fallbackMessages = tRaw(defaultLocale, "error.404.messages");
+const fallbackMessage = Array.isArray(fallbackMessages) ? fallbackMessages[0] : "";
+const fallbackBack = t(defaultLocale, "error.404.back");
+---
+
+<BaseLayout title="404" lang={defaultLocale}>
+  <div class="flex flex-col items-center justify-center gap-6 py-24 text-center">
+    <h1 class="text-8xl font-bold text-accent">404</h1>
+    <p class="max-w-md text-lg text-text-secondary" id="error-message">{fallbackMessage}</p>
+    <a
+      id="error-back"
+      href={`/${defaultLocale}/`}
+      class="rounded-lg bg-accent px-6 py-3 text-white no-underline hover:opacity-90"
+    >{fallbackBack}</a>
+  </div>
+</BaseLayout>
+
+<script is:inline
+  define:vars={{ localesList, defaultLocale, messagesMap, backMap }}
+>
+  // Detect locale from URL path (e.g. /en/missing-page → "en"), fallback to default.
+  // Then pick a random bias-themed message and update the page content + lang attribute.
+  const locales = JSON.parse(localesList);
+  const messages = JSON.parse(messagesMap);
+  const backLabels = JSON.parse(backMap);
+
+  const segment = window.location.pathname.split("/")[1];
+  const locale = locales.includes(segment) ? segment : defaultLocale;
+
+  const pool = messages[locale];
+  const randomMessage = pool[Math.floor(Math.random() * pool.length)];
+
+  document.getElementById("error-message").textContent = randomMessage;
+  document.getElementById("error-back").textContent = backLabels[locale];
+  document.getElementById("error-back").href = `/${locale}/`;
+  document.documentElement.lang = locale;
+</script>
