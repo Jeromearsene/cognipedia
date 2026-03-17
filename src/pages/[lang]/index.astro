@@ -4,13 +4,13 @@
  * Default view: grouped by cognitive bias family.
  * Flat view: filterable grid (Svelte island).
  */
-import { getCollection } from "astro:content";
 import BiasCard from "@/components/BiasCard.svelte";
 import BiasGrid from "@/components/BiasGrid.svelte";
 import type { Locale } from "@/i18n/i18n";
 import { isLocale, t } from "@/i18n/i18n";
 import BaseLayout from "@/layouts/BaseLayout.astro";
-import { DIFFICULTIES, FAMILIES } from "@/lib/constants";
+import { getBiasesForLocale } from "@/lib/biases";
+import { DIFFICULTIES, FAMILIES, FAMILY_BORDER_CLASSES } from "@/lib/constants";
 
 const { lang } = Astro.params;
 
@@ -19,9 +19,7 @@ if (!lang || !isLocale(lang)) {
 }
 
 const locale: Locale = lang;
-
-const allBiases = await getCollection("biases");
-const biases = allBiases.filter((entry) => entry.filePath?.endsWith(`${locale}.md`));
+const { localized: biases } = await getBiasesForLocale(locale);
 
 /** Serialize a bias entry into the shape BiasCard/BiasGrid expects. */
 const toBiasItem = (entry: (typeof biases)[number]) => ({
@@ -39,13 +37,16 @@ const biasItems = biases.map(toBiasItem);
 const groupedByFamily = FAMILIES.map((family) => ({
 	key: family,
 	label: t(locale, `bias.family.${family}`),
-	biases: biasItems.filter((b) => b.family === family),
+	biases: biasItems.filter((bias) => bias.family === family),
 }));
 
-const familyOptions = FAMILIES.map((f) => ({ key: f, label: t(locale, `bias.family.${f}`) }));
-const difficultyOptions = DIFFICULTIES.map((d) => ({
-	key: d,
-	label: t(locale, `bias.difficulty.${d}`),
+const familyOptions = FAMILIES.map((family) => ({
+	key: family,
+	label: t(locale, `bias.family.${family}`),
+}));
+const difficultyOptions = DIFFICULTIES.map((difficulty) => ({
+	key: difficulty,
+	label: t(locale, `bias.difficulty.${difficulty}`),
 }));
 
 const title = t(locale, "site.title");
@@ -81,10 +82,7 @@ const description = t(locale, "site.description");
     <div id="view-grouped">
       {groupedByFamily.map(({ key, label, biases: familyBiases }) => (
         <div class="mb-10">
-          <h2
-            class="mb-4 border-l-4 pl-3 text-xl font-bold"
-            style={`border-color: var(--family-${key})`}
-          >
+          <h2 class={`mb-4 border-l-4 pl-3 text-xl font-bold ${FAMILY_BORDER_CLASSES[key]}`}>
             {label}
           </h2>
           {familyBiases.length > 0 ? (

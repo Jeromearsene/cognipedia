@@ -4,3 +4,35 @@
 	--family-need-to-act-fast: #f97316;
 	--family-what-to-remember: #10b981;
 }
+
+.bg-family-too-much-information {
+	background-color: var(--family-too-much-information);
+}
+
+.bg-family-not-enough-meaning {
+	background-color: var(--family-not-enough-meaning);
+}
+
+.bg-family-need-to-act-fast {
+	background-color: var(--family-need-to-act-fast);
+}
+
+.bg-family-what-to-remember {
+	background-color: var(--family-what-to-remember);
+}
+
+.border-family-too-much-information {
+	border-color: var(--family-too-much-information);
+}
+
+.border-family-not-enough-meaning {
+	border-color: var(--family-not-enough-meaning);
+}
+
+.border-family-need-to-act-fast {
+	border-color: var(--family-need-to-act-fast);
+}
+
+.border-family-what-to-remember {
+	border-color: var(--family-what-to-remember);
+}
