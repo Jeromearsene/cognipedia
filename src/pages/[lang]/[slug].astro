@@ -24,7 +24,7 @@ const locale: Locale = lang;
 
 // Fetch all biases, then filter to current locale and find by slug
 const allBiases = await getCollection("biases");
-const biases = allBiases.filter((bias) => bias.id.endsWith(`/${locale}`));
+const biases = allBiases.filter((bias) => bias.filePath?.endsWith(`${locale}.md`));
 const entry = biases.find((bias) => bias.data.slug === slug);
 
 if (!entry) {
@@ -36,14 +36,16 @@ const { situation, quiz } = entry.data;
 
 /**
  * Build alternate-language URLs for the Header language switcher.
- * Finds the same bias in other locales (e.g. `anchoring-bias/en`) and maps
- * each locale to its localized slug (e.g. { en: "/en/anchoring-bias" }).
+ * Derives the bias folder from the current entry's filePath (e.g. "anchoring-bias/fr.md"
+ * → "anchoring-bias"), then finds the same bias in other locales.
  */
-const biasFolder = entry.id.replace(`/${locale}`, "");
+const biasFolder = entry.filePath?.replace(`/${locale}.md`, "").split("/").pop() ?? "";
 Astro.locals.altLangHrefs = Object.fromEntries(
 	SUPPORTED_LOCALES.filter((otherLocale) => otherLocale !== locale)
 		.map((otherLocale) => {
-			const alternate = allBiases.find((bias) => bias.id === `${biasFolder}/${otherLocale}`);
+			const alternate = allBiases.find((bias) =>
+				bias.filePath?.endsWith(`${biasFolder}/${otherLocale}.md`),
+			);
 			return alternate ? [otherLocale, `/${otherLocale}/${alternate.data.slug}`] : [];
 		})
 		.filter((pair) => pair.length > 0),

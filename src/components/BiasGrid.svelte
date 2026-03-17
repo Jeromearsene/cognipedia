@@ -70,9 +70,9 @@ const filtered = $derived(
     <div class="flex flex-wrap gap-2">
       {#each families as { key, label }}
         <button
-          class="rounded-full border px-3 py-1 text-sm transition-colors {activeFamilies.has(key)
-            ? 'border-transparent text-white'
-            : 'border-border bg-surface text-text-secondary'}"
+          class="cursor-pointer rounded-full border px-3 py-1 text-sm transition-colors {activeFamilies.has(key)
+            ? 'border-transparent text-white hover:opacity-80'
+            : 'border-border bg-surface text-text-secondary hover:bg-border/50'}"
           style={activeFamilies.has(key) ? `background-color: var(--family-${key})` : ""}
           onclick={() => toggleFamily(key)}
         >
@@ -87,9 +87,9 @@ const filtered = $derived(
     <div class="flex flex-wrap gap-2">
       {#each difficulties as { key, label }}
         <button
-          class="rounded-full border px-3 py-1 text-sm transition-colors {activeDifficulties.has(key)
-            ? 'border-accent bg-accent text-white'
-            : 'border-border bg-surface text-text-secondary'}"
+          class="cursor-pointer rounded-full border px-3 py-1 text-sm transition-colors {activeDifficulties.has(key)
+            ? 'border-accent bg-accent text-white hover:opacity-80'
+            : 'border-border bg-surface text-text-secondary hover:bg-border/50'}"
           onclick={() => toggleDifficulty(key)}
         >
           {label}

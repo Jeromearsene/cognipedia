@@ -21,7 +21,7 @@ if (!lang || !isLocale(lang)) {
 const locale: Locale = lang;
 
 const allBiases = await getCollection("biases");
-const biases = allBiases.filter((entry) => entry.id.endsWith(`/${locale}`));
+const biases = allBiases.filter((entry) => entry.filePath?.endsWith(`${locale}.md`));
 
 /** Serialize a bias entry into the shape BiasCard/BiasGrid expects. */
 const toBiasItem = (entry: (typeof biases)[number]) => ({
@@ -57,12 +57,6 @@ const description = t(locale, "site.description");
   <section class="flex flex-col items-center gap-4 py-16 text-center">
     <h1 class="text-5xl font-bold">{title}</h1>
     <p class="max-w-lg text-lg text-text-secondary">{description}</p>
-    <a
-      href="#catalogue"
-      class="mt-4 rounded-lg bg-accent px-6 py-3 text-white no-underline hover:opacity-90"
-    >
-      {t(locale, "home.cta")}
-    </a>
   </section>
 
   <!-- Catalogue -->
