@@ -1,6 +1,5 @@
 <script lang="ts">
 import type { Family } from "@/lib/constants";
-import { FAMILY_BG_CLASSES } from "@/lib/constants";
 import BiasCard, { type BiasCardProps } from "./BiasCard.svelte";
 
 interface FamilyOption {
@@ -64,8 +63,9 @@ const filtered = $derived(
       {#each families as { key, label }}
         <button
           class="cursor-pointer rounded-full border px-3 py-1 text-sm transition-colors {activeFamilies.has(key)
-            ? 'border-transparent text-white hover:opacity-80 ' + FAMILY_BG_CLASSES[key]
+            ? 'border-transparent text-white hover:opacity-80'
             : 'border-border bg-surface text-text-secondary hover:bg-border/50'}"
+          style={activeFamilies.has(key) ? `background-color: var(--family-${key})` : ""}
           onclick={() => toggleFamily(key)}
         >
           {label}

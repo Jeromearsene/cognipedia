@@ -10,7 +10,7 @@ import type { Locale } from "@/i18n/i18n";
 import { isLocale, t } from "@/i18n/i18n";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { getBiasesForLocale } from "@/lib/biases";
-import { DIFFICULTIES, FAMILIES, FAMILY_BORDER_CLASSES } from "@/lib/constants";
+import { DIFFICULTIES, FAMILIES } from "@/lib/constants";
 
 const { lang } = Astro.params;
 
@@ -82,7 +82,10 @@ const description = t(locale, "site.description");
     <div id="view-grouped">
       {groupedByFamily.map(({ key, label, biases: familyBiases }) => (
         <div class="mb-10">
-          <h2 class={`mb-4 border-l-4 pl-3 text-xl font-bold ${FAMILY_BORDER_CLASSES[key]}`}>
+          <h2
+            class="mb-4 border-l-4 pl-3 text-xl font-bold"
+            style={`border-color: var(--family-${key})`}
+          >
             {label}
           </h2>
           {familyBiases.length > 0 ? (

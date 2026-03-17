@@ -32,6 +32,9 @@ importers:
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
+      levita-js:
+        specifier: ^0.3.0
+        version: 0.3.0
       svelte:
         specifier: ^5.53.2
         version: 5.53.2

@@ -2,7 +2,7 @@
 import { tilt } from "@levita-js/svelte";
 import "levita-js/style.css";
 import type { Difficulty, Family } from "@/lib/constants";
-import { DIFFICULTY_COLORS, FAMILY_BG_CLASSES } from "@/lib/constants";
+import { DIFFICULTY_COLORS } from "@/lib/constants";
 
 export interface BiasCardProps {
 	/** URL to the bias page. */
@@ -29,7 +29,11 @@ const { href, title, family, familyLabel, difficulty, difficultyLabel }: BiasCar
 >
   <h3 class="mb-3 text-lg font-semibold text-text">{title}</h3>
   <div class="flex flex-wrap gap-2">
-    <span class="rounded-full px-2.5 py-0.5 text-xs font-medium text-white {FAMILY_BG_CLASSES[family]}">
+    <!-- Family color is dynamic (depends on data), so inline style is appropriate here -->
+    <span
+      class="rounded-full px-2.5 py-0.5 text-xs font-medium text-white"
+      style="background-color: var(--family-{family})"
+    >
       {familyLabel}
     </span>
     <span class="rounded-full px-2.5 py-0.5 text-xs font-medium {DIFFICULTY_COLORS[difficulty]}">
