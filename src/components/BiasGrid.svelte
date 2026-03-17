@@ -1,6 +1,6 @@
 <script lang="ts">
-import type { Family } from "@/lib/constants";
-import BiasCard, { type BiasCardProps } from "./BiasCard.svelte";
+import type { BiasCardData, Difficulty, Family } from "@/lib/constants";
+import BiasCard from "./BiasCard.svelte";
 
 interface FamilyOption {
 	key: Family;
@@ -8,12 +8,12 @@ interface FamilyOption {
 }
 
 interface DifficultyOption {
-	key: string;
+	key: Difficulty;
 	label: string;
 }
 
 interface Props {
-	biases: BiasCardProps[];
+	biases: BiasCardData[];
 	families: FamilyOption[];
 	difficulties: DifficultyOption[];
 	labels: {
@@ -42,7 +42,7 @@ const toggleFamily = (key: Family) => {
 	activeFamilies = next;
 };
 
-const toggleDifficulty = (key: string) => {
+const toggleDifficulty = (key: Difficulty) => {
 	const next = new Set(activeDifficulties);
 	if (next.has(key)) next.delete(key);
 	else next.add(key);

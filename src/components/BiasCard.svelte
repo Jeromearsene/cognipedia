@@ -1,25 +1,10 @@
 <script lang="ts">
 import { tilt } from "@levita-js/svelte";
 import "levita-js/style.css";
-import type { Difficulty, Family } from "@/lib/constants";
+import type { BiasCardData } from "@/lib/constants";
 import { DIFFICULTY_COLORS } from "@/lib/constants";
 
-export interface BiasCardProps {
-	/** URL to the bias page. */
-	href: string;
-	/** Display title of the bias. */
-	title: string;
-	/** Family key (e.g. "too-much-information"). */
-	family: Family;
-	/** Translated family label. */
-	familyLabel: string;
-	/** Difficulty key (e.g. "easy", "medium", "hard"). */
-	difficulty: Difficulty;
-	/** Translated difficulty label. */
-	difficultyLabel: string;
-}
-
-const { href, title, family, familyLabel, difficulty, difficultyLabel }: BiasCardProps = $props();
+const { href, title, family, familyLabel, difficulty, difficultyLabel }: BiasCardData = $props();
 </script>
 
 <a
