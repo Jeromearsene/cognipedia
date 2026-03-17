@@ -1,62 +1,67 @@
 <script lang="ts">
-  import BiasCard from "./BiasCard.svelte";
+import BiasCard from "./BiasCard.svelte";
 
-  interface BiasItem {
-    href: string;
-    title: string;
-    family: string;
-    familyLabel: string;
-    difficulty: string;
-    difficultyLabel: string;
-  }
+interface BiasItem {
+	href: string;
+	title: string;
+	family: string;
+	familyLabel: string;
+	difficulty: string;
+	difficultyLabel: string;
+}
 
-  interface FamilyOption {
-    key: string;
-    label: string;
-  }
+interface FamilyOption {
+	key: string;
+	label: string;
+}
 
-  interface DifficultyOption {
-    key: string;
-    label: string;
-  }
+interface DifficultyOption {
+	key: string;
+	label: string;
+}
 
-  interface Props {
-    biases: BiasItem[];
-    families: FamilyOption[];
-    difficulties: DifficultyOption[];
-    labels: {
-      family: string;
-      difficulty: string;
-      noResults: string;
-    };
-  }
+interface Props {
+	biases: BiasItem[];
+	families: FamilyOption[];
+	difficulties: DifficultyOption[];
+	labels: {
+		family: string;
+		difficulty: string;
+		noResults: string;
+	};
+}
 
-  const { biases, families, difficulties, labels }: Props = $props();
+const { biases, families, difficulties, labels }: Props = $props();
 
-  /** Active family filters — all enabled by default. */
-  let activeFamilies = $state(new Set(families.map((f) => f.key)));
-  /** Active difficulty filters — all enabled by default. */
-  let activeDifficulties = $state(new Set(difficulties.map((d) => d.key)));
+// svelte-ignore state_referenced_locally — props are static (from Astro), won't change after mount
+const familyKeys = families.map((f) => f.key);
+// svelte-ignore state_referenced_locally
+const difficultyKeys = difficulties.map((d) => d.key);
 
-  const toggleFamily = (key: string) => {
-    const next = new Set(activeFamilies);
-    if (next.has(key)) next.delete(key);
-    else next.add(key);
-    activeFamilies = next;
-  };
+/** Active family filters — all enabled by default. */
+let activeFamilies = $state(new Set(familyKeys));
+/** Active difficulty filters — all enabled by default. */
+let activeDifficulties = $state(new Set(difficultyKeys));
 
-  const toggleDifficulty = (key: string) => {
-    const next = new Set(activeDifficulties);
-    if (next.has(key)) next.delete(key);
-    else next.add(key);
-    activeDifficulties = next;
-  };
+const toggleFamily = (key: string) => {
+	const next = new Set(activeFamilies);
+	if (next.has(key)) next.delete(key);
+	else next.add(key);
+	activeFamilies = next;
+};
 
-  const filtered = $derived(
-    biases.filter(
-      (bias) => activeFamilies.has(bias.family) && activeDifficulties.has(bias.difficulty),
-    ),
-  );
+const toggleDifficulty = (key: string) => {
+	const next = new Set(activeDifficulties);
+	if (next.has(key)) next.delete(key);
+	else next.add(key);
+	activeDifficulties = next;
+};
+
+const filtered = $derived(
+	biases.filter(
+		(bias) => activeFamilies.has(bias.family) && activeDifficulties.has(bias.difficulty),
+	),
+);
 </script>
 
 <div class="mb-6 flex flex-wrap gap-6">
