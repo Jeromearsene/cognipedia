@@ -1,6 +1,6 @@
 <script lang="ts">
 import { tilt } from "@levita-js/svelte";
-import "levita-js/style.css";
+import "@levita-js/svelte/style.css";
 import type { BiasCardData } from "@/lib/constants";
 import { DIFFICULTY_COLORS } from "@/lib/constants";
 
