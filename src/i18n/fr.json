@@ -29,6 +29,12 @@
 	"sources.videos": "Videos",
 	"slug.leaderboard": "classement",
 	"slug.about": "a-propos",
+	"home.empty": "Bientot disponible",
+	"home.no-results": "Aucun biais ne correspond",
+	"home.view.grouped": "Par famille",
+	"home.view.flat": "Tous",
+	"home.filter.family": "Famille",
+	"home.filter.difficulty": "Difficulte",
 	"error.404.back": "Retour a l'accueil",
 	"error.404.messages": [
 		"Biais de l'angle mort — vous etiez convaincu que cette page existait.",

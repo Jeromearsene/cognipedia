@@ -52,3 +52,16 @@ export const getLocaleFromUrl = (url: URL): Locale => {
 /** Builds a localized path, e.g. `getLocalizedPath('en', '/about')` → `/en/about`. */
 export const getLocalizedPath = (locale: Locale, path: string): string =>
 	`/${locale}${path.startsWith("/") ? path : `/${path}`}`;
+
+/**
+ * Detects the preferred locale from an `Accept-Language` header.
+ * Matches the first supported locale found in the header, falls back to DEFAULT_LOCALE.
+ */
+export const getLocaleFromAcceptLanguage = (header: string | null): Locale => {
+	if (!header) return DEFAULT_LOCALE;
+	const preferred = header
+		.split(",")
+		.map((part) => part.split(";")[0].trim().split("-")[0].toLowerCase());
+	const match = preferred.find((lang) => isLocale(lang));
+	return match ?? DEFAULT_LOCALE;
+};

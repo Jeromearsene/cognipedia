@@ -1,3 +1,7 @@
 ---
-return Astro.redirect("/fr/");
+import { getLocaleFromAcceptLanguage } from "@/i18n/i18n";
+
+/** Redirect root URL to the user's preferred locale based on Accept-Language header. */
+const locale = getLocaleFromAcceptLanguage(Astro.request.headers.get("accept-language"));
+return Astro.redirect(`/${locale}/`);
 ---

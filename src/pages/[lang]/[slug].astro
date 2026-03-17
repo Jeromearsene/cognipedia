@@ -1,10 +1,11 @@
 ---
-import { getCollection, render } from "astro:content";
+import { render } from "astro:content";
 import Quiz from "@/components/interactive/Quiz.svelte";
 import Situation from "@/components/interactive/Situation.svelte";
 import type { Locale } from "@/i18n/i18n";
-import { isLocale, SUPPORTED_LOCALES, t } from "@/i18n/i18n";
+import { getLocaleFromAcceptLanguage, isLocale, SUPPORTED_LOCALES, t } from "@/i18n/i18n";
 import BaseLayout from "@/layouts/BaseLayout.astro";
+import { getBiasesForLocale } from "@/lib/biases";
 
 /**
  * Dynamic bias page — renders a single cognitive bias entry.
@@ -16,15 +17,15 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 const { lang, slug } = Astro.params;
 
 if (!lang || !isLocale(lang)) {
-	return Astro.redirect("/fr/");
+	const fallback = getLocaleFromAcceptLanguage(Astro.request.headers.get("accept-language"));
+	return Astro.redirect(`/${fallback}/`);
 }
 
 // Safe after isLocale() guard above
 const locale: Locale = lang;
 
 // Fetch all biases, then filter to current locale and find by slug
-const allBiases = await getCollection("biases");
-const biases = allBiases.filter((bias) => bias.id.endsWith(`/${locale}`));
+const { all: allBiases, localized: biases } = await getBiasesForLocale(locale);
 const entry = biases.find((bias) => bias.data.slug === slug);
 
 if (!entry) {
@@ -36,14 +37,16 @@ const { situation, quiz } = entry.data;
 
 /**
  * Build alternate-language URLs for the Header language switcher.
- * Finds the same bias in other locales (e.g. `anchoring-bias/en`) and maps
- * each locale to its localized slug (e.g. { en: "/en/anchoring-bias" }).
+ * Derives the bias folder from the current entry's filePath (e.g. "anchoring-bias/fr.md"
+ * → "anchoring-bias"), then finds the same bias in other locales.
  */
-const biasFolder = entry.id.replace(`/${locale}`, "");
+const biasFolder = entry.filePath?.replace(`/${locale}.md`, "").split("/").pop() ?? "";
 Astro.locals.altLangHrefs = Object.fromEntries(
 	SUPPORTED_LOCALES.filter((otherLocale) => otherLocale !== locale)
 		.map((otherLocale) => {
-			const alternate = allBiases.find((bias) => bias.id === `${biasFolder}/${otherLocale}`);
+			const alternate = allBiases.find((bias) =>
+				bias.filePath?.endsWith(`${biasFolder}/${otherLocale}.md`),
+			);
 			return alternate ? [otherLocale, `/${otherLocale}/${alternate.data.slug}`] : [];
 		})
 		.filter((pair) => pair.length > 0),

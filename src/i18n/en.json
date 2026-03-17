@@ -29,6 +29,12 @@
 	"sources.videos": "Videos",
 	"slug.leaderboard": "leaderboard",
 	"slug.about": "about",
+	"home.empty": "Coming soon",
+	"home.no-results": "No biases match",
+	"home.view.grouped": "By family",
+	"home.view.flat": "All",
+	"home.filter.family": "Family",
+	"home.filter.difficulty": "Difficulty",
 	"error.404.back": "Back to home",
 	"error.404.messages": [
 		"Blind spot bias — you were convinced this page existed.",

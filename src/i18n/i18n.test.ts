@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
 	DEFAULT_LOCALE,
+	getLocaleFromAcceptLanguage,
 	getLocaleFromUrl,
 	getLocalizedPath,
 	isLocale,
@@ -86,6 +87,28 @@ describe("getLocalizedPath", () => {
 
 	it("builds a localized path for default locale", () => {
 		expect(getLocalizedPath("fr", "/about")).toBe("/fr/about");
+	});
+});
+
+describe("getLocaleFromAcceptLanguage", () => {
+	it("detects fr from French browser", () => {
+		expect(getLocaleFromAcceptLanguage("fr-FR,fr;q=0.9,en;q=0.8")).toBe("fr");
+	});
+
+	it("detects en from English browser", () => {
+		expect(getLocaleFromAcceptLanguage("en-US,en;q=0.9")).toBe("en");
+	});
+
+	it("picks the first supported locale", () => {
+		expect(getLocaleFromAcceptLanguage("de,en;q=0.8,fr;q=0.5")).toBe("en");
+	});
+
+	it("falls back to default for unsupported languages", () => {
+		expect(getLocaleFromAcceptLanguage("ja,zh;q=0.9")).toBe("fr");
+	});
+
+	it("falls back to default for null header", () => {
+		expect(getLocaleFromAcceptLanguage(null)).toBe("fr");
 	});
 });
 

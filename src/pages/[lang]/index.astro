@@ -1,32 +1,146 @@
 ---
-import { getCollection } from "astro:content";
+/**
+ * Homepage — hero section + dual-view bias catalogue.
+ * Default view: grouped by cognitive bias family.
+ * Flat view: filterable grid (Svelte island).
+ */
+import BiasCard from "@/components/BiasCard.svelte";
+import BiasGrid from "@/components/BiasGrid.svelte";
 import type { Locale } from "@/i18n/i18n";
-import { isLocale, t } from "@/i18n/i18n";
+import { getLocaleFromAcceptLanguage, isLocale, t } from "@/i18n/i18n";
 import BaseLayout from "@/layouts/BaseLayout.astro";
+import { getBiasesForLocale } from "@/lib/biases";
+import { DIFFICULTIES, FAMILIES } from "@/lib/constants";
 
 const { lang } = Astro.params;
 
 if (!lang || !isLocale(lang)) {
-	return Astro.redirect("/fr/");
+	const fallback = getLocaleFromAcceptLanguage(Astro.request.headers.get("accept-language"));
+	return Astro.redirect(`/${fallback}/`);
 }
 
-const locale = lang as Locale;
+const locale: Locale = lang;
+const { localized: biases } = await getBiasesForLocale(locale);
 
-const allBiases = await getCollection("biases");
-const biases = allBiases.filter((entry) => entry.id.endsWith(`/${locale}`));
+/** Serialize a bias entry into the shape BiasCard/BiasGrid expects. */
+const toBiasItem = (entry: (typeof biases)[number]) => ({
+	href: `/${locale}/${entry.data.slug}`,
+	title: entry.data.title,
+	family: entry.data.family,
+	familyLabel: t(locale, `bias.family.${entry.data.family}`),
+	difficulty: entry.data.difficulty,
+	difficultyLabel: t(locale, `bias.difficulty.${entry.data.difficulty}`),
+});
+
+const biasItems = biases.map(toBiasItem);
+
+/** Biases grouped by family, preserving FAMILIES order. */
+const groupedByFamily = FAMILIES.map((family) => ({
+	key: family,
+	label: t(locale, `bias.family.${family}`),
+	biases: biasItems.filter((bias) => bias.family === family),
+}));
+
+const familyOptions = FAMILIES.map((family) => ({
+	key: family,
+	label: t(locale, `bias.family.${family}`),
+}));
+const difficultyOptions = DIFFICULTIES.map((difficulty) => ({
+	key: difficulty,
+	label: t(locale, `bias.difficulty.${difficulty}`),
+}));
 
 const title = t(locale, "site.title");
 const description = t(locale, "site.description");
 ---
 
 <BaseLayout title={title} description={description} lang={locale}>
-	<h1>{title}</h1>
-	<p>{description}</p>
-	<ul>
-		{biases.map((entry) => (
-			<li>
-				<a href={`/${locale}/${entry.data.slug}`}>{entry.data.title}</a>
-			</li>
-		))}
-	</ul>
+  <!-- Hero -->
+  <section class="flex flex-col items-center gap-4 py-16 text-center">
+    <h1 class="text-5xl font-bold">{title}</h1>
+    <p class="max-w-lg text-lg text-text-secondary">{description}</p>
+  </section>
+
+  <!-- Catalogue -->
+  <section id="catalogue" class="scroll-mt-8">
+    <!-- View toggle tabs -->
+    <div class="mb-8 flex gap-4 border-b border-border" id="view-tabs">
+      <button
+        class="border-b-2 border-accent px-4 py-2 text-sm font-medium text-accent"
+        data-view="grouped"
+      >
+        {t(locale, "home.view.grouped")}
+      </button>
+      <button
+        class="border-b-2 border-transparent px-4 py-2 text-sm font-medium text-text-secondary hover:text-text"
+        data-view="flat"
+      >
+        {t(locale, "home.view.flat")}
+      </button>
+    </div>
+
+    <!-- Grouped view (default, static HTML) -->
+    <div id="view-grouped">
+      {groupedByFamily.map(({ key, label, biases: familyBiases }) => (
+        <div class="mb-10">
+          <h2
+            class="mb-4 border-l-4 pl-3 text-xl font-bold"
+            style={`border-color: var(--family-${key})`}
+          >
+            {label}
+          </h2>
+          {familyBiases.length > 0 ? (
+            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {familyBiases.map((bias) => (
+                <BiasCard {...bias} client:visible />
+              ))}
+            </div>
+          ) : (
+            <p class="py-6 text-center text-text-secondary">
+              {t(locale, "home.empty")}
+            </p>
+          )}
+        </div>
+      ))}
+    </div>
+
+    <!-- Flat view (Svelte island, hidden by default) -->
+    <div id="view-flat" class="hidden">
+      <BiasGrid
+        biases={biasItems}
+        families={familyOptions}
+        difficulties={difficultyOptions}
+        labels={{
+          family: t(locale, "home.filter.family"),
+          difficulty: t(locale, "home.filter.difficulty"),
+          noResults: t(locale, "home.no-results"),
+        }}
+        client:visible
+      />
+    </div>
+  </section>
+
+  <!-- View toggle script (minimal inline JS for tab switching) -->
+  <script is:inline>
+    document.getElementById("view-tabs")?.addEventListener("click", (event) => {
+      const button = event.target.closest("[data-view]");
+      if (!button) return;
+
+      const view = button.dataset.view;
+      const grouped = document.getElementById("view-grouped");
+      const flat = document.getElementById("view-flat");
+      const buttons = document.querySelectorAll("[data-view]");
+
+      grouped?.classList.toggle("hidden", view !== "grouped");
+      flat?.classList.toggle("hidden", view !== "flat");
+
+      buttons.forEach((btn) => {
+        const isActive = btn.dataset.view === view;
+        btn.classList.toggle("border-accent", isActive);
+        btn.classList.toggle("text-accent", isActive);
+        btn.classList.toggle("border-transparent", !isActive);
+        btn.classList.toggle("text-text-secondary", !isActive);
+      });
+    });
+  </script>
 </BaseLayout>
