@@ -3,7 +3,7 @@ import { getCollection, render } from "astro:content";
 import Quiz from "@/components/interactive/Quiz.svelte";
 import Situation from "@/components/interactive/Situation.svelte";
 import type { Locale } from "@/i18n/i18n";
-import { isLocale, t } from "@/i18n/i18n";
+import { isLocale, SUPPORTED_LOCALES, t } from "@/i18n/i18n";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 
 const { lang, slug } = Astro.params;
@@ -12,11 +12,12 @@ if (!lang || !isLocale(lang)) {
 	return Astro.redirect("/fr/");
 }
 
-const locale = lang as Locale;
+// Safe after isLocale() guard above
+const locale: Locale = lang;
 
 const allBiases = await getCollection("biases");
-const biases = allBiases.filter((entry) => entry.id.endsWith(`/${locale}`));
-const entry = biases.find((e) => e.data.slug === slug);
+const biases = allBiases.filter((bias) => bias.id.endsWith(`/${locale}`));
+const entry = biases.find((bias) => bias.data.slug === slug);
 
 if (!entry) {
 	return new Response(null, { status: 404, statusText: "Not Found" });
@@ -24,6 +25,21 @@ if (!entry) {
 
 const { Content } = await render(entry);
 const { situation, quiz } = entry.data;
+
+/**
+ * Build alternate-language URLs for the Header language switcher.
+ * Finds the same bias in other locales (e.g. `anchoring-bias/en`) and maps
+ * each locale to its localized slug (e.g. { en: "/en/anchoring-bias" }).
+ */
+const biasFolder = entry.id.replace(`/${locale}`, "");
+Astro.locals.altLangHrefs = Object.fromEntries(
+	SUPPORTED_LOCALES.filter((otherLocale) => otherLocale !== locale)
+		.map((otherLocale) => {
+			const alternate = allBiases.find((bias) => bias.id === `${biasFolder}/${otherLocale}`);
+			return alternate ? [otherLocale, `/${otherLocale}/${alternate.data.slug}`] : [];
+		})
+		.filter((pair) => pair.length > 0),
+);
 
 const title = `${entry.data.title} — ${t(locale, "site.title")}`;
 
