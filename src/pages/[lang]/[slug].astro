@@ -3,7 +3,7 @@ import { render } from "astro:content";
 import Quiz from "@/components/interactive/Quiz.svelte";
 import Situation from "@/components/interactive/Situation.svelte";
 import type { Locale } from "@/i18n/i18n";
-import { isLocale, SUPPORTED_LOCALES, t } from "@/i18n/i18n";
+import { getLocaleFromAcceptLanguage, isLocale, SUPPORTED_LOCALES, t } from "@/i18n/i18n";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { getBiasesForLocale } from "@/lib/biases";
 
@@ -17,7 +17,8 @@ import { getBiasesForLocale } from "@/lib/biases";
 const { lang, slug } = Astro.params;
 
 if (!lang || !isLocale(lang)) {
-	return Astro.redirect("/fr/");
+	const fallback = getLocaleFromAcceptLanguage(Astro.request.headers.get("accept-language"));
+	return Astro.redirect(`/${fallback}/`);
 }
 
 // Safe after isLocale() guard above
