@@ -8,8 +8,9 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 import { getBiasesForLocale } from "@/lib/biases";
 
 /**
- * Dynamic bias page — renders a single cognitive bias entry.
- * URL pattern: /:lang/:slug (e.g. /fr/biais-ancrage, /en/anchoring-bias).
+ * English bias page — renders a single cognitive bias entry.
+ * URL pattern: /:lang/bias/:slug (e.g. /en/bias/anchoring-bias).
+ * Redirects FR users to /fr/biais/:slug.
  * Also computes alternate-language URLs so the Header language switcher
  * can link to the same bias in another locale.
  */
@@ -23,6 +24,11 @@ if (!lang || !isLocale(lang)) {
 
 // Safe after isLocale() guard above
 const locale: Locale = lang;
+
+// Redirect FR users to the /fr/biais/ route
+if (locale === "fr") {
+	return Astro.redirect(`/fr/biais/${slug}`);
+}
 
 // Fetch all biases, then filter to current locale and find by slug
 const { all: allBiases, localized: biases } = await getBiasesForLocale(locale);
@@ -47,7 +53,9 @@ Astro.locals.altLangHrefs = Object.fromEntries(
 			const alternate = allBiases.find((bias) =>
 				bias.filePath?.endsWith(`${biasFolder}/${otherLocale}.md`),
 			);
-			return alternate ? [otherLocale, `/${otherLocale}/${alternate.data.slug}`] : [];
+			return alternate
+				? [otherLocale, `/${otherLocale}/${t(otherLocale, "slug.bias")}/${alternate.data.slug}`]
+				: [];
 		})
 		.filter((pair) => pair.length > 0),
 );

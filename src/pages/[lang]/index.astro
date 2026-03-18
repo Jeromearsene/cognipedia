@@ -24,7 +24,7 @@ const { localized: biases } = await getBiasesForLocale(locale);
 
 /** Serialize a bias entry into the shape BiasCard/BiasGrid expects. */
 const toBiasItem = (entry: (typeof biases)[number]) => ({
-	href: `/${locale}/${entry.data.slug}`,
+	href: `/${locale}/${t(locale, "slug.bias")}/${entry.data.slug}`,
 	title: entry.data.title,
 	family: entry.data.family,
 	familyLabel: t(locale, `bias.family.${entry.data.family}`),
