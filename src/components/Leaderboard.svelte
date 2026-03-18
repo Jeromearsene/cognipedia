@@ -50,9 +50,7 @@ const rankStyle = (index: number): string => {
 
 {#if loading}
   <p class="py-12 text-center text-text-secondary">{labels.loading}</p>
-{:else if error}
-  <p class="py-12 text-center text-red-500">Error</p>
-{:else if entries.length === 0}
+{:else if error || entries.length === 0}
   <p class="py-12 text-center text-text-secondary">{labels.empty}</p>
 {:else}
   <div class="overflow-x-auto">
