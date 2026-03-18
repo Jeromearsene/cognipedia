@@ -1,0 +1,43 @@
+---
+/**
+ * About page content — shared between /a-propos (FR) and /about (EN).
+ */
+import type { Locale } from "@/i18n/i18n";
+import { t } from "@/i18n/i18n";
+import { FAMILIES } from "@/lib/constants";
+
+interface Props {
+	locale: Locale;
+}
+
+const { locale } = Astro.props;
+---
+
+<div class="prose max-w-none">
+	<p class="text-lg text-text-secondary">{t(locale, "about.intro")}</p>
+
+	<h2>{t(locale, "about.codex").split(":")[0]}</h2>
+	<p>{t(locale, "about.codex")}</p>
+
+	<ul class="space-y-3">
+		{FAMILIES.map((family) => (
+			<li class="flex items-start gap-3">
+				<span
+					class="mt-1.5 inline-block h-3 w-3 flex-shrink-0 rounded-full"
+					style={`background-color: var(--family-${family})`}
+				/>
+				<span>{t(locale, `about.codex.${family}`)}</span>
+			</li>
+		))}
+	</ul>
+
+	<p class="mt-8">
+		<a
+			href="https://github.com/Jeromearsene/cognipedia"
+			target="_blank"
+			rel="noopener noreferrer"
+		>
+			{t(locale, "about.github")} &rarr;
+		</a>
+	</p>
+</div>

@@ -3,7 +3,7 @@
  * Leaderboard page (English route: /en/leaderboard).
  * Redirects French users to /fr/classement.
  */
-import Leaderboard from "@/components/Leaderboard.svelte";
+import LeaderboardComponent from "@/components/Leaderboard.svelte";
 import type { Locale } from "@/i18n/i18n";
 import { getLocaleFromAcceptLanguage, isLocale, t } from "@/i18n/i18n";
 import BaseLayout from "@/layouts/BaseLayout.astro";
@@ -36,5 +36,5 @@ const labels = {
 
 <BaseLayout title={`${pageTitle} — ${t(locale, "site.title")}`} lang={locale}>
 	<h1 class="mb-8 text-3xl font-bold">{pageTitle}</h1>
-	<Leaderboard labels={labels} client:visible />
+	<LeaderboardComponent labels={labels} client:visible />
 </BaseLayout>
