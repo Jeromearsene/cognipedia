@@ -6,4 +6,4 @@ compatibility_date = "2025-01-01"
 [[d1_databases]]
 binding = "DB"
 database_name = "cognipedia-db"
-database_id = "TODO"
+database_id = "eeb16c8b-40de-48b1-9e75-eff6df52fca4"
