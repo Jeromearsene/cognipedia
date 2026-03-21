@@ -1,6 +1,6 @@
 @import "tailwindcss";
-@plugin "@tailwindcss/typography";
 @import "./families.css";
+@plugin "@tailwindcss/typography";
 
 @theme {
 	--color-bg: #fafafa;
