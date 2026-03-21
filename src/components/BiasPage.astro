@@ -1,0 +1,92 @@
+---
+import type { CollectionEntry } from "astro:content";
+/**
+ * Full bias page layout: header with metadata badges, styled markdown content,
+ * interactive situation/quiz, sources, and related biases.
+ */
+import { render } from "astro:content";
+import BiasRelatedSection from "@/components/BiasRelatedSection.astro";
+import BiasSourcesSection from "@/components/BiasSourcesSection.astro";
+import Quiz from "@/components/interactive/Quiz.svelte";
+import Situation from "@/components/interactive/Situation.svelte";
+import type { Locale } from "@/i18n/i18n";
+import { t } from "@/i18n/i18n";
+import { DIFFICULTY_COLORS } from "@/lib/constants";
+
+interface Props {
+	entry: CollectionEntry<"biases">;
+	locale: Locale;
+}
+
+const { entry, locale } = Astro.props;
+const { data } = entry;
+const { Content } = await render(entry);
+
+const showOriginalName = data.originalName !== data.title;
+
+/** Translated labels passed to the Quiz Svelte component. */
+const quizLabels = {
+	next: t(locale, "quiz.next"),
+	results: t(locale, "quiz.results"),
+	correct: t(locale, "quiz.correct"),
+	incorrect: t(locale, "quiz.incorrect"),
+};
+---
+
+<article class="mx-auto max-w-3xl">
+  <!-- Header: title, original name, badges -->
+  <header class="mb-8">
+    <h1 class="text-3xl font-bold">{data.title}</h1>
+    {showOriginalName && (
+      <p class="mt-1 text-lg italic text-text-secondary">{data.originalName}</p>
+    )}
+    <div class="mt-4 flex flex-wrap items-center gap-2">
+      <span
+        class="rounded-full px-2.5 py-0.5 text-xs font-medium text-white"
+        style={`background-color: var(--family-${data.family})`}
+      >
+        {t(locale, `bias.family.${data.family}`)}
+      </span>
+      <span class={`rounded-full px-2.5 py-0.5 text-xs font-medium ${DIFFICULTY_COLORS[data.difficulty]}`}>
+        {t(locale, `bias.difficulty.${data.difficulty}`)}
+      </span>
+      {data.tags.map((tag) => (
+        <span class="rounded-full border border-border px-2.5 py-0.5 text-xs text-text-secondary">
+          {tag}
+        </span>
+      ))}
+    </div>
+  </header>
+
+  <!-- Markdown content with typography styles -->
+  <div class="prose prose-slate max-w-none">
+    <Content />
+  </div>
+
+  <!-- Situation interactive -->
+  {data.situation && (
+    <section class="mt-12">
+      <h2 class="mb-4 text-xl font-bold">{t(locale, "situation.title")}</h2>
+      <Situation data={data.situation} client:visible />
+    </section>
+  )}
+
+  <!-- Quiz -->
+  {data.quiz && (
+    <section class="mt-12">
+      <h2 class="mb-4 text-xl font-bold">{t(locale, "quiz.title")}</h2>
+      <Quiz data={data.quiz} labels={quizLabels} client:visible />
+    </section>
+  )}
+
+  <!-- Sources -->
+  <BiasSourcesSection
+    locale={locale}
+    wikipedia={data.sources.wikipedia}
+    papers={data.sources.papers}
+    videos={data.sources.videos}
+  />
+
+  <!-- Related biases -->
+  <BiasRelatedSection locale={locale} relatedBiases={data.relatedBiases} />
+</article>

@@ -1,7 +1,5 @@
 ---
-import { render } from "astro:content";
-import Quiz from "@/components/interactive/Quiz.svelte";
-import Situation from "@/components/interactive/Situation.svelte";
+import BiasPage from "@/components/BiasPage.astro";
 import { SUPPORTED_LOCALES, t } from "@/i18n/i18n";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { getBiasesForLocale } from "@/lib/biases";
@@ -30,9 +28,6 @@ if (!entry) {
 	return new Response(null, { status: 404, statusText: "Not Found" });
 }
 
-const { Content } = await render(entry);
-const { situation, quiz } = entry.data;
-
 /**
  * Build alternate-language URLs for the Header language switcher.
  * Derives the bias folder from the current entry's filePath (e.g. "anchoring/fr.md"
@@ -53,21 +48,8 @@ Astro.locals.altLangHrefs = Object.fromEntries(
 );
 
 const title = `${entry.data.title} — ${t(locale, "site.title")}`;
-
-/** Translated labels passed to the Quiz Svelte component. */
-const quizLabels = {
-	next: t(locale, "quiz.next"),
-	results: t(locale, "quiz.results"),
-	correct: t(locale, "quiz.correct"),
-	incorrect: t(locale, "quiz.incorrect"),
-};
 ---
 
 <BaseLayout title={title} lang={locale}>
-	<article>
-		<h1>{entry.data.title}</h1>
-		<Content />
-		{situation && <Situation data={situation} client:visible />}
-		{quiz && <Quiz data={quiz} labels={quizLabels} client:visible />}
-	</article>
+	<BiasPage entry={entry} locale={locale} />
 </BaseLayout>
