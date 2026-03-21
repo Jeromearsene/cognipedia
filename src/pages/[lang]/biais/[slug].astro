@@ -2,7 +2,7 @@
 import { render } from "astro:content";
 import Quiz from "@/components/interactive/Quiz.svelte";
 import Situation from "@/components/interactive/Situation.svelte";
-import { SUPPORTED_LOCALES, t, validateLocaleParam } from "@/i18n/i18n";
+import { SUPPORTED_LOCALES, t } from "@/i18n/i18n";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { getBiasesForLocale } from "@/lib/biases";
 
@@ -14,10 +14,8 @@ import { getBiasesForLocale } from "@/lib/biases";
  * can link to the same bias in another locale.
  */
 
-const { lang, slug } = Astro.params;
-const result = validateLocaleParam(lang, Astro.request.headers.get("accept-language"));
-if (!result.locale) return Astro.redirect(result.redirectTo);
-const locale = result.locale;
+const { locale } = Astro.locals;
+const { slug } = Astro.params;
 
 // Redirect EN users to the /en/bias/ route
 if (locale === "en") {
@@ -37,8 +35,8 @@ const { situation, quiz } = entry.data;
 
 /**
  * Build alternate-language URLs for the Header language switcher.
- * Derives the bias folder from the current entry's filePath (e.g. "anchoring-bias/fr.md"
- * → "anchoring-bias"), then finds the same bias in other locales.
+ * Derives the bias folder from the current entry's filePath (e.g. "anchoring/fr.md"
+ * → "anchoring"), then finds the same bias in other locales.
  */
 const biasFolder = entry.filePath?.replace(`/${locale}.md`, "").split("/").pop() ?? "";
 Astro.locals.altLangHrefs = Object.fromEntries(

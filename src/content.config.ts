@@ -4,7 +4,7 @@ import { biasSchema } from "@/lib/schemas";
 
 /**
  * Biases collection — each bias lives in its own folder with one markdown
- * file per locale (e.g. `anchoring-bias/fr.md`, `anchoring-bias/en.md`).
+ * file per locale (e.g. `anchoring/fr.md`, `anchoring/en.md`).
  * Entry IDs follow the pattern `<bias-folder>/<locale>`.
  */
 const biases = defineCollection({
