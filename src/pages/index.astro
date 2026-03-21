@@ -1,7 +1,20 @@
 ---
-import { getLocaleFromAcceptLanguage } from "@/i18n/i18n";
-
-/** Redirect root URL to the user's preferred locale based on Accept-Language header. */
-const locale = getLocaleFromAcceptLanguage(Astro.request.headers.get("accept-language"));
-return Astro.redirect(`/${locale}/`);
+import "@/styles/global.css";
 ---
+
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="L'encyclopédie ludique des biais cognitifs" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>Cognipedia</title>
+  </head>
+  <body class="flex min-h-dvh flex-col items-center justify-center bg-bg text-text">
+    <main class="flex flex-col items-center gap-4 text-center">
+      <h1 class="text-5xl font-bold">Cognipedia</h1>
+      <p class="text-lg text-text-secondary">Site en construction</p>
+    </main>
+  </body>
+</html>
