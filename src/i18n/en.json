@@ -32,6 +32,7 @@
 	"slug.bias": "bias",
 	"leaderboard.loading": "Loading...",
 	"leaderboard.empty": "No scores yet",
+	"leaderboard.error": "Unable to load leaderboard",
 	"about.title": "About",
 	"about.intro": "Cognipedia is a playful encyclopedia of cognitive biases. Discover how your brain tricks you through interactive situations and quizzes.",
 	"about.codex": "Cognitive biases are organized into 4 families, inspired by the Cognitive Bias Codex:",

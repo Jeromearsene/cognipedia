@@ -12,6 +12,7 @@ interface Props {
 		score: string;
 		loading: string;
 		empty: string;
+		error: string;
 	};
 }
 
@@ -26,9 +27,10 @@ const fetchLeaderboard = async () => {
 	error = false;
 	try {
 		const response = await fetch("/api/leaderboard?limit=20");
-		if (!response.ok) throw new Error("Failed to fetch");
+		if (!response.ok) throw new Error(`Leaderboard fetch failed: ${response.status}`);
 		entries = await response.json();
-	} catch {
+	} catch (err) {
+		console.error(err);
 		error = true;
 	} finally {
 		loading = false;
@@ -41,16 +43,24 @@ $effect(() => {
 
 /** Top 3 rank styling. */
 const rankStyle = (index: number): string => {
-	if (index === 0) return "text-yellow-500 font-bold";
-	if (index === 1) return "text-gray-400 font-bold";
-	if (index === 2) return "text-amber-600 font-bold";
-	return "text-text-secondary";
+	switch (index) {
+		case 0:
+			return "text-yellow-500 font-bold";
+		case 1:
+			return "text-gray-400 font-bold";
+		case 2:
+			return "text-amber-600 font-bold";
+		default:
+			return "text-text-secondary";
+	}
 };
 </script>
 
 {#if loading}
   <p class="py-12 text-center text-text-secondary">{labels.loading}</p>
-{:else if error || entries.length === 0}
+{:else if error}
+  <p class="py-12 text-center text-text-secondary">{labels.error}</p>
+{:else if entries.length === 0}
   <p class="py-12 text-center text-text-secondary">{labels.empty}</p>
 {:else}
   <div class="overflow-x-auto">

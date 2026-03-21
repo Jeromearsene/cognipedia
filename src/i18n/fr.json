@@ -32,6 +32,7 @@
 	"slug.bias": "biais",
 	"leaderboard.loading": "Chargement...",
 	"leaderboard.empty": "Aucun score pour le moment",
+	"leaderboard.error": "Impossible de charger le classement",
 	"about.title": "A propos",
 	"about.intro": "Cognipedia est une encyclopedie ludique des biais cognitifs. Decouvrez comment votre cerveau vous joue des tours a travers des situations interactives et des quiz.",
 	"about.codex": "Les biais cognitifs sont organises en 4 grandes familles, inspirees du Codex des biais cognitifs :",

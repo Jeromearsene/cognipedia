@@ -4,18 +4,13 @@
  * Redirects French users to /fr/classement.
  */
 import LeaderboardComponent from "@/components/Leaderboard.svelte";
-import type { Locale } from "@/i18n/i18n";
-import { getLocaleFromAcceptLanguage, isLocale, t } from "@/i18n/i18n";
+import { t, validateLocaleParam } from "@/i18n/i18n";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 
 const { lang } = Astro.params;
-
-if (!lang || !isLocale(lang)) {
-	const fallback = getLocaleFromAcceptLanguage(Astro.request.headers.get("accept-language"));
-	return Astro.redirect(`/${fallback}/`);
-}
-
-const locale: Locale = lang;
+const result = validateLocaleParam(lang, Astro.request.headers.get("accept-language"));
+if (!result.locale) return Astro.redirect(result.redirectTo);
+const locale = result.locale;
 
 if (locale === "fr") {
 	return Astro.redirect("/fr/classement");
@@ -31,6 +26,7 @@ const labels = {
 	score: t(locale, "leaderboard.score"),
 	loading: t(locale, "leaderboard.loading"),
 	empty: t(locale, "leaderboard.empty"),
+	error: t(locale, "leaderboard.error"),
 };
 ---
 

@@ -2,28 +2,22 @@
 import { render } from "astro:content";
 import Quiz from "@/components/interactive/Quiz.svelte";
 import Situation from "@/components/interactive/Situation.svelte";
-import type { Locale } from "@/i18n/i18n";
-import { getLocaleFromAcceptLanguage, isLocale, SUPPORTED_LOCALES, t } from "@/i18n/i18n";
+import { SUPPORTED_LOCALES, t, validateLocaleParam } from "@/i18n/i18n";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { getBiasesForLocale } from "@/lib/biases";
 
 /**
  * English bias page — renders a single cognitive bias entry.
- * URL pattern: /:lang/bias/:slug (e.g. /en/bias/anchoring-bias).
+ * URL pattern: /:lang/bias/:slug (e.g. /en/bias/anchoring).
  * Redirects FR users to /fr/biais/:slug.
  * Also computes alternate-language URLs so the Header language switcher
  * can link to the same bias in another locale.
  */
 
 const { lang, slug } = Astro.params;
-
-if (!lang || !isLocale(lang)) {
-	const fallback = getLocaleFromAcceptLanguage(Astro.request.headers.get("accept-language"));
-	return Astro.redirect(`/${fallback}/`);
-}
-
-// Safe after isLocale() guard above
-const locale: Locale = lang;
+const result = validateLocaleParam(lang, Astro.request.headers.get("accept-language"));
+if (!result.locale) return Astro.redirect(result.redirectTo);
+const locale = result.locale;
 
 // Redirect FR users to the /fr/biais/ route
 if (locale === "fr") {

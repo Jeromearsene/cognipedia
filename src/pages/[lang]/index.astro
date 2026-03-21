@@ -6,20 +6,15 @@
  */
 import BiasCard from "@/components/BiasCard.svelte";
 import BiasGrid from "@/components/BiasGrid.svelte";
-import type { Locale } from "@/i18n/i18n";
-import { getLocaleFromAcceptLanguage, isLocale, t } from "@/i18n/i18n";
+import { t, validateLocaleParam } from "@/i18n/i18n";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { getBiasesForLocale } from "@/lib/biases";
 import { DIFFICULTIES, FAMILIES } from "@/lib/constants";
 
 const { lang } = Astro.params;
-
-if (!lang || !isLocale(lang)) {
-	const fallback = getLocaleFromAcceptLanguage(Astro.request.headers.get("accept-language"));
-	return Astro.redirect(`/${fallback}/`);
-}
-
-const locale: Locale = lang;
+const result = validateLocaleParam(lang, Astro.request.headers.get("accept-language"));
+if (!result.locale) return Astro.redirect(result.redirectTo);
+const locale = result.locale;
 const { localized: biases } = await getBiasesForLocale(locale);
 
 /** Serialize a bias entry into the shape BiasCard/BiasGrid expects. */
