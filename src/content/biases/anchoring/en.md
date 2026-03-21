@@ -1,5 +1,5 @@
 ---
-slug: "anchoring-bias"
+slug: "anchoring"
 title: "Anchoring bias"
 originalName: "Anchoring bias"
 family: "too-much-information"

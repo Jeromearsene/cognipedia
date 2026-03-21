@@ -65,3 +65,17 @@ export const getLocaleFromAcceptLanguage = (header: string | null): Locale => {
 	const match = preferred.find((lang) => isLocale(lang));
 	return match ?? DEFAULT_LOCALE;
 };
+
+/**
+ * Validates a route `lang` param and returns the locale.
+ * Returns `null` if the param is missing or not a supported locale,
+ * along with a fallback redirect URL based on Accept-Language.
+ */
+export const validateLocaleParam = (
+	lang: string | undefined,
+	acceptLanguage: string | null,
+): { locale: Locale } | { locale: null; redirectTo: string } => {
+	if (lang && isLocale(lang)) return { locale: lang };
+	const fallback = getLocaleFromAcceptLanguage(acceptLanguage);
+	return { locale: null, redirectTo: `/${fallback}/` };
+};
