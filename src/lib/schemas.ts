@@ -60,6 +60,24 @@ export const biasSchema = z.object({
 
 export type BiasFrontmatter = z.infer<typeof biasSchema>;
 
+// --- API response schemas ---
+// Fields use snake_case to match D1 column names (returned as-is by the database).
+
+export const scoreEntrySchema = z.object({
+	bias_slug: z.string(),
+	total_score: z.number(),
+	situation_score: z.number(),
+	quiz_correct: z.number(),
+	quiz_total: z.number(),
+	completed_at: z.string(),
+});
+
+export const userScoresResponseSchema = z.object({
+	scores: z.array(scoreEntrySchema),
+	totalScore: z.number(),
+	biasCount: z.number(),
+});
+
 // --- API request body schemas ---
 
 const recoveryCodeSchema = z.string().regex(/^COGNI-[A-Z0-9]{4}-[A-Z0-9]{4}$/);
@@ -80,4 +98,9 @@ export const scoreBodySchema = z.object({
 
 export const recoverBodySchema = z.object({
 	recoveryCode: recoveryCodeSchema,
+});
+
+export const pseudoBodySchema = z.object({
+	uuid: z.string().uuid(),
+	pseudo: z.string().min(1).max(30),
 });

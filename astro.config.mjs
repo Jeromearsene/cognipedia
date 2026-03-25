@@ -16,6 +16,7 @@ export default defineConfig({
 		platformProxy: {
 			enabled: true,
 		},
+		imageService: "compile",
 	}),
 	i18n: {
 		defaultLocale: "fr",

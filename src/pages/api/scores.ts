@@ -26,11 +26,11 @@ export const POST: APIRoute = async (context) => {
 				`INSERT INTO scores (user_uuid, bias_slug, situation_score, quiz_correct, quiz_total, total_score)
 				VALUES (?, ?, ?, ?, ?, ?)
 				ON CONFLICT(user_uuid, bias_slug) DO UPDATE SET
-					situation_score = excluded.situation_score,
-					quiz_correct = excluded.quiz_correct,
-					quiz_total = excluded.quiz_total,
-					total_score = excluded.total_score,
-					completed_at = datetime('now')`,
+					situation_score = CASE WHEN excluded.total_score > scores.total_score THEN excluded.situation_score ELSE scores.situation_score END,
+					quiz_correct = CASE WHEN excluded.total_score > scores.total_score THEN excluded.quiz_correct ELSE scores.quiz_correct END,
+					quiz_total = CASE WHEN excluded.total_score > scores.total_score THEN excluded.quiz_total ELSE scores.quiz_total END,
+					total_score = MAX(excluded.total_score, scores.total_score),
+					completed_at = CASE WHEN excluded.total_score > scores.total_score THEN datetime('now') ELSE scores.completed_at END`,
 			)
 			.bind(userUuid, biasSlug, situationScore, quizCorrect, quizTotal, totalScore)
 			.run();

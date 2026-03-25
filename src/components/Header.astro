@@ -2,12 +2,15 @@
 import type { Locale } from "@/i18n/i18n";
 import { SUPPORTED_LOCALES, t } from "@/i18n/i18n";
 
-const { locale, currentPath, altLangHrefs } = Astro.locals;
+const { locale, currentPath, altLangHrefs, isRegistered } = Astro.locals;
 
 const navLinks = [
 	{ key: "nav.home", href: `/${locale}/` },
 	{ key: "nav.leaderboard", href: `/${locale}/${t(locale, "slug.leaderboard")}` },
 	{ key: "nav.about", href: `/${locale}/${t(locale, "slug.about")}` },
+	...(isRegistered
+		? [{ key: "nav.profile", href: `/${locale}/${t(locale, "slug.profile")}` }]
+		: []),
 ];
 
 /**
