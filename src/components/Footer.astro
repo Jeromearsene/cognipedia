@@ -1,10 +1,21 @@
 ---
 import { Icon } from "astro-icon/components";
+import { t } from "@/i18n/i18n";
+
+const { locale, isRegistered } = Astro.locals;
 ---
 
 <footer class="border-t border-border bg-surface">
   <div class="mx-auto flex w-full max-w-6xl items-center justify-between px-8 py-4 text-sm text-text-secondary">
     <span>Cognipedia &copy; {new Date().getFullYear()}</span>
+    {!isRegistered && (
+      <a
+        href={`/${locale}/${t(locale, "slug.profile")}`}
+        class="text-text-secondary hover:text-text no-underline hover:underline"
+      >
+        {t(locale, "footer.existing-account")}
+      </a>
+    )}
     <a
       href="https://github.com/Jeromearsene/cognipedia"
       target="_blank"
