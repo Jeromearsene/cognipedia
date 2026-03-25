@@ -55,3 +55,7 @@ Nous ne voyons que les gagnants : les entreprises qui réussissent, les artistes
 - Les livres de développement personnel ne parlent que des success stories, jamais des parcours identiques qui ont échoué.
 - On croit que les bâtiments anciens étaient mieux construits, alors que seuls les plus solides ont survécu.
 - Les fonds d'investissement affichent leurs performances en excluant les fonds qui ont fermé (mauvais résultats).
+
+## Le saviez-vous ?
+
+En 1943, le Statistical Research Group de l'université Columbia à New York était chargé par l'armée américaine d'optimiser le blindage des bombardiers. Les ingénieurs militaires avaient cartographié les impacts de balles sur les avions qui rentraient de mission au-dessus de l'Europe et proposaient de renforcer les zones les plus touchées. Le statisticien hongrois Abraham Wald a compris l'erreur : les avions qu'ils étudiaient étaient ceux qui avaient **survécu**. Les zones sans impacts étaient justement celles qui, une fois touchées, empêchaient l'avion de revenir. Il fallait renforcer les zones intactes. Son analyse, publiée dans le mémo [*A Method of Estimating Plane Vulnerability Based on Damage of Survivors*](https://en.wikipedia.org/wiki/Abraham_Wald#Survivorship_bias) (SRG, 1943), est devenue l'exemple le plus célèbre du biais du survivant.

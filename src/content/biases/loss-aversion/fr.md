@@ -55,3 +55,7 @@ Notre cerveau traite les pertes et les gains de manière asymétrique. Perdre 50
 - On refuse un pari avantageux parce que la perspective de perdre nous paralyse.
 - On conserve des objets inutiles parce que s'en séparer ressemble à une perte.
 - Les offres "essai gratuit" fonctionnent parce qu'une fois qu'on possède quelque chose, y renoncer est douloureux.
+
+## Le saviez-vous ?
+
+En 1990, les économistes Daniel Kahneman, Jack Knetsch et Richard Thaler ont mené une expérience devenue célèbre à l'université Cornell, dans l'État de New York. Ils ont donné un mug de l'université à la moitié des participants et demandé à tous de fixer un prix. Ceux qui possédaient le mug exigeaient en moyenne deux fois plus pour le vendre (~7$) que ce que les autres étaient prêts à payer (~3$). Le simple fait de posséder un objet augmente sa valeur perçue — parce que s'en séparer est ressenti comme une perte. Ces résultats ont été publiés dans [*Experimental Tests of the Endowment Effect*](https://doi.org/10.1086/261737) (Journal of Political Economy, 1990).

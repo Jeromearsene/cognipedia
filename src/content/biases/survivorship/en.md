@@ -51,3 +51,7 @@ We only see the winners: successful companies, famous artists, treatments that w
 - Self-help books only feature success stories, never identical paths that led to failure.
 - We think old buildings were built better, but only the sturdiest ones survived.
 - Investment funds display their track records while excluding funds that closed due to poor performance.
+
+## Did you know?
+
+In 1943, the Statistical Research Group at Columbia University in New York was tasked by the US military with optimizing bomber armor. Military engineers had mapped bullet holes on planes returning from missions over Europe and proposed reinforcing the most damaged areas. Hungarian-born statistician Abraham Wald realized the mistake: the planes they were studying were the ones that had **survived**. The areas without bullet holes were precisely the ones that, when hit, prevented the plane from returning. The undamaged areas needed reinforcement. His analysis, published in the memo [*A Method of Estimating Plane Vulnerability Based on Damage of Survivors*](https://en.wikipedia.org/wiki/Abraham_Wald#Survivorship_bias) (SRG, 1943), became the most famous example of survivorship bias.

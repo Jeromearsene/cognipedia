@@ -55,3 +55,7 @@ Our brain is not an impartial judge. When we hold an opinion, we unconsciously s
 - On social media, algorithms reinforce this bias by showing us content aligned with our views.
 - A recruiter convinced a candidate is good will interpret their answers more favorably.
 - In politics, we watch media that reinforce our positions and avoid outlets that challenge them.
+
+## Did you know?
+
+As early as 1620, English philosopher Francis Bacon described this bias in his work [*Novum Organum*](https://en.wikipedia.org/wiki/Novum_Organum), published in London. He recounted the example of sailors who prayed to saints to survive storms. In churches, one could find ex-votos offered by survivors — apparent proof that prayers worked. But as Bacon pointed out, no one went to ask the opinion of those who had prayed and drowned. Four centuries before psychologist Peter Wason coined the term "confirmation bias" in 1960 in London, Bacon had already described its mechanism.

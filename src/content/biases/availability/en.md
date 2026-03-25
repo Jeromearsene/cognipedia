@@ -51,3 +51,7 @@ Our brain uses a shortcut: if something is easy to remember, it must be frequent
 - After a widely covered plane crash, flight bookings drop even though the risk hasn't changed.
 - We overestimate deaths from terrorist attacks and underestimate those from cardiovascular disease.
 - A manager who recently had a bad experience with a freelancer will refuse to hire another, even though the experience is statistically rare.
+
+## Did you know?
+
+After the September 11, 2001 attacks in the United States, air traffic dropped by 20%. Millions of Americans chose to drive rather than fly. German psychologist Gerd Gigerenzer, director at the Max Planck Institute in Berlin, studied the consequences of this shift. In his study published in [*Dread Risk, September 11, and Fatal Traffic Accidents*](https://doi.org/10.1111/j.0956-7976.2004.00668.x) (Psychological Science, 2004), he estimated that approximately 1,600 additional Americans died in road accidents in the year following 9/11 — more than the number of passengers on the hijacked planes. Availability bias had made flying seem terrifying and driving reassuring, when the statistics said the opposite.
