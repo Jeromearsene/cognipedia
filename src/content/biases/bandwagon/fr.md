@@ -1,5 +1,5 @@
 ---
-slug: "effet-de-groupe"
+slug: "effet-groupe"
 title: "Effet de groupe"
 originalName: "Bandwagon effect"
 family: "not-enough-meaning"

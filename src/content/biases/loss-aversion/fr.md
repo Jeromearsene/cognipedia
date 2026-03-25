@@ -1,5 +1,5 @@
 ---
-slug: "aversion-a-la-perte"
+slug: "aversion-perte"
 title: "Aversion à la perte"
 originalName: "Loss aversion"
 family: "need-to-act-fast"

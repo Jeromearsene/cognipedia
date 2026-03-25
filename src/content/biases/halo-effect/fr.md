@@ -1,5 +1,5 @@
 ---
-slug: "effet-de-halo"
+slug: "effet-halo"
 title: "Effet de halo"
 originalName: "Halo effect"
 family: "not-enough-meaning"

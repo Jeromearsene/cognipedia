@@ -1,5 +1,5 @@
 ---
-slug: "du-survivant"
+slug: "survivant"
 title: "Biais du survivant"
 originalName: "Survivorship bias"
 family: "too-much-information"
