@@ -51,3 +51,7 @@ To accurately assess your own competence, you need to... be competent. Novices l
 - A beginner driver feels invincible after a few months on the road, while a professional driver remains cautious.
 - On social media, the least informed people on a topic are often the most assertive.
 - In the workplace, a junior employee may confidently challenge decisions made by seasoned experts.
+
+## Did you know?
+
+On April 19, 1995, McArthur Wheeler robbed two banks in Pittsburgh, Pennsylvania, with his face covered in lemon juice. He was convinced the juice made him invisible to surveillance cameras, since lemon juice is used as invisible ink. Arrested that same evening thanks to the footage, he was stunned: "But I wore the juice!" This case inspired psychologists David Dunning and Justin Kruger at Cornell University to publish their landmark 1999 study [*Unskilled and Unaware of It*](https://doi.org/10.1037/0022-3514.77.6.1121) (Journal of Personality and Social Psychology), demonstrating why incompetent people fail to recognize their own incompetence.

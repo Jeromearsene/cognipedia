@@ -55,3 +55,7 @@ Pour évaluer correctement ses compétences, il faut... être compétent. Les no
 - Un conducteur débutant se sent invincible après quelques mois de permis, alors qu'un pilote professionnel reste prudent.
 - Sur les réseaux sociaux, les personnes les moins informées sur un sujet sont souvent les plus catégoriques.
 - En entreprise, un employé junior peut contester avec assurance les décisions d'experts chevronnés.
+
+## Le saviez-vous ?
+
+Le 19 avril 1995, McArthur Wheeler a braqué deux banques à Pittsburgh, en Pennsylvanie, le visage enduit de jus de citron. Il était convaincu que le jus le rendait invisible aux caméras de surveillance, puisque le citron est utilisé comme encre invisible. Arrêté le soir même grâce aux vidéos de surveillance, il a été stupéfait : "Mais j'avais mis du jus !" C'est cette affaire qui a inspiré les psychologues David Dunning et Justin Kruger de l'université Cornell à publier en 1999 leur étude fondatrice [*Unskilled and Unaware of It*](https://doi.org/10.1037/0022-3514.77.6.1121) (Journal of Personality and Social Psychology), démontrant pourquoi les personnes incompétentes ne réalisent pas leur incompétence.

@@ -55,3 +55,7 @@ Notre cerveau utilise un raccourci : si quelque chose est facile à se rappeler,
 - Après un crash aérien médiatisé, les réservations de vols baissent alors que le risque n'a pas changé.
 - On surestime le nombre de morts par attaque terroriste et on sous-estime ceux par maladie cardiovasculaire.
 - Un manager qui a vécu un échec récent avec un freelance refusera d'en embaucher un autre, même si l'expérience est statistiquement rare.
+
+## Le saviez-vous ?
+
+Après les attentats du 11 septembre 2001 aux États-Unis, le trafic aérien a chuté de 20%. Des millions d'Américains ont préféré prendre la voiture plutôt que l'avion. Le psychologue allemand Gerd Gigerenzer, directeur au Max Planck Institute de Berlin, a étudié les conséquences de ce report. Dans son étude publiée dans [*Dread Risk, September 11, and Fatal Traffic Accidents*](https://doi.org/10.1111/j.0956-7976.2004.00668.x) (Psychological Science, 2004), il a estimé qu'environ 1 600 Américains supplémentaires sont morts dans des accidents de la route dans l'année qui a suivi le 11 septembre — soit plus que le nombre de passagers des avions détournés. Le biais de disponibilité avait rendu l'avion terrifiant et la voiture rassurante, alors que les statistiques disaient l'inverse.

@@ -51,3 +51,7 @@ Our brain processes losses and gains asymmetrically. Losing $50 triggers a negat
 - We refuse a favorable bet because the prospect of losing paralyzes us.
 - We keep useless items because parting with them feels like a loss.
 - "Free trial" offers work because once we have something, giving it up is painful.
+
+## Did you know?
+
+In 1990, economists Daniel Kahneman, Jack Knetsch, and Richard Thaler conducted a now-famous experiment at Cornell University in New York State. They gave a university mug to half the participants and asked everyone to set a price. Those who owned the mug demanded on average twice as much to sell it (~$7) as others were willing to pay (~$3). Simply owning an object increases its perceived value — because giving it up feels like a loss. The results were published in [*Experimental Tests of the Endowment Effect*](https://doi.org/10.1086/261737) (Journal of Political Economy, 1990).
