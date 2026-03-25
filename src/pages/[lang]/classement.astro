@@ -1,17 +1,10 @@
 ---
-/**
- * Leaderboard page (French route: /fr/classement).
- * Redirects English users to /en/leaderboard.
- */
+/** Leaderboard page (French route: /fr/classement). */
 import Leaderboard from "@/components/Leaderboard.svelte";
 import { t } from "@/i18n/i18n";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 
 const { locale } = Astro.locals;
-
-if (locale === "en") {
-	return Astro.redirect("/en/leaderboard");
-}
 
 Astro.locals.altLangHrefs = { en: "/en/leaderboard" };
 

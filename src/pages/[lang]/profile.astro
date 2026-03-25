@@ -7,10 +7,6 @@ import { getProfileLabels } from "@/lib/labels";
 
 const { locale } = Astro.locals;
 
-if (locale === "fr") {
-	return Astro.redirect("/fr/profil");
-}
-
 const { localized: biases } = await getBiasesForLocale(locale);
 const title = `${t(locale, "profile.title")} — ${t(locale, "site.title")}`;
 

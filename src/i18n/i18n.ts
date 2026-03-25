@@ -66,6 +66,28 @@ export const getLocaleFromAcceptLanguage = (header: string | null): Locale => {
 	return match ?? DEFAULT_LOCALE;
 };
 
+/** All slug keys used for localized routes, typed against actual i18n keys. */
+const SLUG_KEYS: readonly TranslationKey[] = [
+	"slug.leaderboard",
+	"slug.about",
+	"slug.profile",
+	"slug.bias",
+];
+
+/**
+ * Reverse map from any localized slug to its canonical key and owning locale.
+ * E.g. "classement" → { key: "slug.leaderboard", locale: "fr" }
+ * Built once at module load, supports any number of locales.
+ */
+export const slugToLocaleMap = new Map<string, { key: TranslationKey; locale: Locale }>();
+
+for (const locale of SUPPORTED_LOCALES) {
+	for (const key of SLUG_KEYS) {
+		const slug = t(locale, key);
+		slugToLocaleMap.set(slug, { key, locale });
+	}
+}
+
 /**
  * Validates a route `lang` param and returns the locale.
  * Returns `null` if the param is missing or not a supported locale,
