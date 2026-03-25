@@ -1,5 +1,6 @@
 <script lang="ts">
 import type { BiasCardData, Difficulty, Family } from "@/lib/constants";
+import { isDifficulty, isFamily } from "@/lib/utils";
 import BiasCard from "./BiasCard.svelte";
 
 interface FamilyOption {
@@ -16,6 +17,10 @@ interface Props {
 	biases: BiasCardData[];
 	families: FamilyOption[];
 	difficulties: DifficultyOption[];
+	/** Pre-selected family filter from query params (passed by Astro SSR). */
+	initialFamily?: string | null;
+	/** Pre-selected difficulty filter from query params (passed by Astro SSR). */
+	initialDifficulty?: string | null;
 	labels: {
 		family: string;
 		difficulty: string;
@@ -23,17 +28,24 @@ interface Props {
 	};
 }
 
-const { biases, families, difficulties, labels }: Props = $props();
+const { biases, families, difficulties, initialFamily, initialDifficulty, labels }: Props =
+	$props();
 
 // svelte-ignore state_referenced_locally — props are static (from Astro), won't change after mount
 const familyKeys = families.map((family) => family.key);
 // svelte-ignore state_referenced_locally
 const difficultyKeys = difficulties.map((difficulty) => difficulty.key);
 
-/** Active family filters — all enabled by default. */
-let activeFamilies = $state(new Set(familyKeys));
-/** Active difficulty filters — all enabled by default. */
-let activeDifficulties = $state(new Set(difficultyKeys));
+/** Active family filters — narrowed to initial filter if provided, otherwise all enabled. */
+let activeFamilies = $state(
+	initialFamily && isFamily(initialFamily) ? new Set<Family>([initialFamily]) : new Set(familyKeys),
+);
+/** Active difficulty filters — narrowed to initial filter if provided, otherwise all enabled. */
+let activeDifficulties = $state(
+	initialDifficulty && isDifficulty(initialDifficulty)
+		? new Set<Difficulty>([initialDifficulty])
+		: new Set(difficultyKeys),
+);
 
 const toggleFamily = (key: Family) => {
 	const next = new Set(activeFamilies);

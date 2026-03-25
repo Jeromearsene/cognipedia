@@ -44,6 +44,11 @@ const difficultyOptions = DIFFICULTIES.map((difficulty) => ({
 
 const title = t(locale, "site.title");
 const description = t(locale, "site.description");
+
+/** Detect filter query params to render the correct initial view (SSR, no flash). */
+const filterFamily = Astro.url.searchParams.get("family");
+const filterDifficulty = Astro.url.searchParams.get("difficulty");
+const hasFilters = filterFamily !== null || filterDifficulty !== null;
 ---
 
 <BaseLayout title={title} description={description} lang={locale}>
@@ -58,21 +63,21 @@ const description = t(locale, "site.description");
     <!-- View toggle tabs -->
     <div class="mb-8 flex gap-4 border-b border-border" id="view-tabs">
       <button
-        class="border-b-2 border-accent px-4 py-2 text-sm font-medium text-accent"
+        class={`border-b-2 px-4 py-2 text-sm font-medium ${hasFilters ? "border-transparent text-text-secondary hover:text-text" : "border-accent text-accent"}`}
         data-view="grouped"
       >
         {t(locale, "home.view.grouped")}
       </button>
       <button
-        class="border-b-2 border-transparent px-4 py-2 text-sm font-medium text-text-secondary hover:text-text"
+        class={`border-b-2 px-4 py-2 text-sm font-medium ${hasFilters ? "border-accent text-accent" : "border-transparent text-text-secondary hover:text-text"}`}
         data-view="flat"
       >
         {t(locale, "home.view.flat")}
       </button>
     </div>
 
-    <!-- Grouped view (default, static HTML) -->
-    <div id="view-grouped">
+    <!-- Grouped view (hidden when filters are active) -->
+    <div id="view-grouped" class={hasFilters ? "hidden" : ""}>
       {groupedByFamily.map(({ key, label, biases: familyBiases }) => (
         <div class="mb-10">
           <h2
@@ -97,11 +102,13 @@ const description = t(locale, "site.description");
     </div>
 
     <!-- Flat view (Svelte island, hidden by default) -->
-    <div id="view-flat" class="hidden">
+    <div id="view-flat" class={hasFilters ? "" : "hidden"}>
       <BiasGrid
         biases={biasItems}
         families={familyOptions}
         difficulties={difficultyOptions}
+        initialFamily={filterFamily}
+        initialDifficulty={filterDifficulty}
         labels={{
           family: t(locale, "home.filter.family"),
           difficulty: t(locale, "home.filter.difficulty"),
@@ -114,11 +121,7 @@ const description = t(locale, "site.description");
 
   <!-- View toggle script (minimal inline JS for tab switching) -->
   <script is:inline>
-    document.getElementById("view-tabs")?.addEventListener("click", (event) => {
-      const button = event.target.closest("[data-view]");
-      if (!button) return;
-
-      const view = button.dataset.view;
+    const switchView = (view) => {
       const grouped = document.getElementById("view-grouped");
       const flat = document.getElementById("view-flat");
       const buttons = document.querySelectorAll("[data-view]");
@@ -133,6 +136,12 @@ const description = t(locale, "site.description");
         btn.classList.toggle("border-transparent", !isActive);
         btn.classList.toggle("text-text-secondary", !isActive);
       });
+    };
+
+    document.getElementById("view-tabs")?.addEventListener("click", (event) => {
+      const button = event.target.closest("[data-view]");
+      if (!button) return;
+      switchView(button.dataset.view);
     });
   </script>
 </BaseLayout>

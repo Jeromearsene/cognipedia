@@ -32,21 +32,25 @@ const showOriginalName = data.originalName !== data.title;
     {showOriginalName && (
       <p class="mt-1 text-lg italic text-text-secondary">{data.originalName}</p>
     )}
-    <div class="mt-4 flex flex-wrap items-center gap-2">
-      <span
-        class="rounded-full px-2.5 py-0.5 text-xs font-medium text-white"
-        style={`background-color: var(--family-${data.family})`}
+    <div class="mt-2 flex flex-wrap gap-2 text-xs text-text-secondary">
+      {data.tags.map((tag) => (
+        <span>#{tag}</span>
+      ))}
+    </div>
+    <div class="mt-3 flex flex-wrap items-center gap-2">
+      <a
+        href={`/${locale}/?family=${data.family}`}
+        class="badge-family rounded-full border-2 px-2.5 py-0.5 text-xs font-medium no-underline transition-all duration-200"
+        style={`--family-color: var(--family-${data.family}); background-color: var(--family-color); border-color: var(--family-color); color: white`}
       >
         {t(locale, `bias.family.${data.family}`)}
-      </span>
-      <span class={`rounded-full px-2.5 py-0.5 text-xs font-medium ${DIFFICULTY_COLORS[data.difficulty]}`}>
+      </a>
+      <a
+        href={`/${locale}/?difficulty=${data.difficulty}`}
+        class={`rounded-full border-2 border-transparent px-2.5 py-0.5 text-xs font-medium no-underline transition-all duration-200 hover:bg-transparent hover:border-current ${DIFFICULTY_COLORS[data.difficulty]}`}
+      >
         {t(locale, `bias.difficulty.${data.difficulty}`)}
-      </span>
-      {data.tags.map((tag) => (
-        <span class="rounded-full border border-border px-2.5 py-0.5 text-xs text-text-secondary">
-          {tag}
-        </span>
-      ))}
+      </a>
     </div>
   </header>
 
@@ -76,3 +80,10 @@ const showOriginalName = data.originalName !== data.title;
   <!-- Related biases -->
   <BiasRelatedSection locale={locale} relatedBiases={data.relatedBiases} />
 </article>
+
+<style>
+  .badge-family:hover {
+    background-color: transparent !important;
+    color: var(--family-color) !important;
+  }
+</style>
