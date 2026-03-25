@@ -66,12 +66,14 @@ const handleRecoveryDismiss = () => {
 
 {#if situation}
 	<section class="mt-12">
+		<h2 class="mb-4 text-2xl font-bold">{labels.situationTitle}</h2>
 		<Situation data={situation} onComplete={handleSituationComplete} />
 	</section>
 {/if}
 
 {#if quiz}
 	<section class="mt-12">
+		<h2 class="mb-4 text-2xl font-bold">{labels.quizTitle}</h2>
 		<Quiz data={quiz} labels={labels.quiz} onComplete={handleQuizComplete} />
 	</section>
 

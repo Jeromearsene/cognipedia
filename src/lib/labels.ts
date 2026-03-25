@@ -48,6 +48,8 @@ export interface PseudoEditorLabels {
 
 /** Labels for the BiasInteractive orchestrator. */
 export interface BiasInteractiveLabels {
+	situationTitle: string;
+	quizTitle: string;
 	quiz: QuizLabels;
 	score: ScoreLabels;
 	recovery: RecoveryModalLabels;
@@ -75,6 +77,8 @@ export interface ProfilePageLabels {
 
 /** Builds all labels needed by the BiasInteractive orchestrator. */
 export const getBiasInteractiveLabels = (locale: Locale): BiasInteractiveLabels => ({
+	situationTitle: t(locale, "situation.title"),
+	quizTitle: t(locale, "quiz.title"),
 	quiz: {
 		next: t(locale, "quiz.next"),
 		results: t(locale, "quiz.results"),
