@@ -11,7 +11,7 @@ export const POST: APIRoute = async (context) => {
 		const result = scoreBodySchema.safeParse(await context.request.json());
 
 		if (!result.success) {
-			return new Response(JSON.stringify({ error: result.error.flatten().fieldErrors }), {
+			return new Response(JSON.stringify({ error: result.error.issues }), {
 				status: 400,
 				headers: jsonHeaders,
 			});
@@ -19,7 +19,7 @@ export const POST: APIRoute = async (context) => {
 
 		const { userUuid, biasSlug, situationScore, quizCorrect, quizTotal } = result.data;
 		const totalScore = computeTotalScore({ situationScore, quizCorrect, quizTotal });
-		const db = getD1(context.locals);
+		const db = getD1();
 
 		await db
 			.prepare(

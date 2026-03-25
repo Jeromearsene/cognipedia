@@ -17,7 +17,7 @@ export const GET: APIRoute = async (context) => {
 			limit = 100;
 		}
 
-		const db = getD1(context.locals);
+		const db = getD1();
 
 		const { results } = await db
 			.prepare(

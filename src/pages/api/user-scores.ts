@@ -16,7 +16,7 @@ export const GET: APIRoute = async (context) => {
 			});
 		}
 
-		const db = getD1(context.locals);
+		const db = getD1();
 
 		const { results: scores } = await db
 			.prepare(

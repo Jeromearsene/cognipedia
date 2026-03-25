@@ -1,19 +1,19 @@
-import { z } from "zod";
+import { z } from "astro/zod";
 import { DIFFICULTIES, FAMILIES } from "./constants";
 
 const paperSchema = z.object({
 	title: z.string().min(1),
-	url: z.string().url(),
+	url: z.url(),
 });
 
 const videoSchema = z.object({
 	title: z.string().min(1),
-	url: z.string().url(),
+	url: z.url(),
 	lang: z.string().min(2).max(5),
 });
 
 const sourcesSchema = z.object({
-	wikipedia: z.string().url(),
+	wikipedia: z.url(),
 	papers: z.array(paperSchema).optional(),
 	videos: z.array(videoSchema).optional(),
 });
@@ -83,13 +83,13 @@ export const userScoresResponseSchema = z.object({
 const recoveryCodeSchema = z.string().regex(/^COGNI-[A-Z0-9]{4}-[A-Z0-9]{4}$/);
 
 export const registerBodySchema = z.object({
-	uuid: z.string().uuid(),
+	uuid: z.uuid(),
 	pseudo: z.string().min(1),
 	recoveryCode: recoveryCodeSchema,
 });
 
 export const scoreBodySchema = z.object({
-	userUuid: z.string().uuid(),
+	userUuid: z.uuid(),
 	biasSlug: z.string().min(1),
 	situationScore: z.number(),
 	quizCorrect: z.number().int().min(0),
@@ -101,6 +101,6 @@ export const recoverBodySchema = z.object({
 });
 
 export const pseudoBodySchema = z.object({
-	uuid: z.string().uuid(),
+	uuid: z.uuid(),
 	pseudo: z.string().min(1).max(30),
 });

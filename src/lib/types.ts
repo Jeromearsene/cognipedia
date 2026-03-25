@@ -1,4 +1,4 @@
-import type { z } from "zod";
+import type { z } from "astro/zod";
 import type { DIFFICULTIES, FAMILIES } from "./constants";
 import type { scoreEntrySchema } from "./schemas";
 
