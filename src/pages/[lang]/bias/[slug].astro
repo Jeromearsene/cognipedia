@@ -7,18 +7,11 @@ import { getBiasesForLocale } from "@/lib/biases";
 /**
  * English bias page — renders a single cognitive bias entry.
  * URL pattern: /:lang/bias/:slug (e.g. /en/bias/anchoring).
- * Redirects FR users to /fr/biais/:slug.
- * Also computes alternate-language URLs so the Header language switcher
- * can link to the same bias in another locale.
+ * Locale redirects are handled by the middleware.
  */
 
 const { locale } = Astro.locals;
 const { slug } = Astro.params;
-
-// Redirect FR users to the /fr/biais/ route
-if (locale === "fr") {
-	return Astro.redirect(`/fr/biais/${slug}`);
-}
 
 // Fetch all biases, then filter to current locale and find by slug
 const { all: allBiases, localized: biases } = await getBiasesForLocale(locale);

@@ -1,17 +1,10 @@
 ---
-/**
- * About page (English route: /en/about).
- * Redirects French users to /fr/a-propos.
- */
+/** About page (English route: /en/about). */
 import AboutPage from "@/components/AboutPage.astro";
 import { t } from "@/i18n/i18n";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 
 const { locale } = Astro.locals;
-
-if (locale === "fr") {
-	return Astro.redirect("/fr/a-propos");
-}
 
 Astro.locals.altLangHrefs = { fr: "/fr/a-propos" };
 
