@@ -10,14 +10,14 @@ export const POST: APIRoute = async (context) => {
 		const result = recoverBodySchema.safeParse(await context.request.json());
 
 		if (!result.success) {
-			return new Response(JSON.stringify({ error: result.error.flatten().fieldErrors }), {
+			return new Response(JSON.stringify({ error: result.error.issues }), {
 				status: 400,
 				headers: jsonHeaders,
 			});
 		}
 
 		const { recoveryCode } = result.data;
-		const db = getD1(context.locals);
+		const db = getD1();
 
 		const user = await db
 			.prepare("SELECT uuid, pseudo FROM users WHERE recovery_code = ?")

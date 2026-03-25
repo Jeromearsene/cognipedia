@@ -1,5 +1,5 @@
 ---
-slug: "de-confirmation"
+slug: "confirmation"
 title: "Biais de confirmation"
 originalName: "Confirmation bias"
 family: "not-enough-meaning"

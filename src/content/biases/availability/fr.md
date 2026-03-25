@@ -1,5 +1,5 @@
 ---
-slug: "de-disponibilite"
+slug: "disponibilite"
 title: "Biais de disponibilité"
 originalName: "Availability bias"
 family: "too-much-information"

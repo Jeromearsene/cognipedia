@@ -37,10 +37,12 @@ const familyKeys = families.map((family) => family.key);
 const difficultyKeys = difficulties.map((difficulty) => difficulty.key);
 
 /** Active family filters — narrowed to initial filter if provided, otherwise all enabled. */
+// svelte-ignore state_referenced_locally — intentional: initialFamily is a static SSR prop, not reactive
 let activeFamilies = $state(
 	initialFamily && isFamily(initialFamily) ? new Set<Family>([initialFamily]) : new Set(familyKeys),
 );
 /** Active difficulty filters — narrowed to initial filter if provided, otherwise all enabled. */
+// svelte-ignore state_referenced_locally — intentional: initialDifficulty is a static SSR prop, not reactive
 let activeDifficulties = $state(
 	initialDifficulty && isDifficulty(initialDifficulty)
 		? new Set<Difficulty>([initialDifficulty])

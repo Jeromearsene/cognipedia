@@ -1,5 +1,8 @@
 name = "cognipedia"
-compatibility_date = "2025-01-01"
+compatibility_date = "2026-03-17"
+# Enable Node.js APIs in Workers (required by Svelte 5 SSR and other deps that import node:async_hooks, tty, etc.)
+# See https://developers.cloudflare.com/workers/runtime-apis/nodejs/
+compatibility_flags = ["nodejs_compat"]
 
 # Production database
 [[d1_databases]]

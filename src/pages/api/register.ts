@@ -10,14 +10,14 @@ export const POST: APIRoute = async (context) => {
 		const result = registerBodySchema.safeParse(await context.request.json());
 
 		if (!result.success) {
-			return new Response(JSON.stringify({ error: result.error.flatten().fieldErrors }), {
+			return new Response(JSON.stringify({ error: result.error.issues }), {
 				status: 400,
 				headers: jsonHeaders,
 			});
 		}
 
 		const { uuid, pseudo, recoveryCode } = result.data;
-		const db = getD1(context.locals);
+		const db = getD1();
 
 		await db
 			.prepare("INSERT INTO users (uuid, pseudo, recovery_code) VALUES (?, ?, ?)")
