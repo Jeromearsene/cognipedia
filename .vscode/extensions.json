@@ -5,6 +5,5 @@
 		"svelte.svelte-vscode",
 		"lokalise.i18n-ally",
 		"bradlc.vscode-tailwindcss"
-	],
-	"unwantedRecommendations": []
+	]
 }
