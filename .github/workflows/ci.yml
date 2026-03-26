@@ -130,21 +130,60 @@ jobs:
     permissions:
       pull-requests: write
     steps:
+      - name: Get previous scores
+        id: prev
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const comments = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+            });
+            const sticky = comments.data.find(c => c.body?.includes('<!-- ci-summary -->'));
+            if (!sticky) return '{}';
+            // Parse scores from previous table: | `/url/` | 🟢 100 | ...
+            const prev = {};
+            const rowRegex = /\| `([^`]+)` \| [^\d]*(\d+) \| [^\d]*(\d+) \| [^\d]*(\d+) \| [^\d]*(\d+) \|/g;
+            let match;
+            while ((match = rowRegex.exec(sticky.body)) !== null) {
+              prev[match[1]] = {
+                performance: parseInt(match[2]),
+                accessibility: parseInt(match[3]),
+                seo: parseInt(match[4]),
+                'best-practices': parseInt(match[5]),
+              };
+            }
+            return JSON.stringify(prev);
+          result-encoding: string
+
       - name: Format Lighthouse scores
         id: scores
         uses: actions/github-script@v7
         env:
           LH_MANIFEST: ${{ needs.lighthouse.outputs.manifest }}
           LH_LINKS: ${{ needs.lighthouse.outputs.links }}
+          LH_PREV: ${{ steps.prev.outputs.result }}
         with:
           script: |
             const manifest = JSON.parse(process.env.LH_MANIFEST);
             const links = JSON.parse(process.env.LH_LINKS);
+            const prev = JSON.parse(process.env.LH_PREV || '{}');
 
             const badge = (score) => {
-              if (score >= 90) return `🟢 ${score}`;
-              if (score >= 75) return `🟠 ${score}`;
+              if (score >= 95) return `🟢 ${score}`;
+              if (score >= 90) return `🟡 ${score}`;
+              if (score >= 85) return `🟠 ${score}`;
+              if (score >= 75) return `🔶 ${score}`;
               return `🔴 ${score}`;
+            };
+
+            const trend = (current, previous) => {
+              if (previous === undefined) return '';
+              const diff = current - previous;
+              if (diff > 0) return ` ↑${diff}`;
+              if (diff < 0) return ` ↓${Math.abs(diff)}`;
+              return '';
             };
 
             // Group runs by URL and compute averages
@@ -165,8 +204,9 @@ jobs:
               const a11y = avg('accessibility');
               const seo = avg('seo');
               const bp = avg('best-practices');
+              const p = prev[url] || {};
               const reports = reportLinks.map((l) => `[report](${l})`).join(', ');
-              return `| \`${url}\` | ${badge(perf)} | ${badge(a11y)} | ${badge(seo)} | ${badge(bp)} | ${reports} |`;
+              return `| \`${url}\` | ${badge(perf)}${trend(perf, p.performance)} | ${badge(a11y)}${trend(a11y, p.accessibility)} | ${badge(seo)}${trend(seo, p.seo)} | ${badge(bp)}${trend(bp, p['best-practices'])} | ${reports} |`;
             });
 
             const table = [
@@ -181,6 +221,7 @@ jobs:
         with:
           header: ci-summary
           message: |
+            <!-- ci-summary -->
             ## CI Summary
 
             ### Preview
