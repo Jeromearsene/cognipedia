@@ -7,3 +7,6 @@ export const isFamily = (value: string): value is Family => FAMILIES.some((f) =>
 /** Type guard for Difficulty values. */
 export const isDifficulty = (value: string): value is Difficulty =>
 	DIFFICULTIES.some((d) => d === value);
+
+/** Returns a promise that resolves after `ms` milliseconds. */
+export const delay = (ms: number) => new Promise((r) => setTimeout(r, ms));
