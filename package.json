@@ -18,7 +18,8 @@
 		"test": "vitest run",
 		"test:watch": "vitest",
 		"changeset": "changeset",
-		"db:reset": "rm -rf .wrangler/state/v3/d1 && wrangler d1 execute cognipedia-db --local --file=schema.sql"
+		"db:reset": "rm -rf .wrangler/state/v3/d1 && wrangler d1 execute cognipedia-db --local --file=schema.sql",
+		"test:links": "vitest run src/content/__tests__/bias-links.test.ts --config vitest.links.config.ts"
 	},
 	"dependencies": {
 		"@astrojs/cloudflare": "^13.1.3",

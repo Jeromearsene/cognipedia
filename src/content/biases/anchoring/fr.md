@@ -6,10 +6,12 @@ family: "too-much-information"
 tags: ["décision", "estimation", "négociation"]
 difficulty: "medium"
 sources:
-  wikipedia: "https://fr.wikipedia.org/wiki/Biais_d%27ancrage_(psychologie)"
+  wikipedia: "https://fr.wikipedia.org/wiki/Biais_d%27ancrage"
   papers:
     - title: "Judgment under Uncertainty: Heuristics and Biases — Tversky & Kahneman, 1974"
-      url: "https://doi.org/10.1126/science.185.4157.1124"
+      urls:
+        - label: "DOI"
+          url: "https://doi.org/10.1126/science.185.4157.1124"
   videos:
     - title: "Le biais d'ancrage — ScienceÉtonnante"
       url: "https://www.youtube.com/watch?v=example"

@@ -9,7 +9,9 @@ sources:
   wikipedia: "https://fr.wikipedia.org/wiki/Effet_de_halo"
   papers:
     - title: "Système 1 / Système 2 : Les deux vitesses de la pensée — Daniel Kahneman, 2012"
-      url: "https://www.babelio.com/livres/Kahneman-Systeme-1--Systeme-2--Les-deux-vitesses-de-la-/364930"
+      urls:
+        - label: "Babelio"
+          url: "https://www.babelio.com/livres/Kahneman-Systeme-1--Systeme-2--Les-deux-vitesses-de-la-/364930"
   videos:
     - title: "L'effet de halo — Horizon Gull"
       url: "https://www.youtube.com/watch?v=TBpRqEjHTbU"

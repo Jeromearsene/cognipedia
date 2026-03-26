@@ -42,15 +42,26 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - run: pnpm build
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
 
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
     needs: [build]
-    if: github.event_name == 'push'
+    # Deploy on push (staging/prod) and on PRs from the same repo (preview)
+    # PRs from forks won't have access to secrets and will skip this job
+    if: >
+      github.event_name == 'push' ||
+      (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository)
     permissions:
       contents: read
       deployments: write
+    outputs:
+      deployment-url: ${{ steps.deploy.outputs.deployment-url }}
     steps:
       - uses: actions/checkout@v6
       - uses: pnpm/action-setup@v5
@@ -59,9 +70,121 @@ jobs:
           node-version-file: package.json
           cache: pnpm
       - run: pnpm install --frozen-lockfile
-      - run: pnpm build
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
       - name: Deploy to Cloudflare Pages
-        run: pnpm wrangler pages deploy dist/ --project-name cognipedia --branch ${{ github.ref_name }} --commit-dirty=true
+        id: deploy
+        run: |
+          BRANCH=${{ github.head_ref || github.ref_name }}
+          OUTPUT=$(pnpm wrangler pages deploy dist/ --project-name cognipedia --branch "$BRANCH" --commit-dirty=true 2>&1)
+          echo "$OUTPUT"
+          URL=$(echo "$OUTPUT" | grep -o 'https://[^ ]*\.pages\.dev' | head -1)
+          echo "deployment-url=$URL" >> "$GITHUB_OUTPUT"
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+
+  lighthouse:
+    name: Lighthouse
+    runs-on: ubuntu-latest
+    needs: [build]
+    outputs:
+      links: ${{ steps.lh.outputs.links }}
+      manifest: ${{ steps.lh.outputs.manifest }}
+    steps:
+      - uses: actions/checkout@v6
+      - uses: pnpm/action-setup@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version-file: package.json
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+      - name: Start local server
+        run: pnpm wrangler dev --config dist/server/wrangler.json --port 8788 &
+      - name: Wait for server
+        run: npx wait-on http://localhost:8788/fr/ --timeout 30000
+      - name: Lighthouse audit
+        id: lh
+        uses: treosh/lighthouse-ci-action@v12
+        with:
+          urls: |
+            http://localhost:8788/fr/
+            http://localhost:8788/fr/biais/ancrage
+          configPath: .lighthouserc.json
+          uploadArtifacts: true
+          temporaryPublicStorage: true
+
+  pr-comment:
+    name: PR Comment
+    runs-on: ubuntu-latest
+    needs: [deploy, lighthouse]
+    if: github.event_name == 'pull_request'
+    permissions:
+      pull-requests: write
+    steps:
+      - name: Format Lighthouse scores
+        id: scores
+        uses: actions/github-script@v7
+        env:
+          LH_MANIFEST: ${{ needs.lighthouse.outputs.manifest }}
+          LH_LINKS: ${{ needs.lighthouse.outputs.links }}
+        with:
+          script: |
+            const manifest = JSON.parse(process.env.LH_MANIFEST);
+            const links = JSON.parse(process.env.LH_LINKS);
+
+            const badge = (score) => {
+              if (score >= 90) return `🟢 ${score}`;
+              if (score >= 75) return `🟠 ${score}`;
+              return `🔴 ${score}`;
+            };
+
+            // Group runs by URL and compute averages
+            const byUrl = {};
+            for (const entry of manifest) {
+              const url = entry.url.replace('http://localhost:8788', '');
+              if (!byUrl[url]) byUrl[url] = { runs: [], links: [] };
+              byUrl[url].runs.push(entry.summary);
+              const reportUrl = links[entry.url];
+              if (reportUrl && !byUrl[url].links.includes(reportUrl)) {
+                byUrl[url].links.push(reportUrl);
+              }
+            }
+
+            const rows = Object.entries(byUrl).map(([url, { runs, links: reportLinks }]) => {
+              const avg = (key) => Math.round(runs.reduce((s, r) => s + r[key], 0) / runs.length * 100);
+              const perf = avg('performance');
+              const a11y = avg('accessibility');
+              const seo = avg('seo');
+              const bp = avg('best-practices');
+              const reports = reportLinks.map((l) => `[report](${l})`).join(', ');
+              return `| \`${url}\` | ${badge(perf)} | ${badge(a11y)} | ${badge(seo)} | ${badge(bp)} | ${reports} |`;
+            });
+
+            const table = [
+              '| URL | Perf | A11y | SEO | BP | Reports |',
+              '|-----|------|------|-----|-----|---------|',
+              ...rows
+            ].join('\n');
+            core.setOutput('table', table);
+
+      - name: Post PR comment
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          header: ci-summary
+          message: |
+            ## CI Summary
+
+            ### Preview
+            ${{ needs.deploy.outputs.deployment-url || 'No preview (deploy skipped)' }}
+
+            ### Lighthouse (average of 3 runs)
+            ${{ steps.scores.outputs.table }}

@@ -9,7 +9,9 @@ sources:
   wikipedia: "https://en.wikipedia.org/wiki/Dunning%E2%80%93Kruger_effect"
   papers:
     - title: "Unskilled and Unaware of It — Kruger & Dunning, 1999"
-      url: "https://doi.org/10.1037/0022-3514.77.6.1121"
+      urls:
+        - label: "DOI"
+          url: "https://doi.org/10.1037/0022-3514.77.6.1121"
 relatedBiases: ["confirmation"]
 situation:
   type: "choice"

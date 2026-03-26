@@ -9,7 +9,9 @@ sources:
   wikipedia: "https://fr.wikipedia.org/wiki/Aversion_pour_la_perte"
   papers:
     - title: "Système 1 / Système 2 : Les deux vitesses de la pensée — Daniel Kahneman, 2012"
-      url: "https://www.babelio.com/livres/Kahneman-Systeme-1--Systeme-2--Les-deux-vitesses-de-la-/364930"
+      urls:
+        - label: "Babelio"
+          url: "https://www.babelio.com/livres/Kahneman-Systeme-1--Systeme-2--Les-deux-vitesses-de-la-/364930"
   videos:
     - title: "L'aversion à la perte — Heu?reka"
       url: "https://www.youtube.com/watch?v=z1XO51K_e-k"

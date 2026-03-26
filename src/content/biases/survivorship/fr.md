@@ -9,7 +9,9 @@ sources:
   wikipedia: "https://fr.wikipedia.org/wiki/Biais_du_survivant"
   papers:
     - title: "L'art de penser clairement — Rolf Dobelli, 2013"
-      url: "https://www.babelio.com/livres/Dobelli-Lart-de-penser-clairement/500595"
+      urls:
+        - label: "Babelio"
+          url: "https://www.babelio.com/livres/Dobelli-Lart-de-penser-clairement/500595"
   videos:
     - title: "Le biais du survivant — Fouloscopie"
       url: "https://www.youtube.com/watch?v=dOCaCeBz0Xk"

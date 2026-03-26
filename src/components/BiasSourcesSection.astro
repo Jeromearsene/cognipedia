@@ -5,9 +5,14 @@ import BookOpenIcon from "~icons/lucide/book-open";
 import FileTextIcon from "~icons/lucide/file-text";
 import PlayCircleIcon from "~icons/lucide/play-circle";
 
+interface PaperLink {
+	label: string;
+	url: string;
+}
+
 interface Paper {
 	title: string;
-	url: string;
+	urls: PaperLink[];
 }
 
 interface Video {
@@ -45,10 +50,13 @@ const { locale, wikipedia, papers, videos } = Astro.props;
         </h3>
         <ul class="list-none space-y-1 pl-6">
           {papers.map((paper) => (
-            <li>
-              <a href={paper.url} target="_blank" rel="noopener noreferrer" class="text-sm">
-                {paper.title}
-              </a>
+            <li class="text-sm">
+              <span>{paper.title}</span>
+              <span class="ml-1">
+                — {paper.urls.map((link, i) => (
+                  <>{i > 0 && ", "}<a href={link.url} target="_blank" rel="noopener noreferrer">{link.label}</a></>
+                ))}
+              </span>
             </li>
           ))}
         </ul>

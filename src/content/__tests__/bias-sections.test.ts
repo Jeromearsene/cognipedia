@@ -1,6 +1,7 @@
-import { readdirSync, readFileSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
+import { SUPPORTED_LOCALES } from "@/i18n/i18n";
 
 const BIASES_DIR = join(import.meta.dirname, "../biases");
 
@@ -75,5 +76,19 @@ describe("bias markdown sections", () => {
 				).toEqual(required);
 			});
 		}
+	}
+});
+
+describe("bias inter-language coherence", () => {
+	const biasFolders = getBiasFolders();
+
+	for (const folder of biasFolders) {
+		it(`${folder}/ — has all locale files (${SUPPORTED_LOCALES.join(", ")})`, () => {
+			const folderPath = join(BIASES_DIR, folder);
+			for (const locale of SUPPORTED_LOCALES) {
+				const filePath = join(folderPath, `${locale}.md`);
+				expect(existsSync(filePath), `Missing ${folder}/${locale}.md`).toBe(true);
+			}
+		});
 	}
 });

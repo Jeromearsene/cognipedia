@@ -9,7 +9,11 @@ sources:
   wikipedia: "https://fr.wikipedia.org/wiki/Effet_Dunning-Kruger"
   papers:
     - title: "Votre cerveau vous joue des tours — Albert Moukheiber, 2019"
-      url: "https://www.odilejacob.fr/catalogue/sciences/neurosciences/votre-cerveau-vous-joue-des-tours_9782738145826.php"
+      urls:
+        - label: "FNAC"
+          url: "https://www.fnac.com/a13192747/Albert-Moukheiber-Votre-cerveau-vous-joue-des-tours"
+        - label: "Amazon"
+          url: "https://www.amazon.fr/Votre-cerveau-vous-joue-tours/dp/2370732601"
   videos:
     - title: "L'effet Dunning-Kruger — La Statistique expliquée à mon chat"
       url: "https://www.youtube.com/watch?v=LVhJxJnID_A"
