@@ -22,8 +22,8 @@ export const onRequest = defineMiddleware((context, next) => {
 	const cookies = request.headers.get("cookie") ?? "";
 	context.locals.isRegistered = cookies.includes("cognipedia_registered=1");
 
-	// Skip locale validation for API routes and static assets
-	if (langSegment === "api" || url.pathname === "/") {
+	// Skip locale validation for API routes, sitemap, and root
+	if (langSegment === "api" || langSegment === "sitemap.xml" || url.pathname === "/") {
 		context.locals.locale = getLocaleFromUrl(url);
 		context.locals.currentPath = url.pathname;
 		return next();
