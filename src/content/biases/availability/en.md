@@ -9,7 +9,9 @@ sources:
   wikipedia: "https://en.wikipedia.org/wiki/Availability_heuristic"
   papers:
     - title: "Availability: A Heuristic for Judging Frequency and Probability — Tversky & Kahneman, 1973"
-      url: "https://doi.org/10.1016/0010-0285(73)90033-9"
+      urls:
+        - label: "DOI"
+          url: "https://doi.org/10.1016/0010-0285(73)90033-9"
 relatedBiases: ["anchoring", "survivorship"]
 situation:
   type: "choice"

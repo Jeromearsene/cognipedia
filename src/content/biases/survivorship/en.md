@@ -8,8 +8,10 @@ difficulty: "easy"
 sources:
   wikipedia: "https://en.wikipedia.org/wiki/Survivorship_bias"
   papers:
-    - title: "Abraham Wald and the Missing Bullet Holes — Jordan Ellenberg, 2015"
-      url: "https://doi.org/10.1080/09332480.2015.1103879"
+    - title: "A Method of Estimating Plane Vulnerability Based on Damage of Survivors — Abraham Wald, 1943"
+      urls:
+        - label: "PDF"
+          url: "https://people.ucsc.edu/~msmangel/Wald.pdf"
 relatedBiases: ["anchoring", "confirmation"]
 situation:
   type: "choice"

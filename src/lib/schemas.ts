@@ -1,9 +1,14 @@
 import { z } from "astro/zod";
 import { DIFFICULTIES, FAMILIES } from "./constants";
 
+const paperLinkSchema = z.object({
+	label: z.string().min(1),
+	url: z.url(),
+});
+
 const paperSchema = z.object({
 	title: z.string().min(1),
-	url: z.url(),
+	urls: z.array(paperLinkSchema).min(1),
 });
 
 const videoSchema = z.object({

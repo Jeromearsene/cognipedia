@@ -9,7 +9,9 @@ sources:
   wikipedia: "https://en.wikipedia.org/wiki/Halo_effect"
   papers:
     - title: "A Constant Error in Psychological Ratings — Thorndike, 1920"
-      url: "https://doi.org/10.1037/h0071663"
+      urls:
+        - label: "DOI"
+          url: "https://doi.org/10.1037/h0071663"
 relatedBiases: ["confirmation"]
 situation:
   type: "choice"

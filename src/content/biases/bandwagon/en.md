@@ -9,7 +9,9 @@ sources:
   wikipedia: "https://en.wikipedia.org/wiki/Bandwagon_effect"
   papers:
     - title: "Effects of Group Pressure upon the Modification and Distortion of Judgments — Asch, 1951"
-      url: "https://doi.org/10.1037/10025-016"
+      urls:
+        - label: "DOI"
+          url: "https://doi.org/10.1037/10025-016"
 relatedBiases: ["confirmation", "halo-effect"]
 situation:
   type: "choice"

@@ -9,7 +9,9 @@ sources:
   wikipedia: "https://en.wikipedia.org/wiki/Anchoring_(cognitive_bias)"
   papers:
     - title: "Judgment under Uncertainty: Heuristics and Biases — Tversky & Kahneman, 1974"
-      url: "https://doi.org/10.1126/science.185.4157.1124"
+      urls:
+        - label: "DOI"
+          url: "https://doi.org/10.1126/science.185.4157.1124"
   videos:
     - title: "Anchoring Bias — Veritasium"
       url: "https://www.youtube.com/watch?v=example"

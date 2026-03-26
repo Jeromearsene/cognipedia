@@ -9,7 +9,9 @@ sources:
   wikipedia: "https://en.wikipedia.org/wiki/Loss_aversion"
   papers:
     - title: "Prospect Theory: An Analysis of Decision under Risk — Kahneman & Tversky, 1979"
-      url: "https://doi.org/10.2307/1914185"
+      urls:
+        - label: "DOI"
+          url: "https://doi.org/10.2307/1914185"
 relatedBiases: ["anchoring"]
 situation:
   type: "choice"

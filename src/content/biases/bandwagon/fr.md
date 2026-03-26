@@ -9,7 +9,9 @@ sources:
   wikipedia: "https://fr.wikipedia.org/wiki/Effet_de_mode"
   papers:
     - title: "Influence et manipulation — Robert Cialdini, 2004"
-      url: "https://www.babelio.com/livres/Cialdini-Influence-et-manipulation/21068"
+      urls:
+        - label: "Babelio"
+          url: "https://www.babelio.com/livres/Cialdini-Influence-et-manipulation/21068"
   videos:
     - title: "L'expérience de Asch — PsykoCouac"
       url: "https://www.youtube.com/watch?v=7AuFhOhOjqg"

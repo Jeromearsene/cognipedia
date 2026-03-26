@@ -143,7 +143,7 @@ jobs:
 
             const badge = (score) => {
               if (score >= 90) return `🟢 ${score}`;
-              if (score >= 50) return `🟠 ${score}`;
+              if (score >= 75) return `🟠 ${score}`;
               return `🔴 ${score}`;
             };
 
@@ -165,7 +165,7 @@ jobs:
               const a11y = avg('accessibility');
               const seo = avg('seo');
               const bp = avg('best-practices');
-              const reports = reportLinks.map((l, i) => `[run ${i + 1}](${l})`).join(', ');
+              const reports = reportLinks.map((l) => `[report](${l})`).join(', ');
               return `| \`${url}\` | ${badge(perf)} | ${badge(a11y)} | ${badge(seo)} | ${badge(bp)} | ${reports} |`;
             });
 

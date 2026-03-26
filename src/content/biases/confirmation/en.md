@@ -9,7 +9,9 @@ sources:
   wikipedia: "https://en.wikipedia.org/wiki/Confirmation_bias"
   papers:
     - title: "The case for motivated reasoning — Kunda, 1990"
-      url: "https://doi.org/10.1037/0033-2909.108.3.480"
+      urls:
+        - label: "DOI"
+          url: "https://doi.org/10.1037/0033-2909.108.3.480"
   videos:
     - title: "Confirmation Bias — Veritasium"
       url: "https://www.youtube.com/watch?v=vKA4w2O61Xo"
