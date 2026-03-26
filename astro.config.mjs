@@ -6,6 +6,7 @@ import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "astro/config";
 import Icons from "unplugin-icons/vite";
 export default defineConfig({
+	site: "https://cognipedia.org",
 	integrations: [svelte()],
 	vite: {
 		plugins: [tailwindcss(), Icons({ compiler: "astro" })],
