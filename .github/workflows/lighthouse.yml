@@ -1,0 +1,65 @@
+name: Lighthouse Audit
+
+on:
+  workflow_call:
+    inputs:
+      port:
+        required: true
+        type: number
+      upload:
+        required: false
+        type: boolean
+        default: false
+      ref:
+        required: false
+        type: string
+        default: ''
+    outputs:
+      manifest:
+        value: ${{ jobs.audit.outputs.manifest }}
+      links:
+        value: ${{ jobs.audit.outputs.links }}
+
+jobs:
+  audit:
+    name: Audit
+    runs-on: ubuntu-latest
+    outputs:
+      manifest: ${{ steps.lh.outputs.manifest }}
+      links: ${{ steps.lh.outputs.links }}
+    steps:
+      - uses: actions/checkout@v6
+        if: ${{ !inputs.ref }}
+      - uses: actions/checkout@v6
+        if: ${{ inputs.ref }}
+        with:
+          ref: ${{ inputs.ref }}
+      - uses: pnpm/action-setup@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version-file: package.json
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Download build artifact
+        if: ${{ !inputs.ref }}
+        uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+      - name: Build
+        if: ${{ inputs.ref }}
+        run: pnpm build
+      - name: Start server
+        run: pnpm wrangler dev --config dist/server/wrangler.json --port ${{ inputs.port }} &
+      - name: Wait for server
+        run: npx wait-on http://localhost:${{ inputs.port }}/fr/ --timeout 30000
+      - name: Lighthouse audit
+        id: lh
+        uses: treosh/lighthouse-ci-action@v12
+        with:
+          urls: |
+            http://localhost:${{ inputs.port }}/fr/
+            http://localhost:${{ inputs.port }}/fr/biais/ancrage
+          configPath: .lighthouserc.json
+          uploadArtifacts: ${{ inputs.upload }}
+          temporaryPublicStorage: ${{ inputs.upload }}
