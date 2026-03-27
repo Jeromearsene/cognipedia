@@ -6,6 +6,10 @@ on:
       port:
         required: true
         type: number
+      url:
+        description: URL path to audit (e.g. /fr/)
+        required: true
+        type: string
       upload:
         required: false
         type: boolean
@@ -14,6 +18,10 @@ on:
         required: false
         type: string
         default: ''
+      runs:
+        required: false
+        type: number
+        default: 2
     outputs:
       manifest:
         value: ${{ jobs.audit.outputs.manifest }}
@@ -52,14 +60,13 @@ jobs:
       - name: Start server
         run: pnpm wrangler dev --config dist/server/wrangler.json --port ${{ inputs.port }} &
       - name: Wait for server
-        run: npx wait-on http://localhost:${{ inputs.port }}/fr/ --timeout 30000
+        run: npx wait-on http://localhost:${{ inputs.port }}${{ inputs.url }} --timeout 30000
       - name: Lighthouse audit
         id: lh
         uses: treosh/lighthouse-ci-action@v12
         with:
-          urls: |
-            http://localhost:${{ inputs.port }}/fr/
-            http://localhost:${{ inputs.port }}/fr/biais/ancrage
+          urls: http://localhost:${{ inputs.port }}${{ inputs.url }}
+          runs: ${{ inputs.runs }}
           configPath: .lighthouserc.json
           uploadArtifacts: ${{ inputs.upload }}
           temporaryPublicStorage: ${{ inputs.upload }}
