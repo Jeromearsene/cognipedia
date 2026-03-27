@@ -13,7 +13,7 @@ const title = `${t(locale, "profile.title")} — ${t(locale, "site.title")}`;
 Astro.locals.altLangHrefs = { fr: "/fr/profil" };
 ---
 
-<BaseLayout title={title} lang={locale}>
+<BaseLayout title={title} description={t(locale, "site.description")} lang={locale}>
 	<ProfilePage
 		totalBiasCount={biases.length}
 		labels={getProfileLabels(locale)}

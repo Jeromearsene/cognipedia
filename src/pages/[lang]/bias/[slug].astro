@@ -41,8 +41,9 @@ Astro.locals.altLangHrefs = Object.fromEntries(
 );
 
 const title = `${entry.data.title} — ${t(locale, "site.title")}`;
+const description = `${entry.data.title} — ${t(locale, `bias.family.${entry.data.family}`)}. ${t(locale, "site.description")}`;
 ---
 
-<BaseLayout title={title} lang={locale}>
+<BaseLayout title={title} description={description} lang={locale}>
 	<BiasPage entry={entry} locale={locale} />
 </BaseLayout>

@@ -20,7 +20,7 @@ const labels = {
 };
 ---
 
-<BaseLayout title={`${pageTitle} — ${t(locale, "site.title")}`} lang={locale}>
+<BaseLayout title={`${pageTitle} — ${t(locale, "site.title")}`} description={t(locale, "site.description")} lang={locale}>
 	<h1 class="mb-8 text-3xl font-bold">{pageTitle}</h1>
 	<Leaderboard labels={labels} client:visible />
 </BaseLayout>
