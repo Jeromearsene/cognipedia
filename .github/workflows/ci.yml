@@ -21,12 +21,7 @@ jobs:
             command: pnpm test
     steps:
       - uses: actions/checkout@v6
-      - uses: pnpm/action-setup@v5
-      - uses: actions/setup-node@v5
-        with:
-          node-version-file: package.json
-          cache: pnpm
-      - run: pnpm install --frozen-lockfile
+      - uses: ./.github/actions/setup
       - run: ${{ matrix.command }}
 
   build:
@@ -35,15 +30,9 @@ jobs:
     needs: [check]
     steps:
       - uses: actions/checkout@v6
-      - uses: pnpm/action-setup@v5
-      - uses: actions/setup-node@v5
-        with:
-          node-version-file: package.json
-          cache: pnpm
-      - run: pnpm install --frozen-lockfile
+      - uses: ./.github/actions/setup
       - run: pnpm build
-      - name: Upload build artifact
-        uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v4
         with:
           name: dist
           path: dist/
@@ -52,8 +41,6 @@ jobs:
     name: Deploy
     runs-on: ubuntu-latest
     needs: [build]
-    # Deploy on push (staging/prod) and on PRs from the same repo (preview)
-    # PRs from forks won't have access to secrets and will skip this job
     if: >
       github.event_name == 'push' ||
       (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository)
@@ -64,14 +51,8 @@ jobs:
       deployment-url: ${{ steps.deploy.outputs.deployment-url }}
     steps:
       - uses: actions/checkout@v6
-      - uses: pnpm/action-setup@v5
-      - uses: actions/setup-node@v5
-        with:
-          node-version-file: package.json
-          cache: pnpm
-      - run: pnpm install --frozen-lockfile
-      - name: Download build artifact
-        uses: actions/download-artifact@v4
+      - uses: ./.github/actions/setup
+      - uses: actions/download-artifact@v4
         with:
           name: dist
           path: dist/
@@ -87,87 +68,89 @@ jobs:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
 
-  lighthouse:
-    name: Lighthouse
-    runs-on: ubuntu-latest
+  lighthouse-home:
+    name: Lighthouse (/fr/)
     needs: [build]
-    outputs:
-      links: ${{ steps.lh.outputs.links }}
-      manifest: ${{ steps.lh.outputs.manifest }}
-    steps:
-      - uses: actions/checkout@v6
-      - uses: pnpm/action-setup@v5
-      - uses: actions/setup-node@v5
-        with:
-          node-version-file: package.json
-          cache: pnpm
-      - run: pnpm install --frozen-lockfile
-      - name: Download build artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: dist
-          path: dist/
-      - name: Start local server
-        run: pnpm wrangler dev --config dist/server/wrangler.json --port 8788 &
-      - name: Wait for server
-        run: npx wait-on http://localhost:8788/fr/ --timeout 30000
-      - name: Lighthouse audit
-        id: lh
-        uses: treosh/lighthouse-ci-action@v12
-        with:
-          urls: |
-            http://localhost:8788/fr/
-            http://localhost:8788/fr/biais/ancrage
-          configPath: .lighthouserc.json
-          uploadArtifacts: true
-          temporaryPublicStorage: true
+    uses: ./.github/workflows/lighthouse.yml
+    with:
+      port: 8788
+      url: /fr/
+      upload: true
 
-  lighthouse-baseline:
-    name: Lighthouse (baseline)
-    runs-on: ubuntu-latest
+  lighthouse-bias:
+    name: Lighthouse (/fr/biais/ancrage)
+    needs: [build]
+    uses: ./.github/workflows/lighthouse.yml
+    with:
+      port: 8788
+      url: /fr/biais/ancrage
+      upload: true
+
+  lighthouse-baseline-home:
+    name: Lighthouse baseline (/fr/)
     needs: [check]
     if: github.event_name == 'pull_request'
-    outputs:
-      baseline: ${{ steps.baseline.outputs.result }}
+    uses: ./.github/workflows/lighthouse.yml
+    with:
+      port: 8789
+      url: /fr/
+      ref: ${{ github.base_ref }}
+
+  lighthouse-baseline-bias:
+    name: Lighthouse baseline (/fr/biais/ancrage)
+    needs: [check]
+    if: github.event_name == 'pull_request'
+    uses: ./.github/workflows/lighthouse.yml
+    with:
+      port: 8789
+      url: /fr/biais/ancrage
+      ref: ${{ github.base_ref }}
+
+  pr-comment:
+    name: PR Comment
+    runs-on: ubuntu-latest
+    needs: [deploy, lighthouse-home, lighthouse-bias, lighthouse-baseline-home, lighthouse-baseline-bias]
+    if: github.event_name == 'pull_request'
+    permissions:
+      pull-requests: write
     steps:
       - uses: actions/checkout@v6
-        with:
-          ref: ${{ github.base_ref }}
-      - uses: pnpm/action-setup@v5
-      - uses: actions/setup-node@v5
-        with:
-          node-version-file: package.json
-          cache: pnpm
-      - run: pnpm install --frozen-lockfile
-      - run: pnpm build
-      - name: Start server
-        run: pnpm wrangler dev --config dist/server/wrangler.json --port 8789 &
-      - name: Wait for server
-        run: npx wait-on http://localhost:8789/fr/ --timeout 30000
-      - name: Lighthouse audit
-        id: lh_base
-        uses: treosh/lighthouse-ci-action@v12
-        with:
-          urls: |
-            http://localhost:8789/fr/
-            http://localhost:8789/fr/biais/ancrage
-          configPath: .lighthouserc.json
-      - name: Compute baseline scores
-        id: baseline
+      - name: Format Lighthouse scores
+        id: scores
         uses: actions/github-script@v7
         env:
-          LH_BASE_MANIFEST: ${{ steps.lh_base.outputs.manifest }}
+          LH_MANIFEST_HOME: ${{ needs.lighthouse-home.outputs.manifest }}
+          LH_MANIFEST_BIAS: ${{ needs.lighthouse-bias.outputs.manifest }}
+          LH_LINKS_HOME: ${{ needs.lighthouse-home.outputs.links }}
+          LH_LINKS_BIAS: ${{ needs.lighthouse-bias.outputs.links }}
+          LH_BASELINE_HOME: ${{ needs.lighthouse-baseline-home.outputs.manifest }}
+          LH_BASELINE_BIAS: ${{ needs.lighthouse-baseline-bias.outputs.manifest }}
         with:
           script: |
-            const manifest = JSON.parse(process.env.LH_BASE_MANIFEST || '[]');
-            const byUrl = {};
-            for (const entry of manifest) {
-              const url = entry.url.replace('http://localhost:8789', '');
-              if (!byUrl[url]) byUrl[url] = [];
-              byUrl[url].push(entry.summary);
+            const fs = require('fs');
+            // Merge manifests and links from parallel jobs
+            const manifests = [
+              ...JSON.parse(process.env.LH_MANIFEST_HOME || '[]'),
+              ...JSON.parse(process.env.LH_MANIFEST_BIAS || '[]'),
+            ];
+            const links = {
+              ...JSON.parse(process.env.LH_LINKS_HOME || '{}'),
+              ...JSON.parse(process.env.LH_LINKS_BIAS || '{}'),
+            };
+            const baselineManifests = [
+              ...JSON.parse(process.env.LH_BASELINE_HOME || '[]'),
+              ...JSON.parse(process.env.LH_BASELINE_BIAS || '[]'),
+            ];
+
+            // Compute baseline averages
+            const baseByUrl = {};
+            for (const entry of baselineManifests) {
+              const url = entry.url.replace(/http:\/\/localhost:\d+/, '');
+              if (!baseByUrl[url]) baseByUrl[url] = [];
+              baseByUrl[url].push(entry.summary);
             }
             const baseline = {};
-            for (const [url, runs] of Object.entries(byUrl)) {
+            for (const [url, runs] of Object.entries(baseByUrl)) {
               const avg = (key) => Math.round(runs.reduce((s, r) => s + r[key], 0) / runs.length * 100);
               baseline[url] = {
                 performance: avg('performance'),
@@ -176,75 +159,14 @@ jobs:
                 'best-practices': avg('best-practices'),
               };
             }
-            return JSON.stringify(baseline);
-          result-encoding: string
 
-  pr-comment:
-    name: PR Comment
-    runs-on: ubuntu-latest
-    needs: [deploy, lighthouse, lighthouse-baseline]
-    if: github.event_name == 'pull_request'
-    permissions:
-      pull-requests: write
-    steps:
-      - name: Format Lighthouse scores
-        id: scores
-        uses: actions/github-script@v7
-        env:
-          LH_MANIFEST: ${{ needs.lighthouse.outputs.manifest }}
-          LH_LINKS: ${{ needs.lighthouse.outputs.links }}
-          LH_BASELINE: ${{ needs.lighthouse-baseline.outputs.baseline }}
-        with:
-          script: |
-            const manifest = JSON.parse(process.env.LH_MANIFEST);
-            const links = JSON.parse(process.env.LH_LINKS);
-            const baseline = JSON.parse(process.env.LH_BASELINE || '{}');
+            // Set env for format script
+            process.env.LH_MANIFEST = JSON.stringify(manifests);
+            process.env.LH_LINKS = JSON.stringify(links);
+            process.env.LH_BASELINE = JSON.stringify(baseline);
 
-            const badge = (score) => {
-              if (score >= 95) return `🟢 ${score}`;
-              if (score >= 90) return `🟡 ${score}`;
-              if (score >= 85) return `🟠 ${score}`;
-              if (score >= 75) return `🔶 ${score}`;
-              return `🔴 ${score}`;
-            };
-
-            const trend = (current, previous) => {
-              if (previous === undefined) return '';
-              const diff = current - previous;
-              if (diff === 0) return '';
-              const indicator = diff > 0 ? '↑' : '↓';
-              return ` <sup>${indicator}${Math.abs(diff)}</sup>`;
-            };
-
-            // Group runs by URL and compute averages
-            const byUrl = {};
-            for (const entry of manifest) {
-              const url = entry.url.replace('http://localhost:8788', '');
-              if (!byUrl[url]) byUrl[url] = { runs: [], links: [] };
-              byUrl[url].runs.push(entry.summary);
-              const reportUrl = links[entry.url];
-              if (reportUrl && !byUrl[url].links.includes(reportUrl)) {
-                byUrl[url].links.push(reportUrl);
-              }
-            }
-
-            const rows = Object.entries(byUrl).map(([url, { runs, links: reportLinks }]) => {
-              const avg = (key) => Math.round(runs.reduce((s, r) => s + r[key], 0) / runs.length * 100);
-              const perf = avg('performance');
-              const a11y = avg('accessibility');
-              const seo = avg('seo');
-              const bp = avg('best-practices');
-              const b = baseline[url] || {};
-              const reports = reportLinks.map((l) => `[report](${l})`).join(', ');
-              return `| \`${url}\` | ${badge(perf)}${trend(perf, b.performance)} | ${badge(a11y)}${trend(a11y, b.accessibility)} | ${badge(seo)}${trend(seo, b.seo)} | ${badge(bp)}${trend(bp, b['best-practices'])} | ${reports} |`;
-            });
-
-            const table = [
-              '| URL | Perf | A11y | SEO | BP | Reports |',
-              '|-----|------|------|-----|-----|---------|',
-              ...rows
-            ].join('\n');
-            core.setOutput('table', table);
+            const script = fs.readFileSync('.github/scripts/format-lighthouse.js', 'utf8');
+            eval(script);
 
       - name: Post PR comment
         uses: marocchino/sticky-pull-request-comment@v2
@@ -257,5 +179,5 @@ jobs:
             ### Preview
             ${{ needs.deploy.outputs.deployment-url || 'No preview (deploy skipped)' }}
 
-            ### Lighthouse (average of 3 runs, compared to ${{ github.base_ref }})
+            ### Lighthouse (average of 2 runs, compared to ${{ github.base_ref }})
             ${{ steps.scores.outputs.table }}
