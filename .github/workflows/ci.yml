@@ -56,13 +56,18 @@ jobs:
         with:
           name: dist
           path: dist/
-      - name: Deploy to Cloudflare Pages
+      - name: Deploy to Cloudflare Workers
         id: deploy
         run: |
-          BRANCH=${{ github.head_ref || github.ref_name }}
-          OUTPUT=$(pnpm wrangler pages deploy dist/ --project-name cognipedia --branch "$BRANCH" --commit-dirty=true 2>&1)
+          if [ "${{ github.event_name }}" = "push" ]; then
+            # Production/staging deploy
+            OUTPUT=$(pnpm wrangler deploy --config dist/server/wrangler.json 2>&1)
+          else
+            # PR preview — upload version without promoting
+            OUTPUT=$(pnpm wrangler versions upload --config dist/server/wrangler.json 2>&1)
+          fi
           echo "$OUTPUT"
-          URL=$(echo "$OUTPUT" | grep -o 'https://[^ ]*\.pages\.dev' | head -1)
+          URL=$(echo "$OUTPUT" | grep -o 'https://[^ ]*\.workers\.dev' | head -1)
           echo "deployment-url=$URL" >> "$GITHUB_OUTPUT"
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
