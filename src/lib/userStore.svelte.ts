@@ -16,23 +16,6 @@ const KEYS = {
 	recoveryCodeSeen: "cognipedia_recovery_code_seen",
 } as const;
 
-const COOKIE_NAME = "cognipedia_registered";
-
-/** Max-age of 100 years. Some browsers (Safari) cap at 400 days, so we renew on each load(). */
-const COOKIE_MAX_AGE = 60 * 60 * 24 * 365 * 100;
-
-/** Sets a lightweight cookie flag so the server knows the user is registered. */
-const setRegisteredCookie = () => {
-	// biome-ignore lint/suspicious/noDocumentCookie: Cookie Store API not widely supported yet
-	document.cookie = `${COOKIE_NAME}=1; path=/; max-age=${COOKIE_MAX_AGE}; SameSite=Lax`;
-};
-
-/** Removes the registered cookie. */
-const clearRegisteredCookie = () => {
-	// biome-ignore lint/suspicious/noDocumentCookie: Cookie Store API not widely supported yet
-	document.cookie = `${COOKIE_NAME}=; path=/; max-age=0`;
-};
-
 /** Reactive user store — manages identity in localStorage and communicates with API endpoints. */
 const createUserStore = () => {
 	let uuid = $state<string | null>(null);
@@ -48,11 +31,6 @@ const createUserStore = () => {
 			pseudo = localStorage.getItem(KEYS.pseudo);
 			recoveryCode = localStorage.getItem(KEYS.recoveryCode);
 			recoveryCodeSeen = localStorage.getItem(KEYS.recoveryCodeSeen) === "true";
-
-			// Renew cookie on each load to counter browsers that cap max-age (e.g. Safari 400 days)
-			if (uuid) {
-				setRegisteredCookie();
-			}
 		} catch (err) {
 			console.warn("[userStore] localStorage unavailable, keeping default state", err);
 		}
@@ -89,7 +67,6 @@ const createUserStore = () => {
 		localStorage.setItem(KEYS.uuid, newUuid);
 		localStorage.setItem(KEYS.pseudo, newPseudo);
 		localStorage.setItem(KEYS.recoveryCode, newRecoveryCode);
-		setRegisteredCookie();
 	};
 
 	/**
@@ -122,7 +99,6 @@ const createUserStore = () => {
 		localStorage.setItem(KEYS.pseudo, data.pseudo);
 		localStorage.setItem(KEYS.recoveryCode, code);
 		localStorage.setItem(KEYS.recoveryCodeSeen, "true");
-		setRegisteredCookie();
 	};
 
 	/** Marks the recovery code as seen by the user and persists to localStorage. */
@@ -165,7 +141,6 @@ const createUserStore = () => {
 		localStorage.removeItem(KEYS.pseudo);
 		localStorage.removeItem(KEYS.recoveryCode);
 		localStorage.removeItem(KEYS.recoveryCodeSeen);
-		clearRegisteredCookie();
 	};
 
 	return {

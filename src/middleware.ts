@@ -18,10 +18,6 @@ export const onRequest = defineMiddleware((context, next) => {
 	const { url, request } = context;
 	const langSegment = url.pathname.split("/")[1];
 
-	// Read registered cookie flag
-	const cookies = request.headers.get("cookie") ?? "";
-	context.locals.isRegistered = cookies.includes("cognipedia_registered=1");
-
 	// Skip locale validation for API routes, sitemap, and root
 	if (langSegment === "api" || langSegment === "sitemap.xml" || url.pathname === "/") {
 		context.locals.locale = getLocaleFromUrl(url);

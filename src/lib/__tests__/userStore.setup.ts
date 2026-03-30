@@ -15,35 +15,14 @@ export const createLocalStorageMock = () => {
 	};
 };
 
-/** Cookie mock that captures the last value set. */
-export const createCookieMock = () => {
-	let cookieStore = "";
-	return {
-		get value() {
-			return cookieStore;
-		},
-		stub: {
-			get cookie() {
-				return cookieStore;
-			},
-			set cookie(value: string) {
-				cookieStore = value;
-			},
-		},
-	};
-};
-
 export let localStorageMock: ReturnType<typeof createLocalStorageMock>;
-export let cookieMock: ReturnType<typeof createCookieMock>;
 
-/** Sets up localStorage and document.cookie mocks. Call in each test file's top-level scope. */
+/** Sets up localStorage mock. Call in each test file's top-level scope. */
 export const setupUserStoreMocks = () => {
 	beforeEach(() => {
 		vi.resetModules();
 		localStorageMock = createLocalStorageMock();
-		cookieMock = createCookieMock();
 		vi.stubGlobal("localStorage", localStorageMock);
-		vi.stubGlobal("document", cookieMock.stub);
 	});
 
 	afterEach(() => {
