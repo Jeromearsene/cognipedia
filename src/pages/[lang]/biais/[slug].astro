@@ -1,14 +1,18 @@
 ---
+export const prerender = true;
+
+import type { GetStaticPaths } from "astro";
 import BiasPage from "@/components/BiasPage.astro";
 import { SUPPORTED_LOCALES, t } from "@/i18n/i18n";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { getBiasesForLocale } from "@/lib/biases";
 
-/**
- * French bias page — renders a single cognitive bias entry.
- * URL pattern: /:lang/biais/:slug (e.g. /fr/biais/ancrage).
- * Locale redirects are handled by the middleware.
- */
+export const getStaticPaths: GetStaticPaths = async () => {
+	const { localized } = await getBiasesForLocale("fr");
+	return localized.map((bias) => ({
+		params: { lang: "fr", slug: bias.data.slug },
+	}));
+};
 
 const { locale } = Astro.locals;
 const { slug } = Astro.params;
