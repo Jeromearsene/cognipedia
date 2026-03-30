@@ -1,9 +1,18 @@
 name = "cognipedia"
-compatibility_date = "2025-01-01"
+compatibility_date = "2026-03-17"
+# Enable Node.js APIs in Workers (required by Svelte 5 SSR and other deps that import node:async_hooks, tty, etc.)
+# See https://developers.cloudflare.com/workers/runtime-apis/nodejs/
+compatibility_flags = ["nodejs_compat"]
 
-# Create the database: wrangler d1 create cognipedia-db
-# Then replace the database_id below with the returned ID.
+# Production database
 [[d1_databases]]
 binding = "DB"
 database_name = "cognipedia-db"
 database_id = "eeb16c8b-40de-48b1-9e75-eff6df52fca4"
+
+# Staging database
+[env.staging]
+[[env.staging.d1_databases]]
+binding = "DB"
+database_name = "cognipedia-db-staging"
+database_id = "b191ec1e-1821-493f-b210-806920afdb3b"

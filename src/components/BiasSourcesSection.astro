@@ -1,15 +1,18 @@
 ---
-/**
- * Displays bias sources: Wikipedia link, scientific papers, and videos.
- * Only renders sections that have data.
- */
-import { Icon } from "astro-icon/components";
 import type { Locale } from "@/i18n/i18n";
 import { t } from "@/i18n/i18n";
+import BookOpenIcon from "~icons/lucide/book-open";
+import FileTextIcon from "~icons/lucide/file-text";
+import PlayCircleIcon from "~icons/lucide/play-circle";
+
+interface PaperLink {
+	label: string;
+	url: string;
+}
 
 interface Paper {
 	title: string;
-	url: string;
+	urls: PaperLink[];
 }
 
 interface Video {
@@ -33,7 +36,7 @@ const { locale, wikipedia, papers, videos } = Astro.props;
 
   <div class="space-y-4">
     <div class="flex items-center gap-2">
-      <Icon name="lucide:book-open" class="h-4 w-4 text-text-secondary" />
+      <BookOpenIcon class="h-4 w-4 text-text-secondary" />
       <a href={wikipedia} target="_blank" rel="noopener noreferrer">
         {t(locale, "sources.wikipedia")}
       </a>
@@ -42,15 +45,18 @@ const { locale, wikipedia, papers, videos } = Astro.props;
     {papers && papers.length > 0 && (
       <div>
         <h3 class="mb-2 flex items-center gap-2 text-sm font-medium text-text-secondary">
-          <Icon name="lucide:file-text" class="h-4 w-4" />
+          <FileTextIcon class="h-4 w-4" />
           {t(locale, "sources.papers")}
         </h3>
         <ul class="list-none space-y-1 pl-6">
           {papers.map((paper) => (
-            <li>
-              <a href={paper.url} target="_blank" rel="noopener noreferrer" class="text-sm">
-                {paper.title}
-              </a>
+            <li class="text-sm">
+              <span>{paper.title}</span>
+              <span class="ml-1">
+                — {paper.urls.map((link, i) => (
+                  <>{i > 0 && ", "}<a href={link.url} target="_blank" rel="noopener noreferrer">{link.label}</a></>
+                ))}
+              </span>
             </li>
           ))}
         </ul>
@@ -60,7 +66,7 @@ const { locale, wikipedia, papers, videos } = Astro.props;
     {videos && videos.length > 0 && (
       <div>
         <h3 class="mb-2 flex items-center gap-2 text-sm font-medium text-text-secondary">
-          <Icon name="lucide:play-circle" class="h-4 w-4" />
+          <PlayCircleIcon class="h-4 w-4" />
           {t(locale, "sources.videos")}
         </h3>
         <ul class="list-none space-y-1 pl-6">
@@ -69,7 +75,7 @@ const { locale, wikipedia, papers, videos } = Astro.props;
               <a href={video.url} target="_blank" rel="noopener noreferrer" class="text-sm">
                 {video.title}
               </a>
-              <span class="rounded bg-border px-1.5 py-0.5 text-xs uppercase text-text-secondary">
+              <span class="rounded bg-border px-1.5 py-0.5 text-xs uppercase text-text">
                 {video.lang}
               </span>
             </li>

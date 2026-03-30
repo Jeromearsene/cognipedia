@@ -1,24 +1,21 @@
 ---
+export const prerender = true;
+
+import type { GetStaticPaths } from "astro";
 import BiasPage from "@/components/BiasPage.astro";
 import { SUPPORTED_LOCALES, t } from "@/i18n/i18n";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { getBiasesForLocale } from "@/lib/biases";
 
-/**
- * French bias page — renders a single cognitive bias entry.
- * URL pattern: /:lang/biais/:slug (e.g. /fr/biais/ancrage).
- * Redirects EN users to /en/bias/:slug.
- * Also computes alternate-language URLs so the Header language switcher
- * can link to the same bias in another locale.
- */
+export const getStaticPaths: GetStaticPaths = async () => {
+	const { localized } = await getBiasesForLocale("fr");
+	return localized.map((bias) => ({
+		params: { lang: "fr", slug: bias.data.slug },
+	}));
+};
 
 const { locale } = Astro.locals;
 const { slug } = Astro.params;
-
-// Redirect EN users to the /en/bias/ route
-if (locale === "en") {
-	return Astro.redirect(`/en/bias/${slug}`);
-}
 
 // Fetch all biases, then filter to current locale and find by slug
 const { all: allBiases, localized: biases } = await getBiasesForLocale(locale);
@@ -48,8 +45,9 @@ Astro.locals.altLangHrefs = Object.fromEntries(
 );
 
 const title = `${entry.data.title} — ${t(locale, "site.title")}`;
+const description = `${entry.data.title} — ${t(locale, `bias.family.${entry.data.family}`)}. ${t(locale, "site.description")}`;
 ---
 
-<BaseLayout title={title} lang={locale}>
+<BaseLayout title={title} description={description} lang={locale}>
 	<BiasPage entry={entry} locale={locale} />
 </BaseLayout>

@@ -1,24 +1,23 @@
 ---
-/**
- * About page (English route: /en/about).
- * Redirects French users to /fr/a-propos.
- */
+export const prerender = true;
+
+import type { GetStaticPaths } from "astro";
+
+export const getStaticPaths: GetStaticPaths = () => [{ params: { lang: "en" } }];
+
+/** About page (English route: /en/about). */
 import AboutPage from "@/components/AboutPage.astro";
 import { t } from "@/i18n/i18n";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 
 const { locale } = Astro.locals;
 
-if (locale === "fr") {
-	return Astro.redirect("/fr/a-propos");
-}
-
 Astro.locals.altLangHrefs = { fr: "/fr/a-propos" };
 
 const pageTitle = t(locale, "about.title");
 ---
 
-<BaseLayout title={`${pageTitle} — ${t(locale, "site.title")}`} lang={locale}>
+<BaseLayout title={`${pageTitle} — ${t(locale, "site.title")}`} description={t(locale, "site.description")} lang={locale}>
 	<h1 class="mb-8 text-3xl font-bold">{pageTitle}</h1>
 	<AboutPage locale={locale} />
 </BaseLayout>

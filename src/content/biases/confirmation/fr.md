@@ -1,5 +1,5 @@
 ---
-slug: "de-confirmation"
+slug: "confirmation"
 title: "Biais de confirmation"
 originalName: "Confirmation bias"
 family: "not-enough-meaning"
@@ -8,8 +8,12 @@ difficulty: "easy"
 sources:
   wikipedia: "https://fr.wikipedia.org/wiki/Biais_de_confirmation"
   papers:
-    - title: "Biais de confirmation — Albert Moukheiber, 2019 (Votre cerveau vous joue des tours)"
-      url: "https://www.odilejacob.fr/catalogue/sciences/neurosciences/votre-cerveau-vous-joue-des-tours_9782738145826.php"
+    - title: "Votre cerveau vous joue des tours — Albert Moukheiber, 2019"
+      urls:
+        - label: "FNAC"
+          url: "https://www.fnac.com/a13192747/Albert-Moukheiber-Votre-cerveau-vous-joue-des-tours"
+        - label: "Amazon"
+          url: "https://www.amazon.fr/Votre-cerveau-vous-joue-tours/dp/2370732601"
   videos:
     - title: "Le biais de confirmation — Hygiène Mentale"
       url: "https://www.youtube.com/watch?v=6cFKyIvNMg4"
@@ -55,3 +59,7 @@ Notre cerveau n'est pas un juge impartial. Quand nous avons une opinion, nous ch
 - Sur les réseaux sociaux, les algorithmes renforcent ce biais en nous montrant du contenu aligné avec nos opinions.
 - Un recruteur convaincu qu'un candidat est bon interprétera ses réponses de manière plus favorable.
 - En politique, nous regardons les médias qui confortent nos positions et évitons les autres.
+
+## Le saviez-vous ?
+
+Dès 1620, le philosophe anglais Francis Bacon décrivait ce biais dans son ouvrage [*Novum Organum*](https://fr.wikipedia.org/wiki/Novum_organum), publié à Londres. Il y racontait l'exemple des marins qui priaient les saints pour survivre aux tempêtes. Dans les églises, on trouvait des ex-voto offerts par les survivants — preuve apparente de l'efficacité des prières. Mais comme Bacon le soulignait, personne n'allait demander l'avis de ceux qui avaient prié et s'étaient noyés. Quatre siècles avant que le terme "biais de confirmation" ne soit inventé par le psychologue Peter Wason en 1960 à Londres, Bacon en avait déjà décrit le mécanisme.

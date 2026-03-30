@@ -1,19 +1,24 @@
-import { z } from "zod";
+import { z } from "astro/zod";
 import { DIFFICULTIES, FAMILIES } from "./constants";
+
+const paperLinkSchema = z.object({
+	label: z.string().min(1),
+	url: z.url(),
+});
 
 const paperSchema = z.object({
 	title: z.string().min(1),
-	url: z.string().url(),
+	urls: z.array(paperLinkSchema).min(1),
 });
 
 const videoSchema = z.object({
 	title: z.string().min(1),
-	url: z.string().url(),
+	url: z.url(),
 	lang: z.string().min(2).max(5),
 });
 
 const sourcesSchema = z.object({
-	wikipedia: z.string().url(),
+	wikipedia: z.url(),
 	papers: z.array(paperSchema).optional(),
 	videos: z.array(videoSchema).optional(),
 });
@@ -60,18 +65,36 @@ export const biasSchema = z.object({
 
 export type BiasFrontmatter = z.infer<typeof biasSchema>;
 
+// --- API response schemas ---
+// Fields use snake_case to match D1 column names (returned as-is by the database).
+
+export const scoreEntrySchema = z.object({
+	bias_slug: z.string(),
+	total_score: z.number(),
+	situation_score: z.number(),
+	quiz_correct: z.number(),
+	quiz_total: z.number(),
+	completed_at: z.string(),
+});
+
+export const userScoresResponseSchema = z.object({
+	scores: z.array(scoreEntrySchema),
+	totalScore: z.number(),
+	biasCount: z.number(),
+});
+
 // --- API request body schemas ---
 
 const recoveryCodeSchema = z.string().regex(/^COGNI-[A-Z0-9]{4}-[A-Z0-9]{4}$/);
 
 export const registerBodySchema = z.object({
-	uuid: z.string().uuid(),
+	uuid: z.uuid(),
 	pseudo: z.string().min(1),
 	recoveryCode: recoveryCodeSchema,
 });
 
 export const scoreBodySchema = z.object({
-	userUuid: z.string().uuid(),
+	userUuid: z.uuid(),
 	biasSlug: z.string().min(1),
 	situationScore: z.number(),
 	quizCorrect: z.number().int().min(0),
@@ -80,4 +103,9 @@ export const scoreBodySchema = z.object({
 
 export const recoverBodySchema = z.object({
 	recoveryCode: recoveryCodeSchema,
+});
+
+export const pseudoBodySchema = z.object({
+	uuid: z.uuid(),
+	pseudo: z.string().min(1).max(30),
 });

@@ -41,7 +41,7 @@ describe("biasSchema", () => {
 			...validFrontmatter,
 			sources: {
 				...validFrontmatter.sources,
-				papers: [{ title: "Tversky 1974", url: "https://doi.org/xxx" }],
+				papers: [{ title: "Tversky 1974", urls: [{ label: "DOI", url: "https://doi.org/xxx" }] }],
 				videos: [{ title: "Video", url: "https://youtube.com/xxx", lang: "fr" }],
 			},
 		});

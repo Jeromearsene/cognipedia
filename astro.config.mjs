@@ -4,18 +4,16 @@ import cloudflare from "@astrojs/cloudflare";
 import svelte from "@astrojs/svelte";
 import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "astro/config";
-import icon from "astro-icon";
-
+import Icons from "unplugin-icons/vite";
 export default defineConfig({
-	integrations: [svelte(), icon()],
+	site: "https://cognipedia.org",
+	integrations: [svelte()],
 	vite: {
-		plugins: [tailwindcss()],
+		plugins: [tailwindcss(), Icons({ compiler: "astro" })],
 	},
 	output: "server",
 	adapter: cloudflare({
-		platformProxy: {
-			enabled: true,
-		},
+		imageService: "compile",
 	}),
 	i18n: {
 		defaultLocale: "fr",

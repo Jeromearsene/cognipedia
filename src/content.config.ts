@@ -8,7 +8,13 @@ import { biasSchema } from "@/lib/schemas";
  * Entry IDs follow the pattern `<bias-folder>/<locale>`.
  */
 const biases = defineCollection({
-	loader: glob({ pattern: "**/*.md", base: "./src/content/biases" }),
+	loader: glob({
+		pattern: "**/*.md",
+		base: "./src/content/biases",
+		// Include parent folder in ID to avoid duplicates across locales
+		// e.g. "anchoring/fr" instead of just "fr"
+		generateId: ({ entry }) => entry.replace(/\.md$/, ""),
+	}),
 	schema: biasSchema,
 });
 

@@ -1,4 +1,11 @@
 /// <reference types="astro/client" />
+/// <reference types="unplugin-icons/types/astro" />
+
+declare namespace Cloudflare {
+	interface Env {
+		DB: D1Database;
+	}
+}
 
 declare namespace App {
 	interface Locals {
