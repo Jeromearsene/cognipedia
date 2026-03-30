@@ -14,8 +14,17 @@ import {
  * 2. Wrong locale slug → redirect to the correct slug for the current locale
  *    (e.g. /fr/leaderboard → /fr/classement, /en/biais/ancrage → /en/bias/ancrage)
  */
+/** Set to true to show "site en construction" holding page on production. */
+const HOLDING_PAGE = true;
+
 export const onRequest = defineMiddleware((context, next) => {
 	const { url, request } = context;
+
+	// Holding page: redirect all routes to "/" except root and static assets
+	if (HOLDING_PAGE && url.pathname !== "/") {
+		return context.redirect("/");
+	}
+
 	const langSegment = url.pathname.split("/")[1];
 
 	// Skip locale validation for API routes, sitemap, and root
