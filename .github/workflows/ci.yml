@@ -59,12 +59,17 @@ jobs:
       - name: Deploy to Cloudflare Workers
         id: deploy
         run: |
-          if [ "${{ github.event_name }}" = "push" ]; then
-            # Production/staging deploy
+          if [ "${{ github.event_name }}" = "push" ] && [ "${{ github.ref_name }}" = "main" ]; then
+            # Production deploy
             OUTPUT=$(pnpm wrangler deploy --config dist/server/wrangler.json 2>&1)
           else
-            # PR preview — upload version without promoting
-            OUTPUT=$(pnpm wrangler versions upload --config dist/server/wrangler.json 2>&1)
+            # Staging push or PR preview — upload version with alias
+            if [ "${{ github.event_name }}" = "push" ]; then
+              ALIAS="${{ github.ref_name }}"
+            else
+              ALIAS=$(echo "${{ github.head_ref }}" | sed 's/[^a-zA-Z0-9-]/-/g' | head -c 30)
+            fi
+            OUTPUT=$(pnpm wrangler versions upload --config dist/server/wrangler.json --preview-alias "$ALIAS" 2>&1)
           fi
           echo "$OUTPUT"
           URL=$(echo "$OUTPUT" | grep -o 'https://[^ ]*\.workers\.dev' | head -1)
