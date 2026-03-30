@@ -59,8 +59,6 @@ const handleQuizComplete = async (correct: number, total: number) => {
 
 const handleRecoveryDismiss = () => {
 	showRecoveryModal = false;
-	// Reload so the server reads the newly set cookie and renders the "Profile" nav link
-	window.location.reload();
 };
 </script>
 

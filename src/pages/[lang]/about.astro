@@ -1,4 +1,10 @@
 ---
+export const prerender = true;
+
+import type { GetStaticPaths } from "astro";
+
+export const getStaticPaths: GetStaticPaths = () => [{ params: { lang: "en" } }];
+
 /** About page (English route: /en/about). */
 import AboutPage from "@/components/AboutPage.astro";
 import { t } from "@/i18n/i18n";

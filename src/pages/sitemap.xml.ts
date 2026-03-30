@@ -1,3 +1,5 @@
+export const prerender = true;
+
 import type { APIRoute } from "astro";
 import { SUPPORTED_LOCALES, t } from "@/i18n/i18n";
 import { getBiasesForLocale } from "@/lib/biases";

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { cookieMock, localStorageMock, setupUserStoreMocks } from "./userStore.setup";
+import { localStorageMock, setupUserStoreMocks } from "./userStore.setup";
 
 setupUserStoreMocks();
 
@@ -31,22 +31,6 @@ describe("userStore — load & clear", () => {
 			expect(userStore.recoveryCodeSeen).toBe(true);
 			expect(userStore.isRegistered).toBe(true);
 		});
-
-		it("renews cookie when a registered user loads", async () => {
-			localStorageMock.setItem("cognipedia_uuid", "test-uuid-123");
-
-			const { userStore } = await import("../userStore.svelte");
-			userStore.load();
-
-			expect(cookieMock.value).toContain("cognipedia_registered=1");
-		});
-
-		it("does not set cookie when no user is registered", async () => {
-			const { userStore } = await import("../userStore.svelte");
-			userStore.load();
-
-			expect(cookieMock.value).toBe("");
-		});
 	});
 
 	describe("clear()", () => {
@@ -72,16 +56,6 @@ describe("userStore — load & clear", () => {
 			expect(localStorageMock.removeItem).toHaveBeenCalledWith("cognipedia_pseudo");
 			expect(localStorageMock.removeItem).toHaveBeenCalledWith("cognipedia_recovery_code");
 			expect(localStorageMock.removeItem).toHaveBeenCalledWith("cognipedia_recovery_code_seen");
-		});
-
-		it("clears the registered cookie", async () => {
-			localStorageMock.setItem("cognipedia_uuid", "test-uuid");
-
-			const { userStore } = await import("../userStore.svelte");
-			userStore.load();
-			userStore.clear();
-
-			expect(cookieMock.value).toContain("max-age=0");
 		});
 	});
 });

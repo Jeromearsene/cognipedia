@@ -1,11 +1,11 @@
 import { describe, expect, it, vi } from "vitest";
-import { cookieMock, localStorageMock, setupUserStoreMocks } from "./userStore.setup";
+import { localStorageMock, setupUserStoreMocks } from "./userStore.setup";
 
 setupUserStoreMocks();
 
 describe("userStore — register & recover", () => {
 	describe("register()", () => {
-		it("calls POST /api/register, persists to localStorage, and sets cookie", async () => {
+		it("calls POST /api/register and persists to localStorage", async () => {
 			const fetchMock = vi
 				.fn()
 				.mockResolvedValue(new Response(JSON.stringify({ ok: true }), { status: 200 }));
@@ -39,14 +39,11 @@ describe("userStore — register & recover", () => {
 				"cognipedia_recovery_code",
 				userStore.recoveryCode,
 			);
-
-			// Cookie
-			expect(cookieMock.value).toContain("cognipedia_registered=1");
 		});
 	});
 
 	describe("recover()", () => {
-		it("calls POST /api/recover, updates state, and sets cookie", async () => {
+		it("calls POST /api/recover and updates state", async () => {
 			const recovered = { uuid: "recovered-uuid", pseudo: "RecoveredOwl99" };
 			const fetchMock = vi
 				.fn()
@@ -76,9 +73,6 @@ describe("userStore — register & recover", () => {
 				"cognipedia_recovery_code",
 				"COGNI-AB12-CD34",
 			);
-
-			// Cookie
-			expect(cookieMock.value).toContain("cognipedia_registered=1");
 		});
 
 		it("throws on invalid code format", async () => {

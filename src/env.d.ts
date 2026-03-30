@@ -15,7 +15,5 @@ declare namespace App {
 		currentPath: string;
 		/** Alternate-language URLs for the current page, used by the language switcher. */
 		altLangHrefs?: Partial<Record<import("./i18n/i18n").Locale, string>>;
-		/** Whether the user has a registered account (read from cookie). */
-		isRegistered: boolean;
 	}
 }
