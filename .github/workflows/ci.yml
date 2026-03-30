@@ -81,6 +81,7 @@ jobs:
   lighthouse-home:
     name: Lighthouse (/fr/)
     needs: [build]
+    if: github.event_name == 'pull_request'
     uses: ./.github/workflows/lighthouse.yml
     with:
       port: 8788
@@ -91,6 +92,7 @@ jobs:
   lighthouse-bias:
     name: Lighthouse (/fr/biais/ancrage)
     needs: [build]
+    if: github.event_name == 'pull_request'
     uses: ./.github/workflows/lighthouse.yml
     with:
       port: 8788
