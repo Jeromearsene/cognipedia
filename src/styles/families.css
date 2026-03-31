@@ -1,6 +1,21 @@
 :root {
-	--family-too-much-information: #2563eb;
-	--family-not-enough-meaning: #9333ea;
-	--family-need-to-act-fast: #c2410c;
-	--family-what-to-remember: #047857;
+	--family-too-much-information: #dc2626;
+	--family-not-enough-meaning: #7c3aed;
+	--family-need-to-act-fast: #d97706;
+	--family-what-to-remember: #db2777;
+
+	--difficulty-easy: #166534;
+	--difficulty-medium: #9a3412;
+	--difficulty-hard: #991b1b;
+}
+
+.dark {
+	--family-too-much-information: #f87171;
+	--family-not-enough-meaning: #a78bfa;
+	--family-need-to-act-fast: #fbbf24;
+	--family-what-to-remember: #f472b6;
+
+	--difficulty-easy: #86efac;
+	--difficulty-medium: #fdba74;
+	--difficulty-hard: #fca5a5;
 }
