@@ -82,9 +82,9 @@ const filtered = $derived(
       {#each families as { key, label }}
         <button
           class="family-pill cursor-pointer rounded-full border px-3 py-1 text-sm transition-colors {activeFamilies.has(key)
-            ? 'border-transparent text-white'
+            ? 'family-pill-active border-transparent'
             : 'border-border bg-bg text-text-secondary'}"
-          style={`--family-color: var(--family-${key}); ${activeFamilies.has(key) ? `background-color: var(--family-${key})` : ""}`}
+          style={`--family-color: var(--family-${key})`}
           onclick={() => toggleFamily(key)}
         >
           {label}
@@ -122,9 +122,15 @@ const filtered = $derived(
 {/if}
 
 <style>
-  /* All pills hover in their respective color: border + text colored, transparent background. */
+  /* Active family pill: filled with family color */
+  .family-pill-active {
+    background-color: var(--family-color);
+    color: white;
+  }
+
+  /* All family pills hover: border + text in family color, transparent background */
   .family-pill:hover {
-    border-color: var(--family-color);
+    border-color: var(--family-color) !important;
     color: var(--family-color);
     background-color: transparent;
   }
