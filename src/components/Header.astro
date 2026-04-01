@@ -1,4 +1,5 @@
 ---
+import ThemeToggle from "@/components/ThemeToggle.svelte";
 import type { Locale } from "@/i18n/i18n";
 import { SUPPORTED_LOCALES, t } from "@/i18n/i18n";
 
@@ -60,5 +61,7 @@ const switchLangPath = (target: Locale) => {
         </a>
       ))}
     </div>
+
+    <ThemeToggle client:load />
   </nav>
 </header>

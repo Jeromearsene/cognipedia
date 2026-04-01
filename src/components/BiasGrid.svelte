@@ -1,5 +1,10 @@
 <script lang="ts">
-import type { BiasCardData, Difficulty, Family } from "@/lib/constants";
+import {
+	type BiasCardData,
+	DIFFICULTY_COLORS,
+	type Difficulty,
+	type Family,
+} from "@/lib/constants";
 import { isDifficulty, isFamily } from "@/lib/utils";
 import BiasCard from "./BiasCard.svelte";
 
@@ -70,16 +75,16 @@ const filtered = $derived(
 );
 </script>
 
-<div class="mb-6 flex flex-wrap gap-6">
+<div class="sticky top-0 z-10 mb-6 flex flex-wrap gap-6 rounded-xl border border-accent/20 bg-accent-subtle p-4 shadow-sm">
   <div>
-    <span class="mb-2 block text-sm font-medium text-text-secondary">{labels.family}</span>
+    <span class="mb-2 block font-heading text-base font-semibold text-text">{labels.family}</span>
     <div class="flex flex-wrap gap-2">
       {#each families as { key, label }}
         <button
-          class="cursor-pointer rounded-full border px-3 py-1 text-sm transition-colors {activeFamilies.has(key)
-            ? 'border-transparent text-white hover:opacity-80'
-            : 'border-border bg-surface text-text-secondary hover:bg-border/50'}"
-          style={activeFamilies.has(key) ? `background-color: var(--family-${key})` : ""}
+          class="family-pill cursor-pointer rounded-full border px-3 py-1 text-sm transition-colors {activeFamilies.has(key)
+            ? 'family-pill-active border-transparent'
+            : 'border-border bg-bg text-text-secondary'}"
+          style={`--family-color: var(--family-${key})`}
           onclick={() => toggleFamily(key)}
         >
           {label}
@@ -89,13 +94,14 @@ const filtered = $derived(
   </div>
 
   <div>
-    <span class="mb-2 block text-sm font-medium text-text-secondary">{labels.difficulty}</span>
+    <span class="mb-2 block font-heading text-base font-semibold text-text">{labels.difficulty}</span>
     <div class="flex flex-wrap gap-2">
       {#each difficulties as { key, label }}
         <button
-          class="cursor-pointer rounded-full border px-3 py-1 text-sm transition-colors {activeDifficulties.has(key)
-            ? 'border-accent bg-accent text-white hover:opacity-80'
-            : 'border-border bg-surface text-text-secondary hover:bg-border/50'}"
+          class="difficulty-pill cursor-pointer rounded-full border px-3 py-1 text-sm transition-colors {activeDifficulties.has(key)
+            ? DIFFICULTY_COLORS[key] + ' border-current'
+            : 'border-border bg-bg text-text-secondary'}"
+          style={`--difficulty-color: var(--difficulty-${key})`}
           onclick={() => toggleDifficulty(key)}
         >
           {label}
@@ -114,3 +120,24 @@ const filtered = $derived(
     {/each}
   </div>
 {/if}
+
+<style>
+  /* Active family pill: filled with family color */
+  .family-pill-active {
+    background-color: var(--family-color);
+    color: white;
+  }
+
+  /* All family pills hover: border + text in family color, transparent background */
+  .family-pill:hover {
+    border-color: var(--family-color) !important;
+    color: var(--family-color);
+    background-color: transparent;
+  }
+
+  .difficulty-pill:hover {
+    border-color: var(--difficulty-color);
+    color: var(--difficulty-color);
+    background-color: transparent;
+  }
+</style>

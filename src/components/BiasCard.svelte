@@ -1,6 +1,4 @@
 <script lang="ts">
-import { tilt } from "@levita-js/svelte";
-import "@levita-js/svelte/style.css";
 import type { BiasCardData } from "@/lib/constants";
 import { DIFFICULTY_COLORS } from "@/lib/constants";
 
@@ -9,8 +7,8 @@ const { href, title, family, familyLabel, difficulty, difficultyLabel }: BiasCar
 
 <a
   {href}
-  class="block rounded-xl border border-border bg-surface p-5 no-underline shadow-sm transition-shadow hover:shadow-md"
-  use:tilt={{ scale: 1.02, glare: true, maxGlare: 0.15 }}
+  class="bias-card block rounded-xl border border-border bg-surface p-5 no-underline shadow-sm"
+  style="--glow-color: var(--family-{family})"
 >
   <h3 class="mb-3 text-lg font-semibold text-text">{title}</h3>
   <div class="flex flex-wrap gap-2">
@@ -25,3 +23,15 @@ const { href, title, family, familyLabel, difficulty, difficultyLabel }: BiasCar
     </span>
   </div>
 </a>
+
+<style>
+  .bias-card {
+    transition: transform 0.2s, box-shadow 0.3s;
+  }
+
+  /* Lift + family-colored glow on hover. --glow-color is set inline from the family CSS variable. */
+  .bias-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px color-mix(in srgb, var(--glow-color) 20%, transparent);
+  }
+</style>

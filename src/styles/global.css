@@ -1,4 +1,6 @@
 @import "tailwindcss";
+@import "@fontsource-variable/fraunces/index.css";
+@import "@fontsource-variable/space-grotesk/index.css";
 @import "./families.css";
 @plugin "@tailwindcss/typography";
 
@@ -8,10 +10,11 @@
 	--color-text-secondary: #64748b;
 	--color-surface: #ffffff;
 	--color-border: #e2e8f0;
-	--color-accent: #4f46e5;
+	--color-accent: #0d9488;
+	--color-accent-subtle: #e6f5f3;
 
-	--font-body: system-ui, -apple-system, sans-serif;
-	--font-heading: system-ui, -apple-system, sans-serif;
+	--font-body: "Space Grotesk Variable", system-ui, sans-serif;
+	--font-heading: "Fraunces Variable", Georgia, serif;
 	--font-mono: ui-monospace, monospace;
 }
 
@@ -22,11 +25,30 @@
 		background: var(--color-bg);
 	}
 
+	h1,
+	h2,
+	h3,
+	h4 {
+		font-family: var(--font-heading);
+	}
+
 	a {
 		color: var(--color-accent);
 	}
 
 	a:hover {
 		text-decoration: underline;
+	}
+}
+
+@layer base {
+	.dark {
+		--color-bg: #0f1117;
+		--color-text: #e8e8ed;
+		--color-text-secondary: #94a3b8;
+		--color-surface: #1a1c25;
+		--color-border: #2d3748;
+		--color-accent: #2dd4bf;
+		--color-accent-subtle: #132825;
 	}
 }
