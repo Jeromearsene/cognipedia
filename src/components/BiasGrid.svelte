@@ -82,9 +82,9 @@ const filtered = $derived(
       {#each families as { key, label }}
         <button
           class="family-pill cursor-pointer rounded-full border px-3 py-1 text-sm transition-colors {activeFamilies.has(key)
-            ? 'border-transparent text-white hover:opacity-80'
+            ? 'border-transparent text-white'
             : 'border-border bg-bg text-text-secondary'}"
-          style={activeFamilies.has(key) ? `background-color: var(--family-${key})` : `--family-color: var(--family-${key})`}
+          style={`--family-color: var(--family-${key}); ${activeFamilies.has(key) ? `background-color: var(--family-${key})` : ""}`}
           onclick={() => toggleFamily(key)}
         >
           {label}
@@ -99,7 +99,7 @@ const filtered = $derived(
       {#each difficulties as { key, label }}
         <button
           class="difficulty-pill cursor-pointer rounded-full border px-3 py-1 text-sm transition-colors {activeDifficulties.has(key)
-            ? DIFFICULTY_COLORS[key] + ' border-current hover:opacity-80'
+            ? DIFFICULTY_COLORS[key] + ' border-current'
             : 'border-border bg-bg text-text-secondary'}"
           style={`--difficulty-color: var(--difficulty-${key})`}
           onclick={() => toggleDifficulty(key)}
@@ -122,14 +122,16 @@ const filtered = $derived(
 {/if}
 
 <style>
-  /* Inactive pills hover in their respective color. --family-color / --difficulty-color are set inline. */
-  .family-pill:not(.border-transparent):hover {
+  /* All pills hover in their respective color: border + text colored, transparent background. */
+  .family-pill:hover {
     border-color: var(--family-color);
     color: var(--family-color);
+    background-color: transparent;
   }
 
-  .difficulty-pill:not(.border-current):hover {
+  .difficulty-pill:hover {
     border-color: var(--difficulty-color);
     color: var(--difficulty-color);
+    background-color: transparent;
   }
 </style>
