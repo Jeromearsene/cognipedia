@@ -63,8 +63,8 @@ const {
     <div class="flex flex-wrap gap-2">
       {#each families as { key, label }}
         <button
-          class="family-pill cursor-pointer rounded-full border px-3 py-1 text-sm transition-colors {activeFamilies.has(key)
-            ? 'family-pill-active border-transparent'
+          class="cursor-pointer rounded-full border px-3 py-1 text-sm transition-colors hover:!border-[var(--family-color)] hover:bg-transparent hover:text-[var(--family-color)] {activeFamilies.has(key)
+            ? 'border-transparent bg-[var(--family-color)] text-[var(--family-contrast)]'
             : 'border-border bg-bg text-text-secondary'}"
           style={`--family-color: var(--family-${key})`}
           onclick={() => onToggleFamily(key)}
@@ -80,7 +80,7 @@ const {
     <div class="flex flex-wrap gap-2">
       {#each difficulties as { key, label }}
         <button
-          class="difficulty-pill cursor-pointer rounded-full border px-3 py-1 text-sm transition-colors {activeDifficulties.has(key)
+          class="cursor-pointer rounded-full border px-3 py-1 text-sm transition-colors hover:border-[var(--difficulty-color)] hover:bg-transparent hover:text-[var(--difficulty-color)] {activeDifficulties.has(key)
             ? DIFFICULTY_COLORS[key] + ' border-current'
             : 'border-border bg-bg text-text-secondary'}"
           style={`--difficulty-color: var(--difficulty-${key})`}
@@ -92,24 +92,3 @@ const {
     </div>
   </div>
 </div>
-
-<style>
-  /* Active family pill: filled with family color (text adapts to theme via --family-contrast) */
-  .family-pill-active {
-    background-color: var(--family-color);
-    color: var(--family-contrast);
-  }
-
-  /* All family pills hover: border + text in family color, transparent background */
-  .family-pill:hover {
-    border-color: var(--family-color) !important;
-    color: var(--family-color);
-    background-color: transparent;
-  }
-
-  .difficulty-pill:hover {
-    border-color: var(--difficulty-color);
-    color: var(--difficulty-color);
-    background-color: transparent;
-  }
-</style>
