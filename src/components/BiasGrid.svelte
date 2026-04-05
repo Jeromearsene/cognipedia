@@ -38,6 +38,8 @@ interface Props {
 		difficulty: string;
 		search: string;
 		searchPlaceholder: string;
+		resultsCount: string;
+		resultsCountPlural: string;
 		noResults: string;
 	};
 }
@@ -89,6 +91,14 @@ const filtered = $derived.by(() => {
 		return true;
 	});
 });
+
+/** Formatted result count: picks singular/plural template and injects the number. */
+const resultsLabel = $derived(
+	(filtered.length <= 1 ? labels.resultsCount : labels.resultsCountPlural).replace(
+		"{count}",
+		String(filtered.length),
+	),
+);
 </script>
 
 <div class="sticky top-0 z-10 mb-6 flex flex-wrap gap-4 rounded-xl border border-accent/20 bg-accent-subtle p-3 shadow-sm sm:gap-6 sm:p-4">
@@ -144,6 +154,7 @@ const filtered = $derived.by(() => {
 {#if filtered.length === 0}
   <p class="py-12 text-center text-text-secondary">{labels.noResults}</p>
 {:else}
+  <p class="mb-3 text-sm text-text-secondary">{resultsLabel}</p>
   <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3" use:autoAnimateAction>
     {#each filtered as bias, index (bias.href)}
       <BiasCard {...bias} delay={Math.min(index * 40, 400)} />
