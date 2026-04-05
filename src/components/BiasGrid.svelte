@@ -75,7 +75,7 @@ const filtered = $derived(
 );
 </script>
 
-<div class="sticky top-0 z-10 mb-6 flex flex-wrap gap-6 rounded-xl border border-accent/20 bg-accent-subtle p-4 shadow-sm">
+<div class="sticky top-0 z-10 mb-6 flex flex-wrap gap-4 rounded-xl border border-accent/20 bg-accent-subtle p-3 shadow-sm sm:gap-6 sm:p-4">
   <div>
     <span class="mb-2 block font-heading text-base font-semibold text-text">{labels.family}</span>
     <div class="flex flex-wrap gap-2">

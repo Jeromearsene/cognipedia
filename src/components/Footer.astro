@@ -6,7 +6,7 @@ const { locale } = Astro.locals;
 ---
 
 <footer class="border-t border-border bg-surface">
-  <div class="mx-auto flex w-full max-w-6xl items-center justify-between px-8 py-4 text-sm text-text-secondary">
+  <div class="mx-auto flex w-full max-w-6xl items-center justify-between px-4 py-4 text-sm text-text-secondary sm:px-8">
     <span>Cognipedia &copy; {new Date().getFullYear()}</span>
     <a
       href={`/${locale}/${t(locale, "slug.profile")}`}
