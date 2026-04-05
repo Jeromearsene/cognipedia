@@ -1,6 +1,6 @@
 <script lang="ts">
 import autoAnimate from "@formkit/auto-animate";
-import { Search } from "lucide-svelte";
+import { RotateCcw, Search } from "lucide-svelte";
 import {
 	type BiasCardData,
 	DIFFICULTY_COLORS,
@@ -38,6 +38,7 @@ interface Props {
 		difficulty: string;
 		search: string;
 		searchPlaceholder: string;
+		reset: string;
 		resultsCount: string;
 		resultsCountPlural: string;
 		noResults: string;
@@ -99,6 +100,20 @@ const resultsLabel = $derived(
 		String(filtered.length),
 	),
 );
+
+/** True when any filter is narrowed (at least one family/difficulty disabled or search active). */
+const hasActiveFilters = $derived(
+	activeFamilies.size < familyKeys.length ||
+		activeDifficulties.size < difficultyKeys.length ||
+		searchQuery.trim().length > 0,
+);
+
+/** Restore all filters to their default state: everything enabled, search cleared. */
+const resetFilters = () => {
+	activeFamilies = new Set(familyKeys);
+	activeDifficulties = new Set(difficultyKeys);
+	searchQuery = "";
+};
 </script>
 
 <div class="sticky top-0 z-10 mb-6 flex flex-wrap gap-4 rounded-xl border border-accent/20 bg-accent-subtle p-3 shadow-sm sm:gap-6 sm:p-4">
@@ -151,10 +166,27 @@ const resultsLabel = $derived(
   </div>
 </div>
 
+<div class="mb-3 flex flex-wrap items-center justify-between gap-2">
+  {#if filtered.length > 0}
+    <p class="text-sm text-text-secondary">{resultsLabel}</p>
+  {:else}
+    <span></span>
+  {/if}
+  {#if hasActiveFilters}
+    <button
+      type="button"
+      onclick={resetFilters}
+      class="flex cursor-pointer items-center gap-1.5 text-sm text-text-secondary transition-colors hover:text-accent"
+    >
+      <RotateCcw size={14} />
+      {labels.reset}
+    </button>
+  {/if}
+</div>
+
 {#if filtered.length === 0}
   <p class="py-12 text-center text-text-secondary">{labels.noResults}</p>
 {:else}
-  <p class="mb-3 text-sm text-text-secondary">{resultsLabel}</p>
   <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3" use:autoAnimateAction>
     {#each filtered as bias, index (bias.href)}
       <BiasCard {...bias} delay={Math.min(index * 40, 400)} />
