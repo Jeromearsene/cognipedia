@@ -43,6 +43,46 @@ export const tRaw = (locale: Locale, key: string): unknown => {
 	return dict[key];
 };
 
+/** Cached Intl.PluralRules instances per locale (created lazily on first use). */
+const pluralRulesCache = new Map<Locale, Intl.PluralRules>();
+
+const getPluralRules = (locale: Locale): Intl.PluralRules => {
+	const cached = pluralRulesCache.get(locale);
+	if (cached) return cached;
+	const rules = new Intl.PluralRules(locale);
+	pluralRulesCache.set(locale, rules);
+	return rules;
+};
+
+/** Runtime guard: checks that a value is an object mapping string keys to strings. */
+const isPluralForms = (value: unknown): value is Record<string, string> => {
+	if (typeof value !== "object" || value === null || Array.isArray(value)) return false;
+	return Object.values(value).every((v) => typeof v === "string");
+};
+
+/**
+ * Returns the plural-forms object for `key` (CLDR categories → template strings).
+ * Returns an empty object if the key is missing or malformed, so the caller
+ * degrades gracefully rather than crashing.
+ */
+export const tPlural = (locale: Locale, key: string): Record<string, string> => {
+	const raw = tRaw(locale, key);
+	return isPluralForms(raw) ? raw : {};
+};
+
+/**
+ * Translates a pluralized key using Intl.PluralRules.
+ * The JSON value must be an object with keys matching CLDR plural categories
+ * (e.g. { "one": "...", "other": "..." }). Replaces `{count}` with the number.
+ * Falls back to the "other" form if the matching category is missing.
+ */
+export const tn = (locale: Locale, key: string, count: number): string => {
+	const forms = tPlural(locale, key);
+	const category = getPluralRules(locale).select(count);
+	const template = forms[category] ?? forms.other ?? key;
+	return template.replace("{count}", String(count));
+};
+
 /** Extracts the locale from the first URL path segment. Defaults to `fr`. */
 export const getLocaleFromUrl = (url: URL): Locale => {
 	const segment = url.pathname.split("/")[1];

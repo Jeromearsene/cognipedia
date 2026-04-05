@@ -48,10 +48,17 @@
 	"about.github": "Contribute on GitHub",
 	"home.empty": "Coming soon",
 	"home.no-results": "No biases match",
+	"home.results-count": {
+		"one": "{count} bias found",
+		"other": "{count} biases found"
+	},
 	"home.view.grouped": "By family",
 	"home.view.flat": "All",
 	"home.filter.family": "Family",
 	"home.filter.difficulty": "Difficulty",
+	"home.filter.search": "Search a bias",
+	"home.filter.search-placeholder": "Bias name...",
+	"home.filter.reset": "Reset",
 	"error.404.back": "Back to home",
 	"error.404.messages": [
 		"Blind spot bias — you were convinced this page existed.",

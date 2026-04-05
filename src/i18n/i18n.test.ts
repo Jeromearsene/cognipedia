@@ -7,6 +7,8 @@ import {
 	isLocale,
 	SUPPORTED_LOCALES,
 	t,
+	tn,
+	tPlural,
 	tRaw,
 } from "./i18n";
 
@@ -63,6 +65,33 @@ describe("tRaw", () => {
 
 	it("returns undefined for missing keys", () => {
 		expect(tRaw("fr", "nonexistent.key")).toBeUndefined();
+	});
+});
+
+describe("tPlural", () => {
+	it("returns the plural forms object", () => {
+		const forms = tPlural("fr", "home.results-count");
+		expect(forms).toHaveProperty("one");
+		expect(forms).toHaveProperty("other");
+	});
+
+	it("returns an empty object for non-plural keys", () => {
+		expect(tPlural("fr", "site.title")).toEqual({});
+	});
+
+	it("returns an empty object for missing keys", () => {
+		expect(tPlural("fr", "nonexistent.key")).toEqual({});
+	});
+});
+
+describe("tn", () => {
+	it("replaces the {count} placeholder with the number", () => {
+		expect(tn("fr", "home.results-count", 1)).toContain("1");
+		expect(tn("fr", "home.results-count", 42)).toContain("42");
+	});
+
+	it("returns the key itself when the pluralized key is missing", () => {
+		expect(tn("fr", "nonexistent.key", 1)).toBe("nonexistent.key");
 	});
 });
 
