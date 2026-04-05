@@ -13,9 +13,11 @@ export type Difficulty = (typeof DIFFICULTIES)[number];
 
 /**
  * Tailwind utility classes for difficulty badge colors.
- * These are static class strings (not dynamic), so Tailwind can detect them at build time.
+ * Static class strings (not dynamic) so Tailwind can detect them at build time.
+ * Pastel background + dark text is kept in both modes: the light badges pop
+ * nicely against the dark theme background without needing dark variants.
  */
-export const DIFFICULTY_COLORS: Record<Difficulty, `bg-${string} text-${string}`> = {
+export const DIFFICULTY_COLORS: Record<Difficulty, string> = {
 	easy: "bg-green-100 text-green-800",
 	medium: "bg-orange-100 text-orange-800",
 	hard: "bg-red-100 text-red-800",

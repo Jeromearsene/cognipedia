@@ -28,8 +28,8 @@ const {
   <h3 class="mb-3 text-lg font-semibold text-text">{title}</h3>
   <div class="flex flex-wrap gap-2">
     <span
-      class="rounded-full px-2.5 py-0.5 text-xs font-medium text-white"
-      style="background-color: var(--family-{family})"
+      class="rounded-full px-2.5 py-0.5 text-xs font-medium"
+      style="background-color: var(--family-{family}); color: var(--family-contrast)"
     >
       {familyLabel}
     </span>

@@ -63,13 +63,13 @@ const hasFilters = filterFamily !== null || filterDifficulty !== null;
     <!-- View toggle tabs -->
     <div class="mb-8 flex gap-2" id="view-tabs">
       <button
-        class={`cursor-pointer rounded-lg border px-5 py-2.5 text-sm font-semibold transition-colors ${hasFilters ? "border-border bg-surface text-text-secondary hover:border-accent hover:text-accent" : "border-accent bg-accent text-white"}`}
+        class={`cursor-pointer rounded-lg border px-5 py-2.5 text-sm font-semibold transition-colors ${hasFilters ? "border-border bg-surface text-text hover:border-accent hover:text-accent" : "border-accent bg-accent text-white"}`}
         data-view="grouped"
       >
         {t(locale, "home.view.grouped")}
       </button>
       <button
-        class={`cursor-pointer rounded-lg border px-5 py-2.5 text-sm font-semibold transition-colors ${hasFilters ? "border-accent bg-accent text-white" : "border-border bg-surface text-text-secondary hover:border-accent hover:text-accent"}`}
+        class={`cursor-pointer rounded-lg border px-5 py-2.5 text-sm font-semibold transition-colors ${hasFilters ? "border-accent bg-accent text-white" : "border-border bg-surface text-text hover:border-accent hover:text-accent"}`}
         data-view="flat"
       >
         {t(locale, "home.view.flat")}
@@ -81,8 +81,8 @@ const hasFilters = filterFamily !== null || filterDifficulty !== null;
       {groupedByFamily.map(({ key, label, biases: familyBiases }) => (
         <div class="mb-10">
           <h2
-            class="mb-4 rounded-lg px-4 py-2 text-xl font-bold text-white"
-            style={`background-color: var(--family-${key})`}
+            class="mb-4 rounded-lg px-4 py-2 text-xl font-bold"
+            style={`background-color: var(--family-${key}); color: var(--family-contrast)`}
           >
             {label}
           </h2>
@@ -135,7 +135,7 @@ const hasFilters = filterFamily !== null || filterDifficulty !== null;
         btn.classList.toggle("text-white", isActive);
         btn.classList.toggle("border-accent", isActive);
         btn.classList.toggle("bg-surface", !isActive);
-        btn.classList.toggle("text-text-secondary", !isActive);
+        btn.classList.toggle("text-text", !isActive);
         btn.classList.toggle("border-border", !isActive);
         btn.classList.toggle("hover:border-accent", !isActive);
         btn.classList.toggle("hover:text-accent", !isActive);
