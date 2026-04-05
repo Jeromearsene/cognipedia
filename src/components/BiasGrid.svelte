@@ -128,10 +128,10 @@ const filtered = $derived(
 {/if}
 
 <style>
-  /* Active family pill: filled with family color */
+  /* Active family pill: filled with family color (text adapts to theme via --family-contrast) */
   .family-pill-active {
     background-color: var(--family-color);
-    color: white;
+    color: var(--family-contrast);
   }
 
   /* All family pills hover: border + text in family color, transparent background */

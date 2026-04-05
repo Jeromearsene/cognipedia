@@ -41,7 +41,7 @@ const showOriginalName = data.originalName !== data.title;
       <a
         href={`/${locale}/?family=${data.family}`}
         class="badge-family rounded-full border-2 px-2.5 py-0.5 text-xs font-medium no-underline transition-all duration-200"
-        style={`--family-color: var(--family-${data.family}); background-color: var(--family-color); border-color: var(--family-color); color: white`}
+        style={`--family-color: var(--family-${data.family}); background-color: var(--family-color); border-color: var(--family-color); color: var(--family-contrast)`}
       >
         {t(locale, `bias.family.${data.family}`)}
       </a>
@@ -54,8 +54,8 @@ const showOriginalName = data.originalName !== data.title;
     </div>
   </header>
 
-  <!-- Markdown content with typography styles -->
-  <div class="prose prose-slate max-w-none">
+  <!-- Markdown content with typography styles (invert colors in dark mode) -->
+  <div class="prose prose-slate max-w-none dark:prose-invert">
     <Content />
   </div>
 

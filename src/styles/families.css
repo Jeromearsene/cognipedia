@@ -4,6 +4,10 @@
 	--family-need-to-act-fast: #d97706;
 	--family-what-to-remember: #db2777;
 
+	/* Text color that sits on top of family-colored backgrounds.
+	   White in light mode (saturated families), dark in dark mode (pastel families). */
+	--family-contrast: #ffffff;
+
 	--difficulty-easy: #166534;
 	--difficulty-medium: #9a3412;
 	--difficulty-hard: #991b1b;
@@ -14,6 +18,8 @@
 	--family-not-enough-meaning: #a78bfa;
 	--family-need-to-act-fast: #fbbf24;
 	--family-what-to-remember: #f472b6;
+
+	--family-contrast: #1a1a2e;
 
 	--difficulty-easy: #86efac;
 	--difficulty-medium: #fdba74;
