@@ -1,4 +1,5 @@
 ---
+import MobileMenu from "@/components/MobileMenu.svelte";
 import ThemeToggle from "@/components/ThemeToggle.svelte";
 import type { Locale } from "@/i18n/i18n";
 import { SUPPORTED_LOCALES, t } from "@/i18n/i18n";
@@ -24,15 +25,28 @@ const switchLangPath = (target: Locale) => {
 	const path = `/${segments.join("/")}`;
 	return currentPath.endsWith("/") ? `${path}/` : path;
 };
+
+const mobileNavLinks = navLinks.map(({ key, href }) => ({
+	label: t(locale, key),
+	href,
+	active: currentPath === href,
+}));
+
+const mobileLangLinks = SUPPORTED_LOCALES.map((lang) => ({
+	lang,
+	href: switchLangPath(lang),
+	active: lang === locale,
+}));
 ---
 
 <header class="border-b border-border bg-surface">
-  <nav class="mx-auto flex w-full max-w-6xl items-center justify-between px-8 py-4">
+  <nav class="mx-auto flex w-full max-w-6xl items-center justify-between px-4 py-4 sm:px-8">
     <a href={`/${locale}/`} class="text-xl font-bold text-text no-underline hover:no-underline">
       Cognipedia
     </a>
 
-    <ul class="flex gap-6 list-none m-0 p-0">
+    <!-- Desktop nav (hidden below lg) -->
+    <ul class="hidden lg:flex gap-6 list-none m-0 p-0">
       {navLinks.map(({ key, href }) => (
         <li>
           <a
@@ -48,7 +62,8 @@ const switchLangPath = (target: Locale) => {
       ))}
     </ul>
 
-    <div class="flex gap-2 text-sm">
+    <!-- Desktop language switcher (hidden below lg) -->
+    <div class="hidden lg:flex gap-2 text-sm">
       {SUPPORTED_LOCALES.map((lang) => (
         <a
           href={switchLangPath(lang)}
@@ -62,6 +77,16 @@ const switchLangPath = (target: Locale) => {
       ))}
     </div>
 
-    <ThemeToggle client:load />
+    <!-- Theme toggle: desktop only (mobile version is inside MobileMenu) -->
+    <div class="hidden lg:block">
+      <ThemeToggle client:load />
+    </div>
+
+    <!-- Mobile burger (hidden above lg) -->
+    <MobileMenu
+      navLinks={mobileNavLinks}
+      langLinks={mobileLangLinks}
+      client:load
+    />
   </nav>
 </header>
