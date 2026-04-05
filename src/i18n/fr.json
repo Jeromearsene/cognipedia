@@ -52,6 +52,8 @@
 	"home.view.flat": "Tous",
 	"home.filter.family": "Famille",
 	"home.filter.difficulty": "Difficulté",
+	"home.filter.search": "Rechercher un biais",
+	"home.filter.search-placeholder": "Nom du biais...",
 	"error.404.back": "Retour à l'accueil",
 	"error.404.messages": [
 		"Biais de l'angle mort — vous étiez convaincu que cette page existait.",

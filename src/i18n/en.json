@@ -52,6 +52,8 @@
 	"home.view.flat": "All",
 	"home.filter.family": "Family",
 	"home.filter.difficulty": "Difficulty",
+	"home.filter.search": "Search a bias",
+	"home.filter.search-placeholder": "Bias name...",
 	"error.404.back": "Back to home",
 	"error.404.messages": [
 		"Blind spot bias — you were convinced this page existed.",
