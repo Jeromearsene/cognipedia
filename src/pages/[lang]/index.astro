@@ -88,8 +88,8 @@ const hasFilters = filterFamily !== null || filterDifficulty !== null;
           </h2>
           {familyBiases.length > 0 ? (
             <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {familyBiases.map((bias) => (
-                <BiasCard {...bias} client:visible />
+              {familyBiases.map((bias, index) => (
+                <BiasCard {...bias} delay={Math.min(index * 40, 400)} client:visible />
               ))}
             </div>
           ) : (

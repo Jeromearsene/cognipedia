@@ -1,14 +1,29 @@
 <script lang="ts">
+import { fade } from "svelte/transition";
 import type { BiasCardData } from "@/lib/constants";
 import { DIFFICULTY_COLORS } from "@/lib/constants";
 
-const { href, title, family, familyLabel, difficulty, difficultyLabel }: BiasCardData = $props();
+interface Props extends BiasCardData {
+	/** Stagger delay in ms for fade-in animation (defaults to 0). */
+	delay?: number;
+}
+
+const {
+	href,
+	title,
+	family,
+	familyLabel,
+	difficulty,
+	difficultyLabel,
+	delay = 0,
+}: Props = $props();
 </script>
 
 <a
   {href}
   class="bias-card block rounded-xl border border-border bg-surface p-5 no-underline shadow-sm"
   style="--glow-color: var(--family-{family})"
+  in:fade={{ duration: 300, delay }}
 >
   <h3 class="mb-3 text-lg font-semibold text-text">{title}</h3>
   <div class="flex flex-wrap gap-2">

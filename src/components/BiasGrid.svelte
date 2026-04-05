@@ -1,4 +1,5 @@
 <script lang="ts">
+import autoAnimate from "@formkit/auto-animate";
 import {
 	type BiasCardData,
 	DIFFICULTY_COLORS,
@@ -7,6 +8,11 @@ import {
 } from "@/lib/constants";
 import { isDifficulty, isFamily } from "@/lib/utils";
 import BiasCard from "./BiasCard.svelte";
+
+/** Svelte action wrapping @formkit/auto-animate for smooth list transitions. */
+const autoAnimateAction = (node: HTMLElement) => {
+	autoAnimate(node, { duration: 250, easing: "ease-in-out" });
+};
 
 interface FamilyOption {
 	key: Family;
@@ -114,9 +120,9 @@ const filtered = $derived(
 {#if filtered.length === 0}
   <p class="py-12 text-center text-text-secondary">{labels.noResults}</p>
 {:else}
-  <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-    {#each filtered as bias (bias.href)}
-      <BiasCard {...bias} />
+  <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3" use:autoAnimateAction>
+    {#each filtered as bias, index (bias.href)}
+      <BiasCard {...bias} delay={Math.min(index * 40, 400)} />
     {/each}
   </div>
 {/if}
