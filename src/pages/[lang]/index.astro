@@ -88,8 +88,8 @@ const hasFilters = filterFamily !== null || filterDifficulty !== null;
           </h2>
           {familyBiases.length > 0 ? (
             <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {familyBiases.map((bias) => (
-                <BiasCard {...bias} client:visible />
+              {familyBiases.map((bias, index) => (
+                <BiasCard {...bias} delay={Math.min(index * 40, 400)} client:visible />
               ))}
             </div>
           ) : (
@@ -120,11 +120,11 @@ const hasFilters = filterFamily !== null || filterDifficulty !== null;
   </section>
 
   <!-- View toggle script (minimal inline JS for tab switching) -->
-  <script is:inline>
-    const switchView = (view) => {
+  <script>
+    const switchView = (view: string) => {
       const grouped = document.getElementById("view-grouped");
       const flat = document.getElementById("view-flat");
-      const buttons = document.querySelectorAll("[data-view]");
+      const buttons = document.querySelectorAll<HTMLButtonElement>("[data-view]");
 
       grouped?.classList.toggle("hidden", view !== "grouped");
       flat?.classList.toggle("hidden", view !== "flat");
@@ -142,10 +142,16 @@ const hasFilters = filterFamily !== null || filterDifficulty !== null;
       });
     };
 
-    document.getElementById("view-tabs")?.addEventListener("click", (event) => {
-      const button = event.target.closest("[data-view]");
-      if (!button) return;
-      switchView(button.dataset.view);
-    });
+    // Re-attach listeners on every page load (initial + Astro client-side navigations).
+    const attachTabListener = () => {
+      document.getElementById("view-tabs")?.addEventListener("click", (event) => {
+        if (!(event.target instanceof Element)) return;
+        const button = event.target.closest<HTMLButtonElement>("[data-view]");
+        if (!button?.dataset.view) return;
+        switchView(button.dataset.view);
+      });
+    };
+
+    document.addEventListener("astro:page-load", attachTabListener);
   </script>
 </BaseLayout>

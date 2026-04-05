@@ -1,5 +1,6 @@
 ---
 import "@/styles/global.css";
+import { ClientRouter } from "astro:transitions";
 import Footer from "@/components/Footer.astro";
 import Header from "@/components/Header.astro";
 import type { Locale } from "@/i18n/i18n";
@@ -30,11 +31,12 @@ const { title, description = "", lang = DEFAULT_LOCALE } = Astro.props;
         }
       })();
     </script>
+    <ClientRouter />
     <title>{title}</title>
   </head>
   <body class="flex min-h-dvh flex-col">
     <Header />
-    <main class="mx-auto w-full max-w-6xl flex-1 p-4 sm:p-8">
+    <main class="mx-auto w-full max-w-6xl flex-1 p-4 sm:p-8" transition:animate="fade">
       <slot />
     </main>
     <Footer />
