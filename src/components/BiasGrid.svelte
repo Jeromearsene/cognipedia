@@ -1,14 +1,10 @@
 <script lang="ts">
 import autoAnimate from "@formkit/auto-animate";
-import { RotateCcw, Search } from "lucide-svelte";
-import {
-	type BiasCardData,
-	DIFFICULTY_COLORS,
-	type Difficulty,
-	type Family,
-} from "@/lib/constants";
+import type { BiasCardData, Difficulty, Family } from "@/lib/constants";
 import { isDifficulty, isFamily } from "@/lib/utils";
 import BiasCard from "./BiasCard.svelte";
+import FilterBar from "./FilterBar.svelte";
+import ResultsHeader from "./ResultsHeader.svelte";
 
 /** Svelte action wrapping @formkit/auto-animate for smooth list transitions. */
 const autoAnimateAction = (node: HTMLElement) => {
@@ -120,73 +116,30 @@ const resetFilters = () => {
 };
 </script>
 
-<div class="sticky top-0 z-10 mb-6 flex flex-wrap gap-4 rounded-xl border border-accent/20 bg-accent-subtle p-3 shadow-sm sm:gap-6 sm:p-4">
-  <div class="w-full sm:w-auto sm:min-w-[220px] sm:flex-1">
-    <label for="bias-search" class="mb-2 block font-heading text-base font-semibold text-text">{labels.search}</label>
-    <div class="relative">
-      <Search size={16} class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-text-secondary" />
-      <input
-        id="bias-search"
-        type="search"
-        bind:value={searchQuery}
-        placeholder={labels.searchPlaceholder}
-        class="w-full rounded-full border border-border bg-bg py-1.5 pl-9 pr-3 text-sm text-text placeholder:text-text-secondary focus:border-accent focus:outline-none"
-      />
-    </div>
-  </div>
+<FilterBar
+  {families}
+  {difficulties}
+  {activeFamilies}
+  {activeDifficulties}
+  {searchQuery}
+  onToggleFamily={toggleFamily}
+  onToggleDifficulty={toggleDifficulty}
+  onSearchChange={(value) => { searchQuery = value; }}
+  labels={{
+    family: labels.family,
+    difficulty: labels.difficulty,
+    search: labels.search,
+    searchPlaceholder: labels.searchPlaceholder,
+  }}
+/>
 
-  <div>
-    <span class="mb-2 block font-heading text-base font-semibold text-text">{labels.family}</span>
-    <div class="flex flex-wrap gap-2">
-      {#each families as { key, label }}
-        <button
-          class="family-pill cursor-pointer rounded-full border px-3 py-1 text-sm transition-colors {activeFamilies.has(key)
-            ? 'family-pill-active border-transparent'
-            : 'border-border bg-bg text-text-secondary'}"
-          style={`--family-color: var(--family-${key})`}
-          onclick={() => toggleFamily(key)}
-        >
-          {label}
-        </button>
-      {/each}
-    </div>
-  </div>
-
-  <div>
-    <span class="mb-2 block font-heading text-base font-semibold text-text">{labels.difficulty}</span>
-    <div class="flex flex-wrap gap-2">
-      {#each difficulties as { key, label }}
-        <button
-          class="difficulty-pill cursor-pointer rounded-full border px-3 py-1 text-sm transition-colors {activeDifficulties.has(key)
-            ? DIFFICULTY_COLORS[key] + ' border-current'
-            : 'border-border bg-bg text-text-secondary'}"
-          style={`--difficulty-color: var(--difficulty-${key})`}
-          onclick={() => toggleDifficulty(key)}
-        >
-          {label}
-        </button>
-      {/each}
-    </div>
-  </div>
-</div>
-
-<div class="mb-3 flex flex-wrap items-center justify-between gap-2">
-  {#if filtered.length > 0}
-    <p class="text-sm text-text-secondary">{resultsLabel}</p>
-  {:else}
-    <span></span>
-  {/if}
-  {#if hasActiveFilters}
-    <button
-      type="button"
-      onclick={resetFilters}
-      class="flex cursor-pointer items-center gap-1.5 text-sm text-text-secondary transition-colors hover:text-accent"
-    >
-      <RotateCcw size={14} />
-      {labels.reset}
-    </button>
-  {/if}
-</div>
+<ResultsHeader
+  {resultsLabel}
+  hasResults={filtered.length > 0}
+  {hasActiveFilters}
+  onReset={resetFilters}
+  label={labels.reset}
+/>
 
 {#if filtered.length === 0}
   <p class="py-12 text-center text-text-secondary">{labels.noResults}</p>
@@ -197,24 +150,3 @@ const resetFilters = () => {
     {/each}
   </div>
 {/if}
-
-<style>
-  /* Active family pill: filled with family color (text adapts to theme via --family-contrast) */
-  .family-pill-active {
-    background-color: var(--family-color);
-    color: var(--family-contrast);
-  }
-
-  /* All family pills hover: border + text in family color, transparent background */
-  .family-pill:hover {
-    border-color: var(--family-color) !important;
-    color: var(--family-color);
-    background-color: transparent;
-  }
-
-  .difficulty-pill:hover {
-    border-color: var(--difficulty-color);
-    color: var(--difficulty-color);
-    background-color: transparent;
-  }
-</style>
