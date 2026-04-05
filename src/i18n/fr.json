@@ -48,8 +48,10 @@
 	"about.github": "Contribuer sur GitHub",
 	"home.empty": "Bientôt disponible",
 	"home.no-results": "Aucun biais ne correspond",
-	"home.results-count": "{count} biais trouvé",
-	"home.results-count-plural": "{count} biais trouvés",
+	"home.results-count": {
+		"one": "{count} biais trouvé",
+		"other": "{count} biais trouvés"
+	},
 	"home.view.grouped": "Par famille",
 	"home.view.flat": "Tous",
 	"home.filter.family": "Famille",

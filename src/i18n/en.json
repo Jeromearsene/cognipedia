@@ -48,8 +48,10 @@
 	"about.github": "Contribute on GitHub",
 	"home.empty": "Coming soon",
 	"home.no-results": "No biases match",
-	"home.results-count": "{count} bias found",
-	"home.results-count-plural": "{count} biases found",
+	"home.results-count": {
+		"one": "{count} bias found",
+		"other": "{count} biases found"
+	},
 	"home.view.grouped": "By family",
 	"home.view.flat": "All",
 	"home.filter.family": "Family",
