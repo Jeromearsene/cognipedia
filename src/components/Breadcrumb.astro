@@ -13,12 +13,12 @@ const familyLabel: Record<Family, () => string> = {
 };
 
 interface Props {
-	locale: string;
 	family: Family;
 	title: string;
 }
 
-const { locale, family, title } = Astro.props;
+const { family, title } = Astro.props;
+const { locale } = Astro.locals;
 ---
 
 <nav aria-label="Breadcrumb" class="mb-4 text-sm text-text-secondary">
