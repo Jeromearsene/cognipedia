@@ -1,0 +1,32 @@
+---
+/**
+ * Breadcrumb navigation: Home > Family > Current page title.
+ */
+import type { Family } from "@/lib/constants";
+import { m } from "@/paraglide/messages";
+
+const familyLabel: Record<Family, () => string> = {
+	"too-much-information": m.bias_family_too_much_information,
+	"not-enough-meaning": m.bias_family_not_enough_meaning,
+	"need-to-act-fast": m.bias_family_need_to_act_fast,
+	"what-to-remember": m.bias_family_what_to_remember,
+};
+
+interface Props {
+	locale: string;
+	family: Family;
+	title: string;
+}
+
+const { locale, family, title } = Astro.props;
+---
+
+<nav aria-label="Breadcrumb" class="mb-4 text-sm text-text-secondary">
+  <ol class="flex flex-wrap items-center gap-1" role="list">
+    <li><a href={`/${locale}/`} class="no-underline hover:underline">{m.nav_home()}</a></li>
+    <li class="before:mx-1 before:content-['/']">
+      <a href={`/${locale}/?family=${family}`} class="no-underline hover:underline">{familyLabel[family]()}</a>
+    </li>
+    <li class="before:mx-1 before:content-['/'] text-text">{title}</li>
+  </ol>
+</nav>
