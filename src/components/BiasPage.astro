@@ -11,7 +11,6 @@ import BiasSourcesSection from "@/components/BiasSourcesSection.astro";
 import Breadcrumb from "@/components/Breadcrumb.astro";
 import BiasInteractive from "@/components/interactive/BiasInteractive.svelte";
 import TableOfContents from "@/components/TableOfContents.astro";
-import type { Locale } from "@/i18n/i18n";
 import { DIFFICULTY_COLORS, type Difficulty, type Family } from "@/lib/constants";
 import { getBiasInteractiveLabels } from "@/lib/labels";
 import { m } from "@/paraglide/messages";
@@ -31,10 +30,10 @@ const difficultyLabel: Record<Difficulty, () => string> = {
 
 interface Props {
 	entry: CollectionEntry<"biases">;
-	locale: Locale;
 }
 
-const { entry, locale } = Astro.props;
+const { entry } = Astro.props;
+const { locale } = Astro.locals;
 const { data } = entry;
 const { Content, headings } = await render(entry);
 
@@ -42,7 +41,7 @@ const showOriginalName = data.originalName !== data.title;
 ---
 
 <article class="mx-auto max-w-3xl">
-  <Breadcrumb locale={locale} family={data.family} title={data.title} />
+  <Breadcrumb family={data.family} title={data.title} />
 
   <!-- Header: title, original name, badges -->
   <header class="mb-8">
@@ -97,7 +96,7 @@ const showOriginalName = data.originalName !== data.title;
   />
 
   <!-- Related biases -->
-  <BiasRelatedSection locale={locale} relatedBiases={data.relatedBiases} />
+  <BiasRelatedSection relatedBiases={data.relatedBiases} />
 </article>
 
 <BackToTop client:load />
