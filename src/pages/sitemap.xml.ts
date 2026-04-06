@@ -1,16 +1,17 @@
 export const prerender = true;
 
 import type { APIRoute } from "astro";
-import { SUPPORTED_LOCALES, t } from "@/i18n/i18n";
+import { SUPPORTED_LOCALES } from "@/i18n/i18n";
 import { getBiasesForLocale } from "@/lib/biases";
 import { urlEntry, wrapSitemap } from "@/lib/sitemap";
+import { m } from "@/paraglide/messages";
 
-/** Static pages with their i18n slug keys. */
-const STATIC_PAGES = [
-	{ slugKey: null, path: "/" },
-	{ slugKey: "slug.leaderboard" },
-	{ slugKey: "slug.about" },
-	{ slugKey: "slug.profile" },
+/** Static pages with their slug message function (or null for root). */
+const STATIC_PAGES: { slug: typeof m.slug_leaderboard | null }[] = [
+	{ slug: null },
+	{ slug: m.slug_leaderboard },
+	{ slug: m.slug_about },
+	{ slug: m.slug_profile },
 ];
 
 export const GET: APIRoute = async () => {
@@ -21,7 +22,7 @@ export const GET: APIRoute = async () => {
 	for (const page of STATIC_PAGES) {
 		const paths: Record<string, string> = {};
 		for (const locale of SUPPORTED_LOCALES) {
-			const slug = page.slugKey ? t(locale, page.slugKey) : "";
+			const slug = page.slug ? page.slug({}, { locale }) : "";
 			paths[locale] = `${site}/${locale}/${slug}`;
 		}
 		entries.push(urlEntry(paths));
@@ -37,13 +38,13 @@ export const GET: APIRoute = async () => {
 
 	const biasByFolder = new Map<string, Record<string, string>>();
 	for (const { locale, biases } of allBiases) {
-		const biasSlugKey = t(locale, "slug.bias");
+		const biasSlug = m.slug_bias({}, { locale });
 		for (const bias of biases) {
 			const folder = bias.filePath?.replace(`/${locale}.md`, "").split("/").pop() ?? "";
 			if (!biasByFolder.has(folder)) biasByFolder.set(folder, {});
 			const paths = biasByFolder.get(folder);
 			if (paths) {
-				paths[locale] = `${site}/${locale}/${biasSlugKey}/${bias.data.slug}`;
+				paths[locale] = `${site}/${locale}/${biasSlug}/${bias.data.slug}`;
 			}
 		}
 	}

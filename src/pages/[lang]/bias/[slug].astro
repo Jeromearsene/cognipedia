@@ -3,9 +3,11 @@ export const prerender = true;
 
 import type { GetStaticPaths } from "astro";
 import BiasPage from "@/components/BiasPage.astro";
-import { SUPPORTED_LOCALES, t } from "@/i18n/i18n";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { getBiasesForLocale } from "@/lib/biases";
+import type { Family } from "@/lib/constants";
+import { m } from "@/paraglide/messages";
+import { locales } from "@/paraglide/runtime";
 
 export const getStaticPaths: GetStaticPaths = async () => {
 	const { localized } = await getBiasesForLocale("en");
@@ -32,20 +34,32 @@ if (!entry) {
  */
 const biasFolder = entry.filePath?.replace(`/${locale}.md`, "").split("/").pop() ?? "";
 Astro.locals.altLangHrefs = Object.fromEntries(
-	SUPPORTED_LOCALES.filter((otherLocale) => otherLocale !== locale)
+	locales
+		.filter((otherLocale) => otherLocale !== locale)
 		.map((otherLocale) => {
 			const alternate = allBiases.find((bias) =>
 				bias.filePath?.endsWith(`${biasFolder}/${otherLocale}.md`),
 			);
 			return alternate
-				? [otherLocale, `/${otherLocale}/${t(otherLocale, "slug.bias")}/${alternate.data.slug}`]
+				? [
+						otherLocale,
+						`/${otherLocale}/${m.slug_bias({}, { locale: otherLocale })}/${alternate.data.slug}`,
+					]
 				: [];
 		})
 		.filter((pair) => pair.length > 0),
 );
 
-const title = `${entry.data.title} — ${t(locale, "site.title")}`;
-const description = `${entry.data.title} — ${t(locale, `bias.family.${entry.data.family}`)}. ${t(locale, "site.description")}`;
+/** Map family keys to their Paraglide message functions. */
+const familyLabel: Record<Family, () => string> = {
+	"too-much-information": m.bias_family_too_much_information,
+	"not-enough-meaning": m.bias_family_not_enough_meaning,
+	"need-to-act-fast": m.bias_family_need_to_act_fast,
+	"what-to-remember": m.bias_family_what_to_remember,
+};
+
+const title = `${entry.data.title} — ${m.site_title()}`;
+const description = `${entry.data.title} — ${familyLabel[entry.data.family]()}. ${m.site_description()}`;
 ---
 
 <BaseLayout title={title} description={description} lang={locale}>

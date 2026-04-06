@@ -1,6 +1,14 @@
 ---
-import { DEFAULT_LOCALE, SUPPORTED_LOCALES, t, tRaw } from "@/i18n/i18n";
+import { DEFAULT_LOCALE, SUPPORTED_LOCALES } from "@/i18n/i18n";
 import BaseLayout from "@/layouts/BaseLayout.astro";
+import {
+	error_404_back,
+	error_404_messages_0,
+	error_404_messages_1,
+	error_404_messages_2,
+	error_404_messages_3,
+	error_404_messages_4,
+} from "@/paraglide/messages";
 
 /**
  * i18n data serialized for the client-side script.
@@ -10,19 +18,27 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 const localesList = JSON.stringify(SUPPORTED_LOCALES);
 const defaultLocale = DEFAULT_LOCALE;
 
+/** All 404 error messages. Add new entries here when adding translations. */
+const ERROR_404_MESSAGES = [
+	error_404_messages_0,
+	error_404_messages_1,
+	error_404_messages_2,
+	error_404_messages_3,
+	error_404_messages_4,
+];
+
+const buildMessages = (locale: "fr" | "en") => ERROR_404_MESSAGES.map((fn) => fn({}, { locale }));
+
 const messagesMap = JSON.stringify(
-	Object.fromEntries(
-		SUPPORTED_LOCALES.map((locale) => [locale, tRaw(locale, "error.404.messages")]),
-	),
+	Object.fromEntries(SUPPORTED_LOCALES.map((locale) => [locale, buildMessages(locale)])),
 );
 const backMap = JSON.stringify(
-	Object.fromEntries(SUPPORTED_LOCALES.map((locale) => [locale, t(locale, "error.404.back")])),
+	Object.fromEntries(SUPPORTED_LOCALES.map((locale) => [locale, error_404_back({}, { locale })])),
 );
 
 /** Default-locale fallback text, displayed if JS is disabled or slow to load. */
-const fallbackMessages = tRaw(defaultLocale, "error.404.messages");
-const fallbackMessage = Array.isArray(fallbackMessages) ? fallbackMessages[0] : "";
-const fallbackBack = t(defaultLocale, "error.404.back");
+const fallbackMessage = buildMessages(defaultLocale)[0];
+const fallbackBack = error_404_back({}, { locale: defaultLocale });
 ---
 
 <BaseLayout title="404" lang={defaultLocale}>

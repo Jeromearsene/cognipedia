@@ -4,8 +4,8 @@
  * collection are clickable links; others are shown as grayed-out text.
  */
 import type { Locale } from "@/i18n/i18n";
-import { t } from "@/i18n/i18n";
 import { getBiasesForLocale } from "@/lib/biases";
+import { m } from "@/paraglide/messages";
 
 interface Props {
 	locale: Locale;
@@ -25,7 +25,7 @@ const resolved = relatedBiases.map((biasId) => {
 		return {
 			exists: true,
 			title: found.data.title,
-			href: `/${locale}/${t(locale, "slug.bias")}/${found.data.slug}`,
+			href: `/${locale}/${m.slug_bias()}/${found.data.slug}`,
 		};
 	}
 	return { exists: false, title: biasId, href: null };
@@ -33,7 +33,7 @@ const resolved = relatedBiases.map((biasId) => {
 ---
 
 <section class="mt-8">
-  <h2 class="mb-3 text-lg font-bold">{t(locale, "bias.related")}</h2>
+  <h2 class="mb-3 text-lg font-bold">{m.bias_related()}</h2>
   <ul class="flex flex-wrap gap-2">
     {resolved.map((bias) => (
       <li>

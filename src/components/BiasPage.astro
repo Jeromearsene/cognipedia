@@ -9,9 +9,22 @@ import BiasRelatedSection from "@/components/BiasRelatedSection.astro";
 import BiasSourcesSection from "@/components/BiasSourcesSection.astro";
 import BiasInteractive from "@/components/interactive/BiasInteractive.svelte";
 import type { Locale } from "@/i18n/i18n";
-import { t } from "@/i18n/i18n";
-import { DIFFICULTY_COLORS } from "@/lib/constants";
+import { DIFFICULTY_COLORS, type Difficulty, type Family } from "@/lib/constants";
 import { getBiasInteractiveLabels } from "@/lib/labels";
+import { m } from "@/paraglide/messages";
+
+const familyLabel: Record<Family, () => string> = {
+	"too-much-information": m.bias_family_too_much_information,
+	"not-enough-meaning": m.bias_family_not_enough_meaning,
+	"need-to-act-fast": m.bias_family_need_to_act_fast,
+	"what-to-remember": m.bias_family_what_to_remember,
+};
+
+const difficultyLabel: Record<Difficulty, () => string> = {
+	easy: m.bias_difficulty_easy,
+	medium: m.bias_difficulty_medium,
+	hard: m.bias_difficulty_hard,
+};
 
 interface Props {
 	entry: CollectionEntry<"biases">;
@@ -43,13 +56,13 @@ const showOriginalName = data.originalName !== data.title;
         class="badge-family rounded-full border-2 px-2.5 py-0.5 text-xs font-medium no-underline transition-all duration-200"
         style={`--family-color: var(--family-${data.family}); background-color: var(--family-color); border-color: var(--family-color); color: var(--family-contrast)`}
       >
-        {t(locale, `bias.family.${data.family}`)}
+        {familyLabel[data.family]()}
       </a>
       <a
         href={`/${locale}/?difficulty=${data.difficulty}`}
         class={`rounded-full border-2 border-transparent px-2.5 py-0.5 text-xs font-medium no-underline transition-all duration-200 hover:bg-transparent hover:border-current ${DIFFICULTY_COLORS[data.difficulty]}`}
       >
-        {t(locale, `bias.difficulty.${data.difficulty}`)}
+        {difficultyLabel[data.difficulty]()}
       </a>
     </div>
   </header>
@@ -62,7 +75,7 @@ const showOriginalName = data.originalName !== data.title;
   <!-- Interactive section: situation + quiz orchestrator -->
   <BiasInteractive
     biasSlug={data.slug}
-    profileUrl={`/${locale}/${t(locale, "slug.profile")}`}
+    profileUrl={`/${locale}/${m.slug_profile()}`}
     situation={data.situation}
     quiz={data.quiz}
     labels={getBiasInteractiveLabels(locale)}
@@ -71,7 +84,6 @@ const showOriginalName = data.originalName !== data.title;
 
   <!-- Sources -->
   <BiasSourcesSection
-    locale={locale}
     wikipedia={data.sources.wikipedia}
     papers={data.sources.papers}
     videos={data.sources.videos}

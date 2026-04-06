@@ -6,22 +6,35 @@
  */
 import BiasCard from "@/components/BiasCard.svelte";
 import BiasGrid from "@/components/BiasGrid.svelte";
-import { t, tPlural } from "@/i18n/i18n";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { getBiasesForLocale } from "@/lib/biases";
-import { DIFFICULTIES, FAMILIES } from "@/lib/constants";
+import { DIFFICULTIES, type Difficulty, FAMILIES, type Family } from "@/lib/constants";
+import { m } from "@/paraglide/messages";
 
 const { locale } = Astro.locals;
 const { localized: biases } = await getBiasesForLocale(locale);
 
+/** Map family/difficulty keys to their Paraglide message functions. */
+const familyLabel: Record<Family, () => string> = {
+	"too-much-information": m.bias_family_too_much_information,
+	"not-enough-meaning": m.bias_family_not_enough_meaning,
+	"need-to-act-fast": m.bias_family_need_to_act_fast,
+	"what-to-remember": m.bias_family_what_to_remember,
+};
+const difficultyLabel: Record<Difficulty, () => string> = {
+	easy: m.bias_difficulty_easy,
+	medium: m.bias_difficulty_medium,
+	hard: m.bias_difficulty_hard,
+};
+
 /** Serialize a bias entry into the shape BiasCard/BiasGrid expects. */
 const toBiasItem = (entry: (typeof biases)[number]) => ({
-	href: `/${locale}/${t(locale, "slug.bias")}/${entry.data.slug}`,
+	href: `/${locale}/${m.slug_bias()}/${entry.data.slug}`,
 	title: entry.data.title,
 	family: entry.data.family,
-	familyLabel: t(locale, `bias.family.${entry.data.family}`),
+	familyLabel: familyLabel[entry.data.family](),
 	difficulty: entry.data.difficulty,
-	difficultyLabel: t(locale, `bias.difficulty.${entry.data.difficulty}`),
+	difficultyLabel: difficultyLabel[entry.data.difficulty](),
 });
 
 const biasItems = biases.map(toBiasItem);
@@ -29,21 +42,21 @@ const biasItems = biases.map(toBiasItem);
 /** Biases grouped by family, preserving FAMILIES order. */
 const groupedByFamily = FAMILIES.map((family) => ({
 	key: family,
-	label: t(locale, `bias.family.${family}`),
+	label: familyLabel[family](),
 	biases: biasItems.filter((bias) => bias.family === family),
 }));
 
 const familyOptions = FAMILIES.map((family) => ({
 	key: family,
-	label: t(locale, `bias.family.${family}`),
+	label: familyLabel[family](),
 }));
 const difficultyOptions = DIFFICULTIES.map((difficulty) => ({
 	key: difficulty,
-	label: t(locale, `bias.difficulty.${difficulty}`),
+	label: difficultyLabel[difficulty](),
 }));
 
-const title = t(locale, "site.title");
-const description = t(locale, "site.description");
+const title = m.site_title();
+const description = m.site_description();
 
 /** Detect filter query params to render the correct initial view (SSR, no flash). */
 const filterFamily = Astro.url.searchParams.get("family");
@@ -66,13 +79,13 @@ const hasFilters = filterFamily !== null || filterDifficulty !== null;
         class={`cursor-pointer rounded-lg border px-5 py-2.5 text-sm font-semibold transition-colors ${hasFilters ? "border-border bg-surface text-text hover:border-accent hover:text-accent" : "border-accent bg-accent text-white"}`}
         data-view="grouped"
       >
-        {t(locale, "home.view.grouped")}
+        {m.home_view_grouped()}
       </button>
       <button
         class={`cursor-pointer rounded-lg border px-5 py-2.5 text-sm font-semibold transition-colors ${hasFilters ? "border-accent bg-accent text-white" : "border-border bg-surface text-text hover:border-accent hover:text-accent"}`}
         data-view="flat"
       >
-        {t(locale, "home.view.flat")}
+        {m.home_view_flat()}
       </button>
     </div>
 
@@ -94,7 +107,7 @@ const hasFilters = filterFamily !== null || filterDifficulty !== null;
             </div>
           ) : (
             <p class="py-6 text-center text-text-secondary">
-              {t(locale, "home.empty")}
+              {m.home_empty()}
             </p>
           )}
         </div>
@@ -109,15 +122,13 @@ const hasFilters = filterFamily !== null || filterDifficulty !== null;
         difficulties={difficultyOptions}
         initialFamily={filterFamily}
         initialDifficulty={filterDifficulty}
-        locale={locale}
         labels={{
-          family: t(locale, "home.filter.family"),
-          difficulty: t(locale, "home.filter.difficulty"),
-          search: t(locale, "home.filter.search"),
-          searchPlaceholder: t(locale, "home.filter.search-placeholder"),
-          reset: t(locale, "home.filter.reset"),
-          resultsCount: tPlural(locale, "home.results-count"),
-          noResults: t(locale, "home.no-results"),
+          family: m.home_filter_family(),
+          difficulty: m.home_filter_difficulty(),
+          search: m.home_filter_search(),
+          searchPlaceholder: m.home_filter_search_placeholder(),
+          reset: m.home_filter_reset(),
+          noResults: m.home_no_results(),
         }}
         client:visible
       />

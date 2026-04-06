@@ -1,6 +1,5 @@
 ---
-import type { Locale } from "@/i18n/i18n";
-import { t } from "@/i18n/i18n";
+import { m } from "@/paraglide/messages";
 import BookOpenIcon from "~icons/lucide/book-open";
 import FileTextIcon from "~icons/lucide/file-text";
 import PlayCircleIcon from "~icons/lucide/play-circle";
@@ -22,23 +21,22 @@ interface Video {
 }
 
 interface Props {
-	locale: Locale;
 	wikipedia: string;
 	papers?: Paper[];
 	videos?: Video[];
 }
 
-const { locale, wikipedia, papers, videos } = Astro.props;
+const { wikipedia, papers, videos } = Astro.props;
 ---
 
 <section class="mt-12 rounded-xl border border-border bg-surface p-6">
-  <h2 class="mb-4 text-lg font-bold">{t(locale, "sources.title")}</h2>
+  <h2 class="mb-4 text-lg font-bold">{m.sources_title()}</h2>
 
   <div class="space-y-4">
     <div class="flex items-center gap-2">
       <BookOpenIcon class="h-4 w-4 text-text-secondary" />
       <a href={wikipedia} target="_blank" rel="noopener noreferrer">
-        {t(locale, "sources.wikipedia")}
+        {m.sources_wikipedia()}
       </a>
     </div>
 
@@ -46,7 +44,7 @@ const { locale, wikipedia, papers, videos } = Astro.props;
       <div>
         <h3 class="mb-2 flex items-center gap-2 text-sm font-medium text-text-secondary">
           <FileTextIcon class="h-4 w-4" />
-          {t(locale, "sources.papers")}
+          {m.sources_papers()}
         </h3>
         <ul class="list-none space-y-1 pl-6">
           {papers.map((paper) => (
@@ -67,7 +65,7 @@ const { locale, wikipedia, papers, videos } = Astro.props;
       <div>
         <h3 class="mb-2 flex items-center gap-2 text-sm font-medium text-text-secondary">
           <PlayCircleIcon class="h-4 w-4" />
-          {t(locale, "sources.videos")}
+          {m.sources_videos()}
         </h3>
         <ul class="list-none space-y-1 pl-6">
           {videos.map((video) => (
