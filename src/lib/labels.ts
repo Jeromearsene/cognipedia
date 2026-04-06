@@ -65,9 +65,9 @@ export interface ProfilePageLabels {
 	copy: string;
 	copied: string;
 	progression: string;
-	progressionBiases: (count: number, total: number) => string;
 	totalScore: string;
 	completedBiases: string;
+	biasColumn: string;
 	scoreColumn: string;
 	noScores: string;
 	recoveryForm: RecoveryFormLabels;
@@ -115,9 +115,9 @@ export const getProfileLabels = (locale: Locale): ProfilePageLabels => ({
 	copy: m.user_recovery_copy({}, { locale }),
 	copied: m.recovery_modal_copied({}, { locale }),
 	progression: m.profile_progression({}, { locale }),
-	progressionBiases: (count, total) => m.profile_progression_biases({ count, total }, { locale }),
 	totalScore: m.profile_total_score({}, { locale }),
 	completedBiases: m.profile_completed_biases({}, { locale }),
+	biasColumn: m.profile_bias_column({}, { locale }),
 	scoreColumn: m.profile_score_column({}, { locale }),
 	noScores: m.profile_no_scores({}, { locale }),
 	recoveryForm: {

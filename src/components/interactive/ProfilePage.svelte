@@ -3,6 +3,7 @@ import type { ProfilePageLabels } from "@/lib/labels";
 import { userScoresResponseSchema } from "@/lib/schemas";
 import type { ScoreEntry } from "@/lib/types";
 import { userStore } from "@/lib/userStore.svelte";
+import { profile_progression_biases } from "@/paraglide/messages";
 import PseudoEditor from "./PseudoEditor.svelte";
 import RecoveryCodeSection from "./RecoveryCodeSection.svelte";
 import RecoveryForm from "./RecoveryForm.svelte";
@@ -10,10 +11,12 @@ import ScoresList from "./ScoresList.svelte";
 
 interface Props {
 	totalBiasCount: number;
+	/** Map bias slug → { title, href } for displaying translated titles and links. */
+	biasMap: Record<string, { title: string; href: string }>;
 	labels: ProfilePageLabels;
 }
 
-let { totalBiasCount, labels }: Props = $props();
+let { totalBiasCount, biasMap, labels }: Props = $props();
 
 let scores = $state<ScoreEntry[]>([]);
 let totalScore = $state(0);
@@ -82,15 +85,17 @@ const progressPercent = $derived(
 				></div>
 			</div>
 			<p class="text-sm text-text-secondary">
-				{labels.progressionBiases(scores.length, totalBiasCount)}
+				{profile_progression_biases({ count: scores.length, total: totalBiasCount })}
 			</p>
 			<p class="mt-1 text-sm font-medium">{labels.totalScore} : {totalScore}</p>
 		</div>
 
 		<ScoresList
 			{scores}
+			{biasMap}
 			labels={{
 				title: labels.completedBiases,
+				biasColumn: labels.biasColumn,
 				scoreColumn: labels.scoreColumn,
 				noScores: labels.noScores,
 			}}
