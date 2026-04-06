@@ -104,6 +104,7 @@
 	"profile_progression_biases": "{count}/{total} biais complétés",
 	"profile_total_score": "Score total",
 	"profile_completed_biases": "Biais complétés",
+	"profile_bias_column": "Biais",
 	"profile_score_column": "Score",
 	"profile_no_scores": "Aucun biais complété pour le moment",
 	"nav_profile": "Profil",
