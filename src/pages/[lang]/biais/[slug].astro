@@ -3,11 +3,11 @@ export const prerender = true;
 
 import type { GetStaticPaths } from "astro";
 import BiasPage from "@/components/BiasPage.astro";
+import { getSlug, SUPPORTED_LOCALES } from "@/i18n/i18n";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { getBiasesForLocale } from "@/lib/biases";
 import type { Family } from "@/lib/constants";
 import { m } from "@/paraglide/messages";
-import { locales } from "@/paraglide/runtime";
 
 export const getStaticPaths: GetStaticPaths = async () => {
 	const { localized } = await getBiasesForLocale("fr");
@@ -34,17 +34,13 @@ if (!entry) {
  */
 const biasFolder = entry.filePath?.replace(`/${locale}.md`, "").split("/").pop() ?? "";
 Astro.locals.altLangHrefs = Object.fromEntries(
-	locales
-		.filter((otherLocale) => otherLocale !== locale)
+	SUPPORTED_LOCALES.filter((otherLocale) => otherLocale !== locale)
 		.map((otherLocale) => {
 			const alternate = allBiases.find((bias) =>
 				bias.filePath?.endsWith(`${biasFolder}/${otherLocale}.md`),
 			);
 			return alternate
-				? [
-						otherLocale,
-						`/${otherLocale}/${m.slug_bias({}, { locale: otherLocale })}/${alternate.data.slug}`,
-					]
+				? [otherLocale, `/${otherLocale}/${getSlug("bias", otherLocale)}/${alternate.data.slug}`]
 				: [];
 		})
 		.filter((pair) => pair.length > 0),
