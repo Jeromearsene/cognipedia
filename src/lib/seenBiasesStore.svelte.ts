@@ -76,6 +76,9 @@ const createBiasProgressStore = () => {
 		return "new";
 	};
 
+	// Auto-load from localStorage at init (SSR guard is inside load())
+	load();
+
 	return {
 		markSeen,
 		markCompleted,
