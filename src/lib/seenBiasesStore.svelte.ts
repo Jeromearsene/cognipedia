@@ -49,9 +49,10 @@ const createBiasProgressStore = () => {
 		persistSeen();
 	};
 
-	/** Mark a bias as completed (quiz finished). */
+	/** Mark a bias as completed (quiz finished). Also marks as seen. */
 	const markCompleted = (slug: string) => {
 		load();
+		markSeen(slug);
 		if (completed.has(slug)) return;
 		completed = new Set(completed).add(slug);
 		persistCompleted();

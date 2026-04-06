@@ -106,7 +106,7 @@ const {
     <div class="flex flex-wrap gap-2">
       {#each labels.statusOptions as { key, label }}
         <button
-          class="cursor-pointer rounded-full border px-3 py-1 text-sm transition-colors hover:border-accent hover:text-accent {activeStatus === key
+          class="cursor-pointer rounded-full border px-3 py-1 text-sm transition-colors hover:border-accent hover:bg-transparent hover:text-accent {activeStatus === key
             ? 'border-accent bg-accent text-white'
             : 'border-border bg-bg text-text-secondary'}"
           onclick={() => onStatusChange(key)}

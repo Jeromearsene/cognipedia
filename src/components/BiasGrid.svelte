@@ -90,8 +90,12 @@ const filtered = $derived.by(() => {
 		if (!activeFamilies.has(bias.family)) return false;
 		if (!activeDifficulties.has(bias.difficulty)) return false;
 		if (normalizedQuery && !bias.title.toLowerCase().includes(normalizedQuery)) return false;
-		if (activeStatus !== "all" && biasProgressStore.getStatus(bias.slug) !== activeStatus)
-			return false;
+		if (activeStatus !== "all") {
+			const status = biasProgressStore.getStatus(bias.slug);
+			if (activeStatus === "seen" && status === "new") return false;
+			if (activeStatus === "new" && status !== "new") return false;
+			if (activeStatus === "completed" && status !== "completed") return false;
+		}
 		return true;
 	});
 });
