@@ -5,9 +5,12 @@ import type { CollectionEntry } from "astro:content";
  * interactive situation/quiz, sources, and related biases.
  */
 import { render } from "astro:content";
+import BackToTop from "@/components/BackToTop.svelte";
 import BiasRelatedSection from "@/components/BiasRelatedSection.astro";
 import BiasSourcesSection from "@/components/BiasSourcesSection.astro";
+import Breadcrumb from "@/components/Breadcrumb.astro";
 import BiasInteractive from "@/components/interactive/BiasInteractive.svelte";
+import TableOfContents from "@/components/TableOfContents.astro";
 import type { Locale } from "@/i18n/i18n";
 import { DIFFICULTY_COLORS, type Difficulty, type Family } from "@/lib/constants";
 import { getBiasInteractiveLabels } from "@/lib/labels";
@@ -33,12 +36,14 @@ interface Props {
 
 const { entry, locale } = Astro.props;
 const { data } = entry;
-const { Content } = await render(entry);
+const { Content, headings } = await render(entry);
 
 const showOriginalName = data.originalName !== data.title;
 ---
 
 <article class="mx-auto max-w-3xl">
+  <Breadcrumb locale={locale} family={data.family} title={data.title} />
+
   <!-- Header: title, original name, badges -->
   <header class="mb-8">
     <h1 class="text-3xl font-bold">{data.title}</h1>
@@ -67,6 +72,8 @@ const showOriginalName = data.originalName !== data.title;
     </div>
   </header>
 
+  <TableOfContents headings={headings} />
+
   <!-- Markdown content with typography styles (invert colors in dark mode) -->
   <div class="prose prose-slate max-w-none dark:prose-invert">
     <Content />
@@ -92,6 +99,8 @@ const showOriginalName = data.originalName !== data.title;
   <!-- Related biases -->
   <BiasRelatedSection locale={locale} relatedBiases={data.relatedBiases} />
 </article>
+
+<BackToTop client:load />
 
 <style>
   .badge-family:hover {
