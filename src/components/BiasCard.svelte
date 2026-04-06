@@ -1,7 +1,9 @@
 <script lang="ts">
+import { CheckCircle, Eye } from "lucide-svelte";
 import { fade } from "svelte/transition";
 import type { BiasCardData } from "@/lib/constants";
 import { DIFFICULTY_COLORS } from "@/lib/constants";
+import { biasProgressStore } from "@/lib/seenBiasesStore.svelte";
 
 interface Props extends BiasCardData {
 	/** Stagger delay in ms for fade-in animation (defaults to 0). */
@@ -9,6 +11,7 @@ interface Props extends BiasCardData {
 }
 
 const {
+	slug,
 	href,
 	title,
 	family,
@@ -17,15 +20,26 @@ const {
 	difficultyLabel,
 	delay = 0,
 }: Props = $props();
+
+const status = $derived(biasProgressStore.getStatus(slug));
 </script>
 
 <a
   {href}
-  class="bias-card block rounded-xl border border-border bg-surface p-5 no-underline shadow-sm"
+  class="bias-card block rounded-xl border bg-surface p-5 no-underline shadow-sm {status === 'completed'
+    ? 'border-accent/40'
+    : 'border-border'}"
   style="--glow-color: var(--family-{family})"
   in:fade={{ duration: 300, delay }}
 >
-  <h3 class="mb-3 text-lg font-semibold text-text">{title}</h3>
+  <div class="flex items-start justify-between gap-2">
+    <h3 class="mb-3 text-lg font-semibold text-text">{title}</h3>
+    {#if status === "completed"}
+      <CheckCircle size={18} class="shrink-0 text-accent" />
+    {:else if status === "seen"}
+      <Eye size={18} class="shrink-0 text-text-secondary" />
+    {/if}
+  </div>
   <div class="flex flex-wrap gap-2">
     <span
       class="rounded-full px-2.5 py-0.5 text-xs font-medium"

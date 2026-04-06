@@ -25,6 +25,8 @@ export const DIFFICULTY_COLORS: Record<Difficulty, string> = {
 
 /** Serializable bias card data, shared between BiasCard and BiasGrid components. */
 export interface BiasCardData {
+	/** Bias slug for status tracking (seen/completed). */
+	slug: string;
 	/** URL to the bias page. */
 	href: string;
 	/** Display title of the bias. */
