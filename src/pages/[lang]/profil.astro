@@ -1,5 +1,6 @@
 ---
 import ProfilePage from "@/components/interactive/ProfilePage.svelte";
+import { buildAltLangHrefs } from "@/i18n/i18n";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { getBiasesForLocale } from "@/lib/biases";
 import { getProfileLabels } from "@/lib/labels";
@@ -10,7 +11,7 @@ const { locale } = Astro.locals;
 const { localized: biases } = await getBiasesForLocale(locale);
 const title = `${m.profile_title()} — ${m.site_title()}`;
 
-Astro.locals.altLangHrefs = { en: "/en/profile" };
+Astro.locals.altLangHrefs = buildAltLangHrefs(locale, "profile");
 ---
 
 <BaseLayout title={title} description={m.site_description()} lang={locale}>

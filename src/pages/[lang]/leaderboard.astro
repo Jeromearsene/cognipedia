@@ -1,12 +1,11 @@
 ---
-/** Leaderboard page (English route: /en/leaderboard). */
 import LeaderboardComponent from "@/components/Leaderboard.svelte";
+import { buildAltLangHrefs } from "@/i18n/i18n";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { m } from "@/paraglide/messages";
 
 const { locale } = Astro.locals;
-
-Astro.locals.altLangHrefs = { fr: "/fr/classement" };
+Astro.locals.altLangHrefs = buildAltLangHrefs(locale, "leaderboard");
 
 const pageTitle = m.leaderboard_title();
 const labels = {

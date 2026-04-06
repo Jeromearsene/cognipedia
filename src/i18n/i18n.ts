@@ -68,6 +68,22 @@ for (const locale of SUPPORTED_LOCALES) {
 }
 
 /**
+ * Builds altLangHrefs for a page identified by its slug key.
+ * Returns a record mapping each non-current locale to its localized URL.
+ * E.g. buildAltLangHrefs("fr", "leaderboard") → { en: "/en/leaderboard" }
+ */
+export const buildAltLangHrefs = (
+	currentLocale: Locale,
+	slugKey: SlugKey,
+): Record<string, string> =>
+	Object.fromEntries(
+		SUPPORTED_LOCALES.filter((l) => l !== currentLocale).map((l) => [
+			l,
+			`/${l}/${getSlug(slugKey, l)}`,
+		]),
+	);
+
+/**
  * Validates a route `lang` param and returns the locale.
  * Returns `null` if the param is missing or not a supported locale,
  * along with a fallback redirect URL based on Accept-Language.
