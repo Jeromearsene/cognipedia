@@ -1,6 +1,5 @@
 <script lang="ts">
 import { CheckCircle, Eye } from "lucide-svelte";
-import { onMount } from "svelte";
 import { fade } from "svelte/transition";
 import type { BiasCardData } from "@/lib/constants";
 import { DIFFICULTY_COLORS } from "@/lib/constants";
@@ -22,11 +21,7 @@ const {
 	delay = 0,
 }: Props = $props();
 
-/** Read status from localStorage on mount (cross-island $state reactivity is unreliable). */
-let status = $state<"new" | "seen" | "completed">("new");
-onMount(() => {
-	status = biasProgressStore.getStatus(slug);
-});
+const status = $derived(biasProgressStore.getStatus(slug));
 </script>
 
 <a
