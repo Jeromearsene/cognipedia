@@ -4,16 +4,14 @@ import {
 	getLocaleFromAcceptLanguage,
 	getLocaleFromUrl,
 	getLocalizedPath,
+	getSlug,
 	isLocale,
 	SUPPORTED_LOCALES,
-	t,
-	tn,
-	tPlural,
-	tRaw,
+	slugToLocaleMap,
 } from "./i18n";
 
 describe("locale constants", () => {
-	it("exports supported locales derived from translation files", () => {
+	it("exports supported locales", () => {
 		expect(SUPPORTED_LOCALES).toContain("fr");
 		expect(SUPPORTED_LOCALES).toContain("en");
 	});
@@ -32,66 +30,6 @@ describe("isLocale", () => {
 	it("returns false for unsupported values", () => {
 		expect(isLocale("zz")).toBe(false);
 		expect(isLocale("")).toBe(false);
-	});
-});
-
-describe("t", () => {
-	it("returns the translated string for a known key", () => {
-		expect(t("fr", "site.title")).toBe("Cognipedia");
-	});
-
-	it("returns the key itself if not found", () => {
-		expect(t("fr", "nonexistent.key")).toBe("nonexistent.key");
-	});
-
-	it("returns english translation", () => {
-		expect(t("en", "site.title")).toBe("Cognipedia");
-	});
-
-	it("throws when the value is not a string", () => {
-		expect(() => t("fr", "error.404.messages")).toThrow("is not a string");
-	});
-});
-
-describe("tRaw", () => {
-	it("returns arrays for array-valued keys", () => {
-		const messages = tRaw("fr", "error.404.messages");
-		expect(Array.isArray(messages)).toBe(true);
-	});
-
-	it("returns strings for string-valued keys", () => {
-		expect(tRaw("fr", "site.title")).toBe("Cognipedia");
-	});
-
-	it("returns undefined for missing keys", () => {
-		expect(tRaw("fr", "nonexistent.key")).toBeUndefined();
-	});
-});
-
-describe("tPlural", () => {
-	it("returns the plural forms object", () => {
-		const forms = tPlural("fr", "home.results-count");
-		expect(forms).toHaveProperty("one");
-		expect(forms).toHaveProperty("other");
-	});
-
-	it("returns an empty object for non-plural keys", () => {
-		expect(tPlural("fr", "site.title")).toEqual({});
-	});
-
-	it("returns an empty object for missing keys", () => {
-		expect(tPlural("fr", "nonexistent.key")).toEqual({});
-	});
-});
-
-describe("tn", () => {
-	it("replaces the {count} placeholder with the number", () => {
-		expect(tn("fr", "home.results-count", 1)).toContain("1");
-		expect(tn("fr", "home.results-count", 42)).toContain("42");
-	});
-
-	it("returns the key itself when the pluralized key is missing", () => {
-		expect(tn("fr", "nonexistent.key", 1)).toBe("nonexistent.key");
 	});
 });
 
@@ -141,16 +79,27 @@ describe("getLocaleFromAcceptLanguage", () => {
 	});
 });
 
-describe("localized slugs in i18n", () => {
-	it("has slug.leaderboard for all locales", () => {
-		for (const locale of SUPPORTED_LOCALES) {
-			expect(t(locale, "slug.leaderboard")).not.toBe("slug.leaderboard");
-		}
+describe("getSlug", () => {
+	it("returns the localized slug for a key", () => {
+		expect(getSlug("leaderboard", "fr")).toBe("classement");
+		expect(getSlug("leaderboard", "en")).toBe("leaderboard");
+		expect(getSlug("about", "fr")).toBe("a-propos");
+		expect(getSlug("about", "en")).toBe("about");
+		expect(getSlug("bias", "fr")).toBe("biais");
+		expect(getSlug("bias", "en")).toBe("bias");
+	});
+});
+
+describe("slugToLocaleMap", () => {
+	it("maps French slugs to their key and locale", () => {
+		expect(slugToLocaleMap.get("classement")).toEqual({ key: "leaderboard", locale: "fr" });
+		expect(slugToLocaleMap.get("a-propos")).toEqual({ key: "about", locale: "fr" });
+		expect(slugToLocaleMap.get("biais")).toEqual({ key: "bias", locale: "fr" });
 	});
 
-	it("has slug.about for all locales", () => {
-		for (const locale of SUPPORTED_LOCALES) {
-			expect(t(locale, "slug.about")).not.toBe("slug.about");
-		}
+	it("maps English slugs to their key and locale", () => {
+		expect(slugToLocaleMap.get("leaderboard")).toEqual({ key: "leaderboard", locale: "en" });
+		expect(slugToLocaleMap.get("about")).toEqual({ key: "about", locale: "en" });
+		expect(slugToLocaleMap.get("bias")).toEqual({ key: "bias", locale: "en" });
 	});
 });

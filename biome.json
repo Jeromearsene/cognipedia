@@ -50,7 +50,9 @@
 			"!!**/node_modules",
 			"!!**/.astro",
 			"!!**/.changeset",
-			"!!**/.claude"
+			"!!**/.claude",
+			"!!**/src/paraglide",
+			"!!**/project.inlang"
 		]
 	}
 }

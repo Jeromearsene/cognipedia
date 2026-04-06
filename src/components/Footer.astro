@@ -1,5 +1,5 @@
 ---
-import { t } from "@/i18n/i18n";
+import { m } from "@/paraglide/messages";
 import GithubIcon from "~icons/lucide/github";
 
 const { locale } = Astro.locals;
@@ -9,10 +9,10 @@ const { locale } = Astro.locals;
   <div class="mx-auto flex w-full max-w-6xl items-center justify-between px-4 py-4 text-sm text-text-secondary sm:px-8">
     <span>Cognipedia &copy; {new Date().getFullYear()}</span>
     <a
-      href={`/${locale}/${t(locale, "slug.profile")}`}
+      href={`/${locale}/${m.slug_profile()}`}
       class="text-text-secondary hover:text-text no-underline hover:underline"
     >
-      {t(locale, "footer.existing-account")}
+      {m.footer_existing_account()}
     </a>
     <a
       href="https://github.com/Jeromearsene/cognipedia"

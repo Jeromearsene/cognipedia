@@ -11,3 +11,6 @@ runs:
         cache: pnpm
     - run: pnpm install --frozen-lockfile
       shell: bash
+    - name: Compile Paraglide messages
+      run: pnpm exec paraglide-js compile --project ./project.inlang --outdir ./src/paraglide
+      shell: bash

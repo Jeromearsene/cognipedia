@@ -2,6 +2,7 @@
 import autoAnimate from "@formkit/auto-animate";
 import type { BiasCardData, Difficulty, Family } from "@/lib/constants";
 import { isDifficulty, isFamily } from "@/lib/utils";
+import { home_results_count } from "@/paraglide/messages";
 import BiasCard from "./BiasCard.svelte";
 import FilterBar from "./FilterBar.svelte";
 import ResultsHeader from "./ResultsHeader.svelte";
@@ -29,25 +30,18 @@ interface Props {
 	initialFamily?: string | null;
 	/** Pre-selected difficulty filter from query params (passed by Astro SSR). */
 	initialDifficulty?: string | null;
-	/** BCP 47 locale (e.g. "fr", "en") — used for Intl.PluralRules. */
-	locale: string;
 	labels: {
 		family: string;
 		difficulty: string;
 		search: string;
 		searchPlaceholder: string;
 		reset: string;
-		/** Plural forms indexed by CLDR category (one, other, ...) with {count} placeholder. */
-		resultsCount: Record<string, string>;
 		noResults: string;
 	};
 }
 
-const { biases, families, difficulties, initialFamily, initialDifficulty, locale, labels }: Props =
+const { biases, families, difficulties, initialFamily, initialDifficulty, labels }: Props =
 	$props();
-
-// svelte-ignore state_referenced_locally — locale is a static SSR prop, won't change after mount
-const pluralRules = new Intl.PluralRules(locale);
 
 // svelte-ignore state_referenced_locally — props are static (from Astro), won't change after mount
 const familyKeys = families.map((family) => family.key);
@@ -94,12 +88,8 @@ const filtered = $derived.by(() => {
 	});
 });
 
-/** Formatted result count via Intl.PluralRules — selects the matching CLDR category. */
-const resultsLabel = $derived.by(() => {
-	const category = pluralRules.select(filtered.length);
-	const template = labels.resultsCount[category] ?? labels.resultsCount.other ?? "";
-	return template.replace("{count}", String(filtered.length));
-});
+/** Formatted result count — uses Paraglide ICU plurals directly from the client. */
+const resultsLabel = $derived(home_results_count({ count: filtered.length }));
 
 /** True when any filter is narrowed (at least one family/difficulty disabled or search active). */
 const hasActiveFilters = $derived(

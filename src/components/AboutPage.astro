@@ -2,14 +2,7 @@
 /**
  * About page content — shared between /a-propos (FR) and /about (EN).
  */
-import type { Locale } from "@/i18n/i18n";
-import { t } from "@/i18n/i18n";
-
-interface Props {
-	locale: Locale;
-}
-
-const { locale } = Astro.props;
+import { m } from "@/paraglide/messages";
 ---
 
-<p class="py-12 text-center text-text-secondary">{t(locale, "about.coming-soon")}</p>
+<p class="py-12 text-center text-text-secondary">{m.about_coming_soon()}</p>

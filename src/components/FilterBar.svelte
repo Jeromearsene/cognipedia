@@ -42,8 +42,9 @@ const {
 }: Props = $props();
 </script>
 
-<div class="sticky top-0 z-10 mb-6 flex flex-wrap gap-4 rounded-xl border border-accent/20 bg-accent-subtle p-3 shadow-sm sm:gap-6 sm:p-4">
-  <div class="w-full sm:w-auto sm:min-w-[220px] sm:flex-1">
+<div class="sticky top-0 z-10 mb-6 flex flex-col gap-4 rounded-xl border border-accent/20 bg-accent-subtle p-3 shadow-sm sm:p-4">
+  <!-- Search: full width -->
+  <div>
     <label for="bias-search" class="mb-2 block font-heading text-base font-semibold text-text">{labels.search}</label>
     <div class="relative">
       <Search size={16} class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-text-secondary" />
@@ -58,6 +59,8 @@ const {
     </div>
   </div>
 
+  <!-- Family + Difficulty: side by side on desktop, stacked on mobile -->
+  <div class="flex flex-wrap gap-4 sm:gap-6">
   <div>
     <span class="mb-2 block font-heading text-base font-semibold text-text">{labels.family}</span>
     <div class="flex flex-wrap gap-2">
@@ -90,5 +93,6 @@ const {
         </button>
       {/each}
     </div>
+  </div>
   </div>
 </div>

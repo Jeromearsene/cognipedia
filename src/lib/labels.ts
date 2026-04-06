@@ -1,5 +1,5 @@
 import type { Locale } from "@/i18n/i18n";
-import { t } from "@/i18n/i18n";
+import { m } from "@/paraglide/messages";
 
 // --- Label type definitions ---
 
@@ -65,7 +65,7 @@ export interface ProfilePageLabels {
 	copy: string;
 	copied: string;
 	progression: string;
-	progressionBiases: string;
+	progressionBiases: (count: number, total: number) => string;
 	totalScore: string;
 	completedBiases: string;
 	scoreColumn: string;
@@ -77,55 +77,55 @@ export interface ProfilePageLabels {
 
 /** Builds all labels needed by the BiasInteractive orchestrator. */
 export const getBiasInteractiveLabels = (locale: Locale): BiasInteractiveLabels => ({
-	situationTitle: t(locale, "situation.title"),
-	quizTitle: t(locale, "quiz.title"),
+	situationTitle: m.situation_title({}, { locale }),
+	quizTitle: m.quiz_title({}, { locale }),
 	quiz: {
-		next: t(locale, "quiz.next"),
-		results: t(locale, "quiz.results"),
-		correct: t(locale, "quiz.correct"),
-		incorrect: t(locale, "quiz.incorrect"),
+		next: m.quiz_next({}, { locale }),
+		results: m.quiz_results({}, { locale }),
+		correct: m.quiz_correct({}, { locale }),
+		incorrect: m.quiz_incorrect({}, { locale }),
 	},
 	score: {
-		submitting: t(locale, "score.submitting"),
-		submitted: t(locale, "score.submitted"),
-		error: t(locale, "score.error"),
+		submitting: m.score_submitting({}, { locale }),
+		submitted: m.score_submitted({}, { locale }),
+		error: m.score_error({}, { locale }),
 	},
 	recovery: {
-		title: t(locale, "recovery.modal.title"),
-		description: t(locale, "recovery.modal.description"),
-		profileHint: t(locale, "recovery.modal.profile-hint"),
-		dismiss: t(locale, "recovery.modal.dismiss"),
-		copied: t(locale, "recovery.modal.copied"),
-		copy: t(locale, "user.recovery.copy"),
+		title: m.recovery_modal_title({}, { locale }),
+		description: m.recovery_modal_description({}, { locale }),
+		profileHint: m.recovery_modal_profile_hint({}, { locale }),
+		dismiss: m.recovery_modal_dismiss({}, { locale }),
+		copied: m.recovery_modal_copied({}, { locale }),
+		copy: m.user_recovery_copy({}, { locale }),
 	},
 });
 
 /** Builds all labels needed by the ProfilePage component. */
 export const getProfileLabels = (locale: Locale): ProfilePageLabels => ({
-	notRegistered: t(locale, "profile.not-registered"),
-	notRegisteredHint: t(locale, "profile.not-registered.hint"),
+	notRegistered: m.profile_not_registered({}, { locale }),
+	notRegisteredHint: m.profile_not_registered_hint({}, { locale }),
 	pseudo: {
-		save: t(locale, "profile.pseudo.save"),
-		saving: t(locale, "profile.pseudo.saving"),
-		placeholder: t(locale, "user.pseudo.placeholder"),
-		edit: t(locale, "profile.pseudo.edit"),
+		save: m.profile_pseudo_save({}, { locale }),
+		saving: m.profile_pseudo_saving({}, { locale }),
+		placeholder: m.user_pseudo_placeholder({}, { locale }),
+		edit: m.profile_pseudo_edit({}, { locale }),
 	},
-	recoveryCodeLabel: t(locale, "profile.recovery-code"),
-	recoveryHint: t(locale, "profile.recovery-hint"),
-	copy: t(locale, "user.recovery.copy"),
-	copied: t(locale, "recovery.modal.copied"),
-	progression: t(locale, "profile.progression"),
-	progressionBiases: t(locale, "profile.progression.biases"),
-	totalScore: t(locale, "profile.total-score"),
-	completedBiases: t(locale, "profile.completed-biases"),
-	scoreColumn: t(locale, "profile.score-column"),
-	noScores: t(locale, "profile.no-scores"),
+	recoveryCodeLabel: m.profile_recovery_code({}, { locale }),
+	recoveryHint: m.profile_recovery_hint({}, { locale }),
+	copy: m.user_recovery_copy({}, { locale }),
+	copied: m.recovery_modal_copied({}, { locale }),
+	progression: m.profile_progression({}, { locale }),
+	progressionBiases: (count, total) => m.profile_progression_biases({ count, total }, { locale }),
+	totalScore: m.profile_total_score({}, { locale }),
+	completedBiases: m.profile_completed_biases({}, { locale }),
+	scoreColumn: m.profile_score_column({}, { locale }),
+	noScores: m.profile_no_scores({}, { locale }),
 	recoveryForm: {
-		title: t(locale, "recovery.form.title"),
-		placeholder: t(locale, "recovery.form.placeholder"),
-		submit: t(locale, "recovery.form.submit"),
-		errorInvalid: t(locale, "recovery.form.error.invalid"),
-		errorNotFound: t(locale, "recovery.form.error.not-found"),
-		success: t(locale, "recovery.form.success"),
+		title: m.recovery_form_title({}, { locale }),
+		placeholder: m.recovery_form_placeholder({}, { locale }),
+		submit: m.recovery_form_submit({}, { locale }),
+		errorInvalid: m.recovery_form_error_invalid({}, { locale }),
+		errorNotFound: m.recovery_form_error_not_found({}, { locale }),
+		success: m.recovery_form_success({}, { locale }),
 	},
 });

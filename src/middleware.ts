@@ -2,10 +2,11 @@ import { defineMiddleware } from "astro:middleware";
 import {
 	getLocaleFromAcceptLanguage,
 	getLocaleFromUrl,
+	getSlug,
 	isLocale,
 	slugToLocaleMap,
-	t,
 } from "@/i18n/i18n";
+import { setLocale } from "@/paraglide/runtime";
 
 /**
  * Populates `Astro.locals` with locale, current path, and registration status.
@@ -22,6 +23,7 @@ export const onRequest = defineMiddleware((context, next) => {
 	if (langSegment === "api" || langSegment === "sitemap.xml" || url.pathname === "/") {
 		context.locals.locale = getLocaleFromUrl(url);
 		context.locals.currentPath = url.pathname;
+		setLocale(context.locals.locale, { reload: false });
 		return next();
 	}
 
@@ -34,6 +36,7 @@ export const onRequest = defineMiddleware((context, next) => {
 	const locale = langSegment;
 	context.locals.locale = locale;
 	context.locals.currentPath = url.pathname;
+	setLocale(locale, { reload: false });
 
 	// Redirect localized slugs that don't match the current locale.
 	// E.g. /fr/leaderboard → /fr/classement, /en/biais/ancrage → /en/bias/ancrage
@@ -45,7 +48,7 @@ export const onRequest = defineMiddleware((context, next) => {
 
 		if (match && match.locale !== locale) {
 			// This slug belongs to another locale — redirect to the correct one
-			const correctSlug = t(locale, match.key);
+			const correctSlug = getSlug(match.key, locale);
 			const rest = segments.slice(2).join("/");
 			const redirectPath = rest ? `/${locale}/${correctSlug}/${rest}` : `/${locale}/${correctSlug}`;
 			return context.redirect(redirectPath);

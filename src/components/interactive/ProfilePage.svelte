@@ -82,7 +82,7 @@ const progressPercent = $derived(
 				></div>
 			</div>
 			<p class="text-sm text-text-secondary">
-				{labels.progressionBiases.replace("{count}", String(scores.length)).replace("{total}", String(totalBiasCount))}
+				{labels.progressionBiases(scores.length, totalBiasCount)}
 			</p>
 			<p class="mt-1 text-sm font-medium">{labels.totalScore} : {totalScore}</p>
 		</div>

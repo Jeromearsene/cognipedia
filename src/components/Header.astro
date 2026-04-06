@@ -2,15 +2,16 @@
 import MobileMenu from "@/components/MobileMenu.svelte";
 import ThemeToggle from "@/components/ThemeToggle.svelte";
 import type { Locale } from "@/i18n/i18n";
-import { SUPPORTED_LOCALES, t } from "@/i18n/i18n";
+import { SUPPORTED_LOCALES } from "@/i18n/i18n";
+import { m } from "@/paraglide/messages";
 
 const { locale, currentPath, altLangHrefs } = Astro.locals;
 
 const navLinks = [
-	{ key: "nav.home", href: `/${locale}/` },
-	{ key: "nav.leaderboard", href: `/${locale}/${t(locale, "slug.leaderboard")}` },
-	{ key: "nav.about", href: `/${locale}/${t(locale, "slug.about")}` },
-	{ key: "nav.profile", href: `/${locale}/${t(locale, "slug.profile")}` },
+	{ label: m.nav_home(), href: `/${locale}/` },
+	{ label: m.nav_leaderboard(), href: `/${locale}/${m.slug_leaderboard()}` },
+	{ label: m.nav_about(), href: `/${locale}/${m.slug_about()}` },
+	{ label: m.nav_profile(), href: `/${locale}/${m.slug_profile()}` },
 ];
 
 /**
@@ -26,8 +27,8 @@ const switchLangPath = (target: Locale) => {
 	return currentPath.endsWith("/") ? `${path}/` : path;
 };
 
-const mobileNavLinks = navLinks.map(({ key, href }) => ({
-	label: t(locale, key),
+const mobileNavLinks = navLinks.map(({ label, href }) => ({
+	label,
 	href,
 	active: currentPath === href,
 }));
@@ -47,7 +48,7 @@ const mobileLangLinks = SUPPORTED_LOCALES.map((lang) => ({
 
     <!-- Desktop nav (hidden below lg) -->
     <ul class="hidden lg:flex gap-6 list-none m-0 p-0">
-      {navLinks.map(({ key, href }) => (
+      {navLinks.map(({ label, href }) => (
         <li>
           <a
             href={href}
@@ -56,7 +57,7 @@ const mobileLangLinks = SUPPORTED_LOCALES.map((lang) => ({
               currentPath === href ? "font-bold text-accent" : "text-text-secondary",
             ]}
           >
-            {t(locale, key)}
+            {label}
           </a>
         </li>
       ))}

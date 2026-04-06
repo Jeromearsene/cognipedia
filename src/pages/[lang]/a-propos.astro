@@ -7,17 +7,17 @@ export const getStaticPaths: GetStaticPaths = () => [{ params: { lang: "fr" } }]
 
 /** About page (French route: /fr/a-propos). */
 import AboutPage from "@/components/AboutPage.astro";
-import { t } from "@/i18n/i18n";
 import BaseLayout from "@/layouts/BaseLayout.astro";
+import { m } from "@/paraglide/messages";
 
 const { locale } = Astro.locals;
 
 Astro.locals.altLangHrefs = { en: "/en/about" };
 
-const pageTitle = t(locale, "about.title");
+const pageTitle = m.about_title();
 ---
 
-<BaseLayout title={`${pageTitle} — ${t(locale, "site.title")}`} description={t(locale, "site.description")} lang={locale}>
+<BaseLayout title={`${pageTitle} — ${m.site_title()}`} description={m.site_description()} lang={locale}>
 	<h1 class="mb-8 text-3xl font-bold">{pageTitle}</h1>
-	<AboutPage locale={locale} />
+	<AboutPage />
 </BaseLayout>
