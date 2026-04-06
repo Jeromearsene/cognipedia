@@ -18,14 +18,18 @@ interface Props {
 	activeFamilies: Set<Family>;
 	activeDifficulties: Set<Difficulty>;
 	searchQuery: string;
+	activeStatus: string;
 	onToggleFamily: (key: Family) => void;
 	onToggleDifficulty: (key: Difficulty) => void;
 	onSearchChange: (value: string) => void;
+	onStatusChange: (value: string) => void;
 	labels: {
 		family: string;
 		difficulty: string;
 		search: string;
 		searchPlaceholder: string;
+		status: string;
+		statusOptions: { key: string; label: string }[];
 	};
 }
 
@@ -35,9 +39,11 @@ const {
 	activeFamilies,
 	activeDifficulties,
 	searchQuery,
+	activeStatus,
 	onToggleFamily,
 	onToggleDifficulty,
 	onSearchChange,
+	onStatusChange,
 	labels,
 }: Props = $props();
 </script>
@@ -88,6 +94,22 @@ const {
             : 'border-border bg-bg text-text-secondary'}"
           style={`--difficulty-color: var(--difficulty-${key})`}
           onclick={() => onToggleDifficulty(key)}
+        >
+          {label}
+        </button>
+      {/each}
+    </div>
+  </div>
+
+  <div>
+    <span class="mb-2 block font-heading text-base font-semibold text-text">{labels.status}</span>
+    <div class="flex flex-wrap gap-2">
+      {#each labels.statusOptions as { key, label }}
+        <button
+          class="cursor-pointer rounded-full border px-3 py-1 text-sm transition-colors hover:border-accent hover:text-accent {activeStatus === key
+            ? 'border-accent bg-accent text-white'
+            : 'border-border bg-bg text-text-secondary'}"
+          onclick={() => onStatusChange(key)}
         >
           {label}
         </button>
