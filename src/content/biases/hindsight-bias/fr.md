@@ -16,6 +16,13 @@ sources:
       urls:
         - label: "DOI"
           url: "https://doi.org/10.1016/0030-5073(75)90002-1"
+  videos:
+    - title: "Le biais rétrospectif : je savais que ça allait arriver ! (Fabrice Valcourt) — BistroBrain"
+      url: "https://www.youtube.com/watch?v=HPNBjdWrky4"
+      lang: "fr"
+    - title: "#130 - Le biais rétrospectif (biais cognitifs, ép. 5) — Se Sentir Bien"
+      url: "https://www.youtube.com/watch?v=G8C4mLmV54s"
+      lang: "fr"
 relatedBiases: ["confirmation", "dunning-kruger"]
 situation:
   type: "choice"
