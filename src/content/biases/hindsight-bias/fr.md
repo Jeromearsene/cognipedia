@@ -16,10 +16,6 @@ sources:
       urls:
         - label: "DOI"
           url: "https://doi.org/10.1016/0030-5073(75)90002-1"
-  videos:
-    - title: "Biais rétrospectif — [BSB]"
-      url: "https://www.youtube.com/watch?v=LNBW-bmbaXI"
-      lang: "fr"
 relatedBiases: ["confirmation", "dunning-kruger"]
 situation:
   type: "choice"
