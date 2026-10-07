@@ -16,6 +16,10 @@ sources:
       urls:
         - label: "DOI"
           url: "https://doi.org/10.3928/0048-5713-19951201-07"
+  videos:
+    - title: "Les questions dirigées en entretien judiciaire (Loftus & Palmer, 1974) — COPSYJU"
+      url: "https://www.youtube.com/watch?v=JyCfqYf4YGk"
+      lang: "fr"
 relatedBiases: ["hindsight-bias", "availability"]
 situation:
   type: "choice"
