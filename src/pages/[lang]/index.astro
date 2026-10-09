@@ -29,6 +29,7 @@ const difficultyLabel: Record<Difficulty, () => string> = {
 
 /** Serialize a bias entry into the shape BiasCard/BiasGrid expects. */
 const toBiasItem = (entry: (typeof biases)[number]) => ({
+	slug: entry.data.slug,
 	href: `/${locale}/${m.slug_bias()}/${entry.data.slug}`,
 	title: entry.data.title,
 	family: entry.data.family,
@@ -129,6 +130,13 @@ const hasFilters = filterFamily !== null || filterDifficulty !== null;
           searchPlaceholder: m.home_filter_search_placeholder(),
           reset: m.home_filter_reset(),
           noResults: m.home_no_results(),
+          status: m.home_filter_status(),
+          statusOptions: [
+            { key: "all", label: m.home_filter_status_all() },
+            { key: "new", label: m.home_filter_status_new() },
+            { key: "seen", label: m.home_filter_status_seen() },
+            { key: "completed", label: m.home_filter_status_completed() },
+          ],
         }}
         client:visible
       />

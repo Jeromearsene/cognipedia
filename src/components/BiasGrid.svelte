@@ -1,6 +1,7 @@
 <script lang="ts">
 import autoAnimate from "@formkit/auto-animate";
 import type { BiasCardData, Difficulty, Family } from "@/lib/constants";
+import { biasProgressStore } from "@/lib/seenBiasesStore.svelte";
 import { isDifficulty, isFamily } from "@/lib/utils";
 import { home_results_count } from "@/paraglide/messages";
 import BiasCard from "./BiasCard.svelte";
@@ -37,6 +38,8 @@ interface Props {
 		searchPlaceholder: string;
 		reset: string;
 		noResults: string;
+		status: string;
+		statusOptions: { key: string; label: string }[];
 	};
 }
 
@@ -64,6 +67,9 @@ let activeDifficulties = $state(
 /** Text search query — matches against bias title (case-insensitive). */
 let searchQuery = $state("");
 
+/** Active status filter — "all" shows everything, others filter by progression. */
+let activeStatus = $state("all");
+
 const toggleFamily = (key: Family) => {
 	const next = new Set(activeFamilies);
 	if (next.has(key)) next.delete(key);
@@ -84,6 +90,12 @@ const filtered = $derived.by(() => {
 		if (!activeFamilies.has(bias.family)) return false;
 		if (!activeDifficulties.has(bias.difficulty)) return false;
 		if (normalizedQuery && !bias.title.toLowerCase().includes(normalizedQuery)) return false;
+		if (activeStatus !== "all") {
+			const status = biasProgressStore.getStatus(bias.slug);
+			if (activeStatus === "seen" && status === "new") return false;
+			if (activeStatus === "new" && status !== "new") return false;
+			if (activeStatus === "completed" && status !== "completed") return false;
+		}
 		return true;
 	});
 });
@@ -95,7 +107,8 @@ const resultsLabel = $derived(home_results_count({ count: filtered.length }));
 const hasActiveFilters = $derived(
 	activeFamilies.size < familyKeys.length ||
 		activeDifficulties.size < difficultyKeys.length ||
-		searchQuery.trim().length > 0,
+		searchQuery.trim().length > 0 ||
+		activeStatus !== "all",
 );
 
 /** Restore all filters to their default state: everything enabled, search cleared. */
@@ -103,6 +116,7 @@ const resetFilters = () => {
 	activeFamilies = new Set(familyKeys);
 	activeDifficulties = new Set(difficultyKeys);
 	searchQuery = "";
+	activeStatus = "all";
 };
 </script>
 
@@ -115,11 +129,15 @@ const resetFilters = () => {
   onToggleFamily={toggleFamily}
   onToggleDifficulty={toggleDifficulty}
   onSearchChange={(value) => { searchQuery = value; }}
+  {activeStatus}
+  onStatusChange={(value) => { activeStatus = value; }}
   labels={{
     family: labels.family,
     difficulty: labels.difficulty,
     search: labels.search,
     searchPlaceholder: labels.searchPlaceholder,
+    status: labels.status,
+    statusOptions: labels.statusOptions,
   }}
 />
 

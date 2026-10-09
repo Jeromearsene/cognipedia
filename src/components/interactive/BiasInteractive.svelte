@@ -1,6 +1,7 @@
 <script lang="ts">
 import type { BiasInteractiveLabels } from "@/lib/labels";
 import type { Quiz as QuizData, Situation as SituationData } from "@/lib/schemas";
+import { biasProgressStore } from "@/lib/seenBiasesStore.svelte";
 import { userStore } from "@/lib/userStore.svelte";
 import Quiz from "./Quiz.svelte";
 import RecoveryCodeModal from "./RecoveryCodeModal.svelte";
@@ -18,6 +19,11 @@ let { biasSlug, profileUrl, situation, quiz, labels }: Props = $props();
 
 let situationScore: number | null = $state(null);
 let submitState = $state<"idle" | "submitting" | "submitted" | "error">("idle");
+
+/* Mark this bias as seen when the page loads (client-side only). */
+$effect(() => {
+	biasProgressStore.markSeen(biasSlug);
+});
 let showRecoveryModal = $state(false);
 
 const handleSituationComplete = (choseBiased: boolean) => {
@@ -47,6 +53,7 @@ const handleQuizComplete = async (correct: number, total: number) => {
 		if (!response.ok) throw new Error("Score submission failed");
 
 		submitState = "submitted";
+		biasProgressStore.markCompleted(biasSlug);
 
 		if (!userStore.recoveryCodeSeen) {
 			showRecoveryModal = true;
