@@ -19,8 +19,9 @@ const createBiasProgressStore = () => {
 			if (rawSeen) seen = new Set(JSON.parse(rawSeen));
 			const rawCompleted = localStorage.getItem(COMPLETED_KEY);
 			if (rawCompleted) completed = new Set(JSON.parse(rawCompleted));
-		} catch {
+		} catch (err) {
 			/* corrupted data — start fresh */
+			console.warn("[biasProgressStore] Corrupted progress data, starting fresh:", err);
 		}
 		loaded = true;
 	};
@@ -28,16 +29,18 @@ const createBiasProgressStore = () => {
 	const persistSeen = () => {
 		try {
 			localStorage.setItem(SEEN_KEY, JSON.stringify([...seen]));
-		} catch {
+		} catch (err) {
 			/* storage full or unavailable */
+			console.warn("[biasProgressStore] Could not persist seen biases:", err);
 		}
 	};
 
 	const persistCompleted = () => {
 		try {
 			localStorage.setItem(COMPLETED_KEY, JSON.stringify([...completed]));
-		} catch {
+		} catch (err) {
 			/* storage full or unavailable */
+			console.warn("[biasProgressStore] Could not persist completed biases:", err);
 		}
 	};
 
