@@ -4,6 +4,9 @@
 @import "./families.css";
 @plugin "@tailwindcss/typography";
 
+/* Make `dark:` utilities follow the `.dark` class set by ThemeToggle (not only the OS preference). */
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
 	--color-bg: #fafafa;
 	--color-text: #1a1a2e;

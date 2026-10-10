@@ -53,10 +53,10 @@ const handleSubmit = async () => {
 	</form>
 
 	{#if status === "error-invalid"}
-		<p class="mt-2 text-sm text-red-600">{labels.errorInvalid}</p>
+		<p class="mt-2 text-sm text-red-600 dark:text-red-400">{labels.errorInvalid}</p>
 	{:else if status === "error-not-found"}
-		<p class="mt-2 text-sm text-red-600">{labels.errorNotFound}</p>
+		<p class="mt-2 text-sm text-red-600 dark:text-red-400">{labels.errorNotFound}</p>
 	{:else if status === "success"}
-		<p class="mt-2 text-sm font-medium text-emerald-600">{labels.success}</p>
+		<p class="mt-2 text-sm font-medium text-emerald-600 dark:text-emerald-400">{labels.success}</p>
 	{/if}
 </div>

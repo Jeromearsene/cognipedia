@@ -85,9 +85,9 @@ const handleRecoveryDismiss = () => {
 	{#if submitState === "submitting"}
 		<p class="mt-4 text-center text-text-secondary">{labels.score.submitting}</p>
 	{:else if submitState === "submitted"}
-		<p class="mt-4 text-center font-medium text-emerald-600">{labels.score.submitted}</p>
+		<p class="mt-4 text-center font-medium text-emerald-600 dark:text-emerald-400">{labels.score.submitted}</p>
 	{:else if submitState === "error"}
-		<p class="mt-4 text-center text-red-600">{labels.score.error}</p>
+		<p class="mt-4 text-center text-red-600 dark:text-red-400">{labels.score.error}</p>
 	{/if}
 {/if}
 
