@@ -12,6 +12,10 @@ sources:
       urls:
         - label: "Babelio"
           url: "https://www.babelio.com/livres/Kahneman-Systeme-1--Systeme-2--Les-deux-vitesses-de-la-/364930"
+    - title: "Prospect Theory: An Analysis of Decision under Risk — Kahneman & Tversky, 1979"
+      urls:
+        - label: "DOI"
+          url: "https://doi.org/10.2307/1914185"
   videos:
     - title: "L'aversion à la perte — Heu?reka"
       url: "https://www.youtube.com/watch?v=z1XO51K_e-k"
