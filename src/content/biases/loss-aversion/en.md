@@ -12,6 +12,10 @@ sources:
       urls:
         - label: "DOI"
           url: "https://doi.org/10.2307/1914185"
+  videos:
+    - title: "Loss Aversion (Ethics Defined) — McCombs School of Business"
+      url: "https://www.youtube.com/watch?v=ib9xyJrnv1I"
+      lang: "en"
 relatedBiases: ["anchoring"]
 situation:
   type: "choice"

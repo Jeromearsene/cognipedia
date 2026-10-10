@@ -12,6 +12,10 @@ sources:
       urls:
         - label: "PDF"
           url: "https://people.ucsc.edu/~msmangel/Wald.pdf"
+  videos:
+    - title: "What is Survivorship Bias? (Easy Explanation) — Helpful Professor Explains!"
+      url: "https://www.youtube.com/watch?v=z-Ez32Bc7hg"
+      lang: "en"
 relatedBiases: ["anchoring", "confirmation"]
 situation:
   type: "choice"

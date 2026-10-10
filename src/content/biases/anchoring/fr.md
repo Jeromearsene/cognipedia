@@ -13,8 +13,8 @@ sources:
         - label: "DOI"
           url: "https://doi.org/10.1126/science.185.4157.1124"
   videos:
-    - title: "Le biais d'ancrage — ScienceÉtonnante"
-      url: "https://www.youtube.com/watch?v=example"
+    - title: "Comment prendre l'avantage en négociation ? Le biais d'ancrage — Les amis du doute"
+      url: "https://www.youtube.com/watch?v=M5jS-fqbtVQ"
       lang: "fr"
 relatedBiases: ["framing-effect"]
 situation:

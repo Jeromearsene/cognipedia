@@ -12,6 +12,10 @@ sources:
       urls:
         - label: "DOI"
           url: "https://doi.org/10.1016/0010-0285(73)90033-9"
+  videos:
+    - title: "What is the Availability Heuristic? (Easy Explanation) — Social Science Explainer"
+      url: "https://www.youtube.com/watch?v=UUSB1VsJs4M"
+      lang: "en"
 relatedBiases: ["anchoring", "survivorship"]
 situation:
   type: "choice"
