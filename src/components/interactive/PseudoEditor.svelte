@@ -66,7 +66,7 @@ const handleKeydown = (e: KeyboardEvent) => {
 			</button>
 		</div>
 		{#if error}
-			<p class="mt-1 text-sm text-red-600">Erreur lors de la sauvegarde</p>
+			<p class="mt-1 text-sm text-red-600 dark:text-red-400">Erreur lors de la sauvegarde</p>
 		{/if}
 	</div>
 {:else}
