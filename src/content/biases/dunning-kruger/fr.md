@@ -14,6 +14,10 @@ sources:
           url: "https://www.fnac.com/a13192747/Albert-Moukheiber-Votre-cerveau-vous-joue-des-tours"
         - label: "Amazon"
           url: "https://www.amazon.fr/Votre-cerveau-vous-joue-tours/dp/2370732601"
+    - title: "Unskilled and Unaware of It — Kruger & Dunning, 1999"
+      urls:
+        - label: "DOI"
+          url: "https://doi.org/10.1037/0022-3514.77.6.1121"
   videos:
     - title: "L'effet Dunning-Kruger — La Statistique expliquée à mon chat"
       url: "https://www.youtube.com/watch?v=LVhJxJnID_A"
