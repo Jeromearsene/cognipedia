@@ -1,15 +1,18 @@
 <script lang="ts">
 import { cn } from "@/lib/cn";
+import type { SituationLabels } from "@/lib/labels";
 import type { Situation } from "@/lib/schemas";
 
 interface Props {
 	/** Situation data parsed from the bias markdown. */
 	data: Situation;
+	/** Translated UI labels. */
+	labels: SituationLabels;
 	/** Called after the user picks a choice. `true` if the biased option was selected. */
 	onComplete?: (choseBiased: boolean) => void;
 }
 
-let { data, onComplete }: Props = $props();
+let { data, labels, onComplete }: Props = $props();
 let selectedIndex: number | null = $state(null);
 let revealed = $state(false);
 
@@ -21,33 +24,34 @@ const handleChoice = (index: number) => {
 };
 </script>
 
-<section class="rounded-lg border border-border bg-surface p-8">
-  <p class="mb-8 text-lg">{data.scenario}</p>
+<section class="rounded-[22px] bg-surface p-[26px] shadow-brand-sm">
+  <p class="mb-[18px] text-base">{data.scenario}</p>
 
-  <div class="flex flex-col gap-2">
+  <div class="flex flex-col gap-[10px]">
     {#each data.choices as choice, i}
       <button
         class={cn(
-          "cursor-pointer rounded-lg border-2 border-border bg-surface p-4 text-left text-base transition-colors",
-          "hover:not-disabled:border-accent disabled:cursor-default disabled:opacity-70",
-          revealed && selectedIndex === i && {
-            "border-red-500 bg-red-50 text-red-950 disabled:opacity-100 dark:bg-red-500/15 dark:text-red-100":
-              choice.bias,
-            "border-emerald-500 bg-emerald-50 text-emerald-950 disabled:opacity-100 dark:bg-emerald-500/15 dark:text-emerald-100":
-              !choice.bias,
-          },
+          "flex cursor-pointer items-center justify-between gap-3 rounded-[14px] border-[1.5px] border-border bg-surface px-[18px] py-[14px] text-left text-[15px] transition-colors",
+          "hover:not-disabled:border-accent disabled:cursor-default",
+          revealed && selectedIndex !== i && "opacity-60",
+          revealed && !choice.bias && "border-[color:var(--success-border)] font-semibold",
         )}
+        style={revealed && !choice.bias ? "background-color: var(--success-bg); color: var(--success-text)" : ""}
         disabled={revealed}
         onclick={() => handleChoice(i)}
       >
-        {choice.label}
+        <span>{choice.label}</span>
+        {#if revealed && !choice.bias}
+          <span class="text-[13px] font-bold">✓</span>
+        {/if}
       </button>
     {/each}
   </div>
 
   {#if revealed}
-    <div class="mt-8 rounded-r-lg border-l-4 border-amber-500 bg-amber-50 p-4 text-amber-950 dark:bg-amber-500/15 dark:text-amber-100">
-      <p>{data.reveal}</p>
+    <div class="mt-[18px] border-t border-border pt-4">
+      <span class="text-xs font-bold uppercase tracking-wide text-accent-ink">{labels.revealLabel}</span>
+      <p class="mt-1.5 text-[15px] text-text-secondary">{data.reveal}</p>
     </div>
   {/if}
 </section>

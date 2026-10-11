@@ -1,4 +1,5 @@
 <script lang="ts">
+import Mascot from "@/components/Mascot.svelte";
 import { cn } from "@/lib/cn";
 import type { Quiz } from "@/lib/schemas";
 import { computeQuizScore } from "@/lib/scoring";
@@ -61,45 +62,58 @@ const handleNext = () => {
 };
 </script>
 
-<section class="rounded-lg border border-border bg-surface p-8">
+<section class="rounded-[22px] bg-surface p-[26px] shadow-brand-sm">
   {#if !finished}
-    <div class="mb-2 text-sm text-text-secondary">
-      {currentIndex + 1} / {data.questions.length}
+    <div class="mb-[14px] flex items-center justify-between">
+      <span class="text-xs font-bold text-text-secondary">
+        {currentIndex + 1} / {data.questions.length}
+      </span>
+      <span class="text-[13px] font-bold tabular-nums">
+        {score.correct} / {answers.length}
+      </span>
     </div>
 
-    <p class="mb-8 text-lg font-semibold">{currentQuestion.question}</p>
+    <p class="mb-[18px] text-base font-semibold">{currentQuestion.question}</p>
 
-    <div class="flex flex-col gap-2">
+    <div class="flex flex-col gap-[10px]">
       {#each currentQuestion.choices as choice, i}
         <button
           class={cn(
-            "cursor-pointer rounded-lg border-2 border-border bg-surface p-4 text-left text-base transition-colors",
+            "flex cursor-pointer items-center justify-between gap-3 rounded-[14px] border-[1.5px] border-border bg-surface px-[18px] py-[14px] text-left text-[15px] transition-colors",
             "hover:not-disabled:border-accent disabled:cursor-default",
-            showExplanation && {
-              "border-emerald-500 bg-emerald-50 text-emerald-950 dark:bg-emerald-500/15 dark:text-emerald-100":
-                i === currentQuestion.correct,
-              "border-red-500 bg-red-50 text-red-950 dark:bg-red-500/15 dark:text-red-100":
-                selectedAnswer === i && i !== currentQuestion.correct,
-            },
+            showExplanation && i !== currentQuestion.correct && "opacity-60",
+            showExplanation && i === currentQuestion.correct && "border-[color:var(--success-border)] font-semibold",
           )}
+          style={showExplanation && i === currentQuestion.correct
+            ? "background-color: var(--success-bg); color: var(--success-text)"
+            : ""}
           disabled={showExplanation}
           onclick={() => handleAnswer(i)}
         >
-          {choice}
+          <span>{choice}</span>
+          {#if showExplanation && i === currentQuestion.correct}
+            <span class="text-[13px] font-bold">✓</span>
+          {/if}
         </button>
       {/each}
     </div>
 
     {#if showExplanation}
-      <div class="mt-8 rounded-lg border-l-4 border-emerald-500 bg-emerald-50 p-4 text-emerald-950 dark:bg-emerald-500/15 dark:text-emerald-100">
-        <p><strong>{isCorrect ? '✓' : '✗'}</strong> {currentQuestion.explanation}</p>
-        <button
-          class="mt-4 cursor-pointer rounded bg-accent px-4 py-2 text-sm text-white"
-          onclick={handleNext}
-        >
-          {isLastQuestion ? labels.results : labels.next}
-        </button>
+      <div
+        class="mt-[18px] flex items-center gap-4 rounded-2xl p-4"
+        style="background-color: var(--success-bg)"
+      >
+        <Mascot pose={isCorrect ? "happy" : "confused"} size={56} />
+        <div class="flex flex-col gap-1">
+          <span class="text-[15px] font-bold" style="color: var(--success-text)">
+            {isCorrect ? labels.correct : labels.incorrect}
+          </span>
+          <span class="text-sm">{currentQuestion.explanation}</span>
+        </div>
       </div>
+      <button class="btn-primary float-right mt-4 cursor-pointer px-[22px] py-[11px] text-sm" onclick={handleNext}>
+        {isLastQuestion ? labels.results : labels.next}
+      </button>
     {/if}
   {:else}
     <div class="text-center">

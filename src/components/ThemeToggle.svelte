@@ -1,6 +1,6 @@
 <script lang="ts">
 import { Monitor, Moon, Sun } from "lucide-svelte";
-import { onMount } from "svelte";
+import { m } from "@/paraglide/messages";
 
 type ThemeMode = "auto" | "light" | "dark";
 
@@ -14,7 +14,7 @@ const applyTheme = (themeMode: ThemeMode) => {
 	document.documentElement.classList.toggle("dark", isDark);
 };
 
-onMount(() => {
+$effect(() => {
 	const stored = localStorage.getItem("theme");
 	if (stored === "light" || stored === "dark") mode = stored;
 	applyTheme(mode);
@@ -39,24 +39,27 @@ const setMode = (themeMode: ThemeMode) => {
 
 <div class="flex gap-0.5 rounded-xl border border-border bg-surface p-0.5">
   <button
+    type="button"
+    aria-label={m.theme_auto()}
     onclick={() => setMode('auto')}
     class="flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs font-medium transition-colors {mode === 'auto' ? 'bg-accent text-white' : 'text-text-secondary hover:text-text'}"
   >
     <Monitor size={14} />
-    Auto
   </button>
   <button
+    type="button"
+    aria-label={m.theme_light()}
     onclick={() => setMode('light')}
     class="flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs font-medium transition-colors {mode === 'light' ? 'bg-accent text-white' : 'text-text-secondary hover:text-text'}"
   >
     <Sun size={14} />
-    Light
   </button>
   <button
+    type="button"
+    aria-label={m.theme_dark()}
     onclick={() => setMode('dark')}
     class="flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs font-medium transition-colors {mode === 'dark' ? 'bg-accent text-white' : 'text-text-secondary hover:text-text'}"
   >
     <Moon size={14} />
-    Dark
   </button>
 </div>

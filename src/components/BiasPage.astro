@@ -11,7 +11,8 @@ import BiasSourcesSection from "@/components/BiasSourcesSection.astro";
 import Breadcrumb from "@/components/Breadcrumb.astro";
 import BiasInteractive from "@/components/interactive/BiasInteractive.svelte";
 import TableOfContents from "@/components/TableOfContents.astro";
-import { DIFFICULTY_COLORS, type Difficulty, type Family } from "@/lib/constants";
+import { difficultyBadgeStyle, difficultyDotStyle, familyBadgeStyle } from "@/lib/badges";
+import type { Difficulty, Family } from "@/lib/constants";
 import { getBiasInteractiveLabels } from "@/lib/labels";
 import { m } from "@/paraglide/messages";
 
@@ -44,28 +45,30 @@ const showOriginalName = data.originalName !== data.title;
   <Breadcrumb family={data.family} title={data.title} />
 
   <!-- Header: title, original name, badges -->
-  <header class="mb-8">
-    <h1 class="text-3xl font-bold">{data.title}</h1>
+  <header class="mb-10 flex flex-col gap-[10px]">
+    <h1 class="text-4xl font-bold text-balance">{data.title}</h1>
     {showOriginalName && (
-      <p class="mt-1 text-lg italic text-text-secondary">{data.originalName}</p>
+      <p class="italic text-text-secondary">{data.originalName}</p>
     )}
-    <div class="mt-2 flex flex-wrap gap-2 text-xs text-text-secondary">
+    <div class="flex flex-wrap gap-[10px] text-xs text-text-secondary">
       {data.tags.map((tag) => (
         <span>#{tag}</span>
       ))}
     </div>
-    <div class="mt-3 flex flex-wrap items-center gap-2">
+    <div class="mt-1.5 flex flex-wrap items-center gap-2">
       <a
         href={`/${locale}/?family=${data.family}`}
-        class="badge-family rounded-full border-2 px-2.5 py-0.5 text-xs font-medium no-underline transition-all duration-200"
-        style={`--family-color: var(--family-${data.family}); background-color: var(--family-color); border-color: var(--family-color); color: var(--family-contrast)`}
+        class="rounded-full px-3 py-[5px] text-xs font-bold no-underline"
+        style={familyBadgeStyle(data.family)}
       >
         {familyLabel[data.family]()}
       </a>
       <a
         href={`/${locale}/?difficulty=${data.difficulty}`}
-        class={`rounded-full border-2 border-transparent px-2.5 py-0.5 text-xs font-medium no-underline transition-all duration-200 hover:bg-transparent hover:border-current ${DIFFICULTY_COLORS[data.difficulty]}`}
+        class="flex items-center gap-[5px] rounded-full py-[5px] pl-2 pr-3 text-xs font-bold no-underline"
+        style={difficultyBadgeStyle(data.difficulty)}
       >
+        <span class="inline-block h-1.5 w-1.5 rounded-full" style={difficultyDotStyle(data.difficulty)}></span>
         {difficultyLabel[data.difficulty]()}
       </a>
     </div>
@@ -73,8 +76,8 @@ const showOriginalName = data.originalName !== data.title;
 
   <TableOfContents headings={headings} />
 
-  <!-- Markdown content with typography styles (invert colors in dark mode) -->
-  <div class="prose prose-slate max-w-none dark:prose-invert">
+  <!-- Markdown content with typography styles -->
+  <div class="prose max-w-none prose-headings:font-heading prose-headings:font-bold prose-a:text-accent">
     <Content />
   </div>
 
@@ -100,10 +103,3 @@ const showOriginalName = data.originalName !== data.title;
 </article>
 
 <BackToTop client:load />
-
-<style>
-  .badge-family:hover {
-    background-color: transparent !important;
-    color: var(--family-color) !important;
-  }
-</style>

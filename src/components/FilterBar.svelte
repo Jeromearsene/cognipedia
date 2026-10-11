@@ -1,6 +1,7 @@
 <script lang="ts">
 import { Search } from "lucide-svelte";
-import { DIFFICULTY_COLORS, type Difficulty, type Family } from "@/lib/constants";
+import type { Difficulty, Family } from "@/lib/constants";
+import { difficultyBadgeStyle, familyBadgeStyle } from "@/lib/badges";
 
 interface FamilyOption {
 	key: Family;
@@ -48,7 +49,7 @@ const {
 }: Props = $props();
 </script>
 
-<div class="sticky top-0 z-10 mb-6 flex flex-col gap-4 rounded-xl border border-accent/20 bg-accent-subtle p-3 shadow-sm sm:p-4">
+<div class="sticky top-0 z-10 mb-6 flex flex-col gap-4 rounded-xl border border-border bg-surface p-3 shadow-brand-sm sm:p-4">
   <!-- Search: full width -->
   <div>
     <label for="bias-search" class="mb-2 block font-heading text-base font-semibold text-text">{labels.search}</label>
@@ -72,10 +73,12 @@ const {
     <div class="flex flex-wrap gap-2">
       {#each families as { key, label }}
         <button
-          class="cursor-pointer rounded-full border px-3 py-1 text-sm transition-colors hover:!border-[var(--family-color)] hover:bg-transparent hover:text-[var(--family-color)] {activeFamilies.has(key)
-            ? 'border-transparent bg-[var(--family-color)] text-[var(--family-contrast)]'
-            : 'border-border bg-bg text-text-secondary'}"
-          style={`--family-color: var(--family-${key})`}
+          class="cursor-pointer rounded-full border px-3 py-1 text-sm transition-colors {activeFamilies.has(key)
+            ? 'border-transparent'
+            : 'border-border bg-bg text-text-secondary hover:border-[var(--family-color-1)] hover:text-[var(--family-color-1)]'}"
+          style={activeFamilies.has(key)
+            ? familyBadgeStyle(key)
+            : `--family-color-1: var(--family-${key}-1)`}
           onclick={() => onToggleFamily(key)}
         >
           {label}
@@ -89,10 +92,12 @@ const {
     <div class="flex flex-wrap gap-2">
       {#each difficulties as { key, label }}
         <button
-          class="cursor-pointer rounded-full border px-3 py-1 text-sm transition-colors hover:border-[var(--difficulty-color)] hover:bg-transparent hover:text-[var(--difficulty-color)] {activeDifficulties.has(key)
-            ? DIFFICULTY_COLORS[key] + ' border-current'
-            : 'border-border bg-bg text-text-secondary'}"
-          style={`--difficulty-color: var(--difficulty-${key})`}
+          class="cursor-pointer rounded-full border px-3 py-1 text-sm transition-colors {activeDifficulties.has(key)
+            ? 'border-current'
+            : 'border-border bg-bg text-text-secondary hover:border-[var(--difficulty-color)] hover:text-[var(--difficulty-color)]'}"
+          style={activeDifficulties.has(key)
+            ? difficultyBadgeStyle(key)
+            : `--difficulty-color: var(--difficulty-${key}-dot)`}
           onclick={() => onToggleDifficulty(key)}
         >
           {label}

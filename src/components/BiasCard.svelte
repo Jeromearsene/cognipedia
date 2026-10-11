@@ -1,8 +1,10 @@
 <script lang="ts">
+import { tilt } from "@levita-js/svelte";
+import "@levita-js/svelte/style.css";
 import { CheckCircle, Eye } from "lucide-svelte";
 import { fade } from "svelte/transition";
+import { difficultyBadgeStyle, difficultyDotStyle, familyBadgeStyle } from "@/lib/badges";
 import type { BiasCardData } from "@/lib/constants";
-import { DIFFICULTY_COLORS } from "@/lib/constants";
 import { biasProgressStore } from "@/lib/seenBiasesStore.svelte";
 
 interface Props extends BiasCardData {
@@ -26,41 +28,33 @@ const status = $derived(biasProgressStore.getStatus(slug));
 
 <a
   {href}
-  class="bias-card block rounded-xl border bg-surface p-5 no-underline shadow-sm {status === 'completed'
+  class="hoverlift block rounded-[22px] border bg-surface p-[22px] no-underline shadow-brand-sm {status === 'completed'
     ? 'border-accent/40'
-    : 'border-border'}"
-  style="--glow-color: var(--family-{family})"
+    : 'border-transparent'}"
+  use:tilt={{ scale: 1.02, glare: true, maxGlare: 0.15 }}
   in:fade={{ duration: 300, delay }}
 >
-  <div class="flex items-start justify-between gap-2">
-    <h3 class="mb-3 text-lg font-semibold text-text">{title}</h3>
+  <div class="mb-3 flex items-start justify-between gap-2">
+    <h3 class="text-[17px] font-bold text-text">{title}</h3>
     {#if status === "completed"}
       <CheckCircle size={18} class="shrink-0 text-accent" />
     {:else if status === "seen"}
       <Eye size={18} class="shrink-0 text-text-secondary" />
     {/if}
   </div>
-  <div class="flex flex-wrap gap-2">
+  <div class="flex flex-wrap gap-[7px]">
     <span
-      class="rounded-full px-2.5 py-0.5 text-xs font-medium"
-      style="background-color: var(--family-{family}); color: var(--family-contrast)"
+      class="rounded-full px-[11px] py-[5px] text-[11px] font-bold"
+      style={familyBadgeStyle(family)}
     >
       {familyLabel}
     </span>
-    <span class="rounded-full px-2.5 py-0.5 text-xs font-medium {DIFFICULTY_COLORS[difficulty]}">
+    <span
+      class="flex items-center gap-[5px] rounded-full py-[5px] pl-[8px] pr-[11px] text-[11px] font-bold"
+      style={difficultyBadgeStyle(difficulty)}
+    >
+      <span class="inline-block h-1.5 w-1.5 rounded-full" style={difficultyDotStyle(difficulty)}></span>
       {difficultyLabel}
     </span>
   </div>
 </a>
-
-<style>
-  .bias-card {
-    transition: transform 0.2s, box-shadow 0.3s;
-  }
-
-  /* Lift + family-colored glow on hover. --glow-color is set inline from the family CSS variable. */
-  .bias-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 20px color-mix(in srgb, var(--glow-color) 20%, transparent);
-  }
-</style>

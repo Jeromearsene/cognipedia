@@ -42,7 +42,7 @@ const mobileLangLinks = SUPPORTED_LOCALES.map((lang) => ({
 
 <header class="border-b border-border bg-surface">
   <nav class="mx-auto flex w-full max-w-6xl items-center justify-between px-4 py-4 sm:px-8">
-    <a href={`/${locale}/`} class="text-xl font-bold text-text no-underline hover:no-underline">
+    <a href={`/${locale}/`} class="font-heading text-xl font-bold text-text no-underline hover:no-underline hover:text-text">
       Cognipedia
     </a>
 
@@ -64,23 +64,22 @@ const mobileLangLinks = SUPPORTED_LOCALES.map((lang) => ({
     </ul>
 
     <!-- Desktop language switcher (hidden below lg) -->
-    <div class="hidden lg:flex gap-2 text-sm">
-      {SUPPORTED_LOCALES.map((lang) => (
-        <a
-          href={switchLangPath(lang)}
-          class:list={[
-            "no-underline uppercase",
-            lang === locale ? "font-bold text-accent" : "text-text-secondary hover:underline",
-          ]}
-        >
-          {lang}
-        </a>
-      ))}
-    </div>
-
-    <!-- Theme toggle: desktop only (mobile version is inside MobileMenu) -->
-    <div class="hidden lg:block">
+    <div class="hidden lg:flex items-center gap-4">
       <ThemeToggle client:load />
+
+      <div class="flex gap-2 text-sm">
+        {SUPPORTED_LOCALES.map((lang) => (
+          <a
+            href={switchLangPath(lang)}
+            class:list={[
+              "no-underline uppercase",
+              lang === locale ? "font-bold text-accent" : "text-text-secondary hover:underline",
+            ]}
+          >
+            {lang}
+          </a>
+        ))}
+      </div>
     </div>
 
     <!-- Mobile burger (hidden above lg) -->
