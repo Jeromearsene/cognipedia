@@ -1,6 +1,10 @@
 name: Link check
 
 on:
+  push:
+    branches: [staging]
+  pull_request:
+    branches: [main, staging]
   schedule:
     # Every Monday at 06:00 UTC
     - cron: "0 6 * * 1"
