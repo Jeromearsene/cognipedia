@@ -76,8 +76,10 @@ const handleNext = () => {
             "cursor-pointer rounded-lg border-2 border-border bg-surface p-4 text-left text-base transition-colors",
             "hover:not-disabled:border-accent disabled:cursor-default",
             showExplanation && {
-              "border-emerald-500 bg-emerald-50": i === currentQuestion.correct,
-              "border-red-500 bg-red-50": selectedAnswer === i && i !== currentQuestion.correct,
+              "border-emerald-500 bg-emerald-50 text-emerald-950 dark:bg-emerald-500/15 dark:text-emerald-100":
+                i === currentQuestion.correct,
+              "border-red-500 bg-red-50 text-red-950 dark:bg-red-500/15 dark:text-red-100":
+                selectedAnswer === i && i !== currentQuestion.correct,
             },
           )}
           disabled={showExplanation}
@@ -89,7 +91,7 @@ const handleNext = () => {
     </div>
 
     {#if showExplanation}
-      <div class="mt-8 rounded-lg border-l-4 border-emerald-500 bg-emerald-50 p-4">
+      <div class="mt-8 rounded-lg border-l-4 border-emerald-500 bg-emerald-50 p-4 text-emerald-950 dark:bg-emerald-500/15 dark:text-emerald-100">
         <p><strong>{isCorrect ? '✓' : '✗'}</strong> {currentQuestion.explanation}</p>
         <button
           class="mt-4 cursor-pointer rounded bg-accent px-4 py-2 text-sm text-white"
