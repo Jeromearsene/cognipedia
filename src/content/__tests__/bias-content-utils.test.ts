@@ -1,5 +1,36 @@
 import { describe, expect, it } from "vitest";
-import { extractUrls, getAllBiasFiles } from "./bias-content-utils";
+import { extractAddedUrls, extractUrls, getAllBiasFiles } from "./bias-content-utils";
+
+describe("extractAddedUrls", () => {
+	const diff = `diff --git a/src/content/biases/a/fr.md b/src/content/biases/a/fr.md
+--- a/src/content/biases/a/fr.md
++++ b/src/content/biases/a/fr.md
+@@ -10,2 +10,6 @@ sources:
+           url: "https://doi.org/10.1234/old"
++    - title: "New paper"
++      urls:
++        - label: "DOI"
++          url: "https://doi.org/10.1234/new"
+-      url: "https://example.com/removed"
++      url: "https://www.youtube.com/watch?v=abc"`;
+
+	it("returns only URLs on added lines", () => {
+		expect(extractAddedUrls(diff)).toEqual([
+			"https://doi.org/10.1234/new",
+			"https://www.youtube.com/watch?v=abc",
+		]);
+	});
+
+	it("ignores the file headers and removed lines", () => {
+		const urls = extractAddedUrls(diff);
+		expect(urls).not.toContain("https://example.com/removed");
+		expect(urls).not.toContain("https://doi.org/10.1234/old");
+	});
+
+	it("returns an empty array for an empty diff", () => {
+		expect(extractAddedUrls("")).toEqual([]);
+	});
+});
 
 describe("extractUrls", () => {
 	it("extracts URLs from YAML frontmatter", () => {
