@@ -12,6 +12,10 @@ sources:
       urls:
         - label: "Babelio"
           url: "https://www.babelio.com/livres/Cialdini-Influence-et-manipulation/21068"
+    - title: "Effects of Group Pressure upon the Modification and Distortion of Judgments — Asch, 1951"
+      urls:
+        - label: "DOI"
+          url: "https://doi.org/10.1037/10025-016"
   videos:
     - title: "L'expérience de Asch — PsykoCouac"
       url: "https://www.youtube.com/watch?v=7AuFhOhOjqg"

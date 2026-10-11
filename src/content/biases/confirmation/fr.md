@@ -14,6 +14,10 @@ sources:
           url: "https://www.fnac.com/a13192747/Albert-Moukheiber-Votre-cerveau-vous-joue-des-tours"
         - label: "Amazon"
           url: "https://www.amazon.fr/Votre-cerveau-vous-joue-tours/dp/2370732601"
+    - title: "The case for motivated reasoning — Kunda, 1990"
+      urls:
+        - label: "DOI"
+          url: "https://doi.org/10.1037/0033-2909.108.3.480"
   videos:
     - title: "Le biais de confirmation — Hygiène Mentale"
       url: "https://www.youtube.com/watch?v=6cFKyIvNMg4"

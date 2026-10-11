@@ -14,6 +14,10 @@ sources:
           url: "https://www.fnac.com/a13192747/Albert-Moukheiber-Votre-cerveau-vous-joue-des-tours"
         - label: "Amazon"
           url: "https://www.amazon.fr/Votre-cerveau-vous-joue-tours/dp/2370732601"
+    - title: "Availability: A Heuristic for Judging Frequency and Probability — Tversky & Kahneman, 1973"
+      urls:
+        - label: "DOI"
+          url: "https://doi.org/10.1016/0010-0285(73)90033-9"
   videos:
     - title: "Les biais cognitifs — ScienceÉtonnante"
       url: "https://www.youtube.com/watch?v=oFEOoEqW3bE"

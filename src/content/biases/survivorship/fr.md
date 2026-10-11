@@ -12,6 +12,10 @@ sources:
       urls:
         - label: "Babelio"
           url: "https://www.babelio.com/livres/Dobelli-Lart-de-penser-clairement/500595"
+    - title: "A Method of Estimating Plane Vulnerability Based on Damage of Survivors — Abraham Wald, 1943"
+      urls:
+        - label: "PDF"
+          url: "https://people.ucsc.edu/~msmangel/Wald.pdf"
   videos:
     - title: "Le biais du survivant — Fouloscopie"
       url: "https://www.youtube.com/watch?v=dOCaCeBz0Xk"

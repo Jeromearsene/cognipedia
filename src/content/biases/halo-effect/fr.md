@@ -12,6 +12,10 @@ sources:
       urls:
         - label: "Babelio"
           url: "https://www.babelio.com/livres/Kahneman-Systeme-1--Systeme-2--Les-deux-vitesses-de-la-/364930"
+    - title: "A Constant Error in Psychological Ratings — Thorndike, 1920"
+      urls:
+        - label: "DOI"
+          url: "https://doi.org/10.1037/h0071663"
   videos:
     - title: "L'effet de halo — Horizon Gull"
       url: "https://www.youtube.com/watch?v=TBpRqEjHTbU"
