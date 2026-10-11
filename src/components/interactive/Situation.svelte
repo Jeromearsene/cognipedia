@@ -31,8 +31,10 @@ const handleChoice = (index: number) => {
           "cursor-pointer rounded-lg border-2 border-border bg-surface p-4 text-left text-base transition-colors",
           "hover:not-disabled:border-accent disabled:cursor-default disabled:opacity-70",
           revealed && selectedIndex === i && {
-            "border-red-500 bg-red-50": choice.bias,
-            "border-emerald-500 bg-emerald-50": !choice.bias,
+            "border-red-500 bg-red-50 text-red-950 disabled:opacity-100 dark:bg-red-500/15 dark:text-red-100":
+              choice.bias,
+            "border-emerald-500 bg-emerald-50 text-emerald-950 disabled:opacity-100 dark:bg-emerald-500/15 dark:text-emerald-100":
+              !choice.bias,
           },
         )}
         disabled={revealed}
@@ -44,7 +46,7 @@ const handleChoice = (index: number) => {
   </div>
 
   {#if revealed}
-    <div class="mt-8 rounded-r-lg border-l-4 border-amber-500 bg-amber-50 p-4">
+    <div class="mt-8 rounded-r-lg border-l-4 border-amber-500 bg-amber-50 p-4 text-amber-950 dark:bg-amber-500/15 dark:text-amber-100">
       <p>{data.reveal}</p>
     </div>
   {/if}
