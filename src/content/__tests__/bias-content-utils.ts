@@ -20,6 +20,19 @@ export const extractUrls = (content: string): string[] => {
 	return [...urls];
 };
 
+/**
+ * Extracts the URLs introduced by a unified diff: only added lines are read,
+ * so URLs that were already there (even in the diff context) are ignored.
+ */
+export const extractAddedUrls = (diff: string): string[] => {
+	const added = diff
+		.split("\n")
+		.filter((line) => line.startsWith("+") && !line.startsWith("+++"))
+		.map((line) => line.slice(1))
+		.join("\n");
+	return extractUrls(added);
+};
+
 /** Returns all markdown files with their paths. */
 export const getAllBiasFiles = (): { relativePath: string; filePath: string }[] => {
 	const folders = readdirSync(BIASES_DIR, { withFileTypes: true })

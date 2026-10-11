@@ -1,7 +1,9 @@
+import { execFileSync } from "node:child_process";
 import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
 import { describe, expect, it } from "vitest";
 import { delay } from "@/lib/utils";
-import { extractUrls, getAllBiasFiles } from "./bias-content-utils";
+import { extractAddedUrls, extractUrls, getAllBiasFiles } from "./bias-content-utils";
 
 /**
  * Domains that block programmatic access (anti-scraping) but work in browsers.
@@ -61,7 +63,44 @@ const checkUrl = async (url: string): Promise<{ ok: boolean; status: number | st
 	return { ok: false, status: "unreachable" };
 };
 
+/**
+ * When LINKS_BASE_REF is set (e.g. `origin/staging` on a pull request), only the
+ * URLs added since that ref are checked, so an old dead link cannot fail an
+ * unrelated change. Without it, every link of every bias file is checked.
+ */
+const baseRef = process.env.LINKS_BASE_REF;
+
+const getAddedUrls = (ref: string): string[] => {
+	const repoRoot = resolve(import.meta.dirname, "../../..");
+	const diff = execFileSync("git", ["diff", "-U0", `${ref}...HEAD`, "--", "src/content/biases"], {
+		cwd: repoRoot,
+		encoding: "utf-8",
+		maxBuffer: 16 * 1024 * 1024,
+	});
+	return extractAddedUrls(diff);
+};
+
+const expectReachable = async (url: string) => {
+	await delay(500);
+	const result = await checkUrl(url);
+	const acceptable = result.ok || (result.status === 403 && is403Whitelisted(url));
+	expect(acceptable, `${url} returned ${result.status}`).toBe(true);
+};
+
 describe("bias content links", () => {
+	if (baseRef) {
+		const urls = getAddedUrls(baseRef);
+
+		if (urls.length === 0) {
+			it(`no new links since ${baseRef}`, () => {});
+		}
+
+		for (const url of urls) {
+			it(`new since ${baseRef} — ${url}`, { timeout: 30_000 }, () => expectReachable(url));
+		}
+		return;
+	}
+
 	const files = getAllBiasFiles();
 
 	for (const { relativePath, filePath } of files) {
@@ -69,12 +108,7 @@ describe("bias content links", () => {
 		const urls = extractUrls(content);
 
 		for (const url of urls) {
-			it(`${relativePath} — ${url}`, { timeout: 30_000 }, async () => {
-				await delay(500);
-				const result = await checkUrl(url);
-				const acceptable = result.ok || (result.status === 403 && is403Whitelisted(url));
-				expect(acceptable, `${url} returned ${result.status}`).toBe(true);
-			});
+			it(`${relativePath} — ${url}`, { timeout: 30_000 }, () => expectReachable(url));
 		}
 	}
 });
