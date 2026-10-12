@@ -12,6 +12,10 @@ sources:
       urls:
         - label: "DOI"
           url: "https://doi.org/10.1126/science.7455683"
+  videos:
+    - title: "Why Do We Fall For The Framing Effect? — BrainFacts.org"
+      url: "https://www.youtube.com/watch?v=Xb1LOEzw9qs"
+      lang: "en"
 relatedBiases: ["anchoring", "loss-aversion"]
 situation:
   type: "choice"
