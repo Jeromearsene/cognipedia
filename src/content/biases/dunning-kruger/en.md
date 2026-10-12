@@ -12,6 +12,10 @@ sources:
       urls:
         - label: "DOI"
           url: "https://doi.org/10.1037/0022-3514.77.6.1121"
+  videos:
+    - title: "Why incompetent people think they're amazing — TED-Ed"
+      url: "https://www.youtube.com/watch?v=pOLmD_WVY-E"
+      lang: "en"
 relatedBiases: ["confirmation"]
 situation:
   type: "choice"

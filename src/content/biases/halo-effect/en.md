@@ -12,6 +12,10 @@ sources:
       urls:
         - label: "DOI"
           url: "https://doi.org/10.1037/h0071663"
+  videos:
+    - title: "What is the Halo Effect? (Easy Explanation) — Helpful Professor Explains!"
+      url: "https://www.youtube.com/watch?v=Yo53lCtJTXw"
+      lang: "en"
 relatedBiases: ["confirmation"]
 situation:
   type: "choice"

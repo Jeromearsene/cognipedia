@@ -12,6 +12,10 @@ sources:
       urls:
         - label: "DOI"
           url: "https://doi.org/10.1037/10025-016"
+  videos:
+    - title: "Asch's Conformity Experiment on Groupthink — Sprouts"
+      url: "https://www.youtube.com/watch?v=WkK5eA_qhFk"
+      lang: "en"
 relatedBiases: ["confirmation", "halo-effect"]
 situation:
   type: "choice"

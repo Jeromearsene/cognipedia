@@ -13,8 +13,8 @@ sources:
         - label: "DOI"
           url: "https://doi.org/10.1126/science.185.4157.1124"
   videos:
-    - title: "Anchoring Bias — Veritasium"
-      url: "https://www.youtube.com/watch?v=example"
+    - title: "The Anchoring Bias: Why The First Offer Matters — Sprouts"
+      url: "https://www.youtube.com/watch?v=JLeyIdWv2Q8"
       lang: "en"
 relatedBiases: ["framing-effect"]
 situation:
