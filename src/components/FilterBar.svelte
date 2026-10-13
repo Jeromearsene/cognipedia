@@ -1,7 +1,7 @@
 <script lang="ts">
 import { Search } from "lucide-svelte";
-import type { Difficulty, Family } from "@/lib/constants";
 import { difficultyBadgeStyle, familyBadgeStyle } from "@/lib/badges";
+import type { Difficulty, Family } from "@/lib/constants";
 
 interface FamilyOption {
 	key: Family;

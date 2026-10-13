@@ -60,6 +60,19 @@
 			}
 		}
 	],
+	"home_family_count": [
+		{
+			"declarations": ["input count", "local countPlural = count: plural"],
+			"selectors": ["countPlural"],
+			"match": {
+				"countPlural=one": "{count} biais",
+				"countPlural=other": "{count} biais"
+			}
+		}
+	],
+	"theme_auto": "Automatique",
+	"theme_light": "Clair",
+	"theme_dark": "Sombre",
 	"home_view_grouped": "Par famille",
 	"home_view_flat": "Tous",
 	"home_filter_family": "Famille",
