@@ -29,6 +29,7 @@ situation:
 quiz:
   questions:
     - question: "A sunk cost is..."
+      level: easy
       choices:
         - "An expense already incurred that can no longer be recovered"
         - "A future expense you can still avoid"
@@ -36,6 +37,7 @@ quiz:
       correct: 0
       explanation: "A sunk cost has been spent for good (money, time, effort). It shouldn't weigh on future decisions."
     - question: "What is the most rational decision when facing a project that will never be profitable?"
+      level: medium
       choices:
         - "Keep going so the past investment isn't wasted"
         - "Compare only future costs and benefits"
@@ -43,6 +45,7 @@ quiz:
       correct: 1
       explanation: "Only future costs and benefits matter. What has already been spent is gone either way, whether you continue or not."
     - question: "Why is it sometimes called the \"Concorde fallacy\"?"
+      level: hard
       choices:
         - "Because the project cost less than planned"
         - "Because two governments persisted with a project already seen as unprofitable"

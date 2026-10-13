@@ -29,6 +29,7 @@ situation:
 quiz:
   questions:
     - question: "Availability bias makes us..."
+      level: easy
       choices:
         - "Overestimate the probability of events that are easy to recall"
         - "Forget recent events"
@@ -36,12 +37,21 @@ quiz:
       correct: 0
       explanation: "The easier an event is to recall (media coverage, spectacular, recent), the more we overestimate its probability."
     - question: "Why do people overestimate the risk of shark attacks?"
+      level: medium
       choices:
         - "Because the media covers them extensively"
         - "Because they are statistically frequent"
         - "Because they live near the ocean"
       correct: 0
       explanation: "Shark attacks are extremely rare but heavily covered by media. Their mental availability is disproportionate to the actual risk."
+    - question: "According to Gigerenzer's study (2004), what happened on American roads after September 11, 2001?"
+      level: hard
+      choices:
+        - "About 1,600 additional deaths in the following year, as many people swapped planes for cars"
+        - "Road deaths fell, because people traveled less"
+        - "Nothing notable: road traffic did not change"
+      correct: 0
+      explanation: "Air traffic dropped by about 20% and many Americans drove instead, which is far more dangerous: Gigerenzer estimates about 1,600 additional road deaths in a year, more than the number of passengers on the hijacked planes."
 ---
 
 ## Definition

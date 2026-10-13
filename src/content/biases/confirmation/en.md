@@ -29,19 +29,29 @@ situation:
 quiz:
   questions:
     - question: "Confirmation bias makes us..."
+      level: easy
       choices:
         - "Seek information that confirms what we already believe"
         - "Question all of our opinions"
         - "Ignore all forms of information"
       correct: 0
       explanation: "We naturally look for evidence that reinforces our existing beliefs and dismiss evidence that contradicts them."
-    - question: "Where is confirmation bias particularly dangerous?"
+    - question: "Why can social media reinforce confirmation bias?"
+      level: medium
       choices:
-        - "In scientific research"
-        - "In cooking"
-        - "In sports"
+        - "Their algorithms mostly show us content that matches our opinions"
+        - "They ban opposing views"
+        - "They fact-check every piece of information before showing it"
       correct: 0
-      explanation: "In science, confirmation bias can lead researchers to only retain results that support their hypothesis and ignore the rest."
+      explanation: "By favoring what we like and what resembles us, algorithms reduce our exposure to opposing views and reinforce our beliefs."
+    - question: "What does the story of votive offerings told by Francis Bacon in 1620 illustrate?"
+      level: hard
+      choices:
+        - "That we only look at cases that confirm a belief and forget those that contradict it"
+        - "That prayers really protected sailors at sea"
+        - "That sailors were more religious than the rest of the population"
+      correct: 0
+      explanation: "Churches displayed offerings from sailors who survived, apparent proof that prayers worked, but nobody counted those who had prayed and drowned. Bacon described the mechanism of confirmation bias four centuries before Peter Wason gave it its name."
 ---
 
 ## Definition

@@ -1,5 +1,5 @@
 import { z } from "astro/zod";
-import { DIFFICULTIES, FAMILIES } from "./constants";
+import { DIFFICULTIES, FAMILIES, QUIZ_LEVELS } from "./constants";
 
 const paperLinkSchema = z.object({
 	label: z.string().min(1),
@@ -39,14 +39,24 @@ export type Situation = z.infer<typeof situationSchema>;
 
 const questionSchema = z.object({
 	question: z.string().min(1),
+	level: z.enum(QUIZ_LEVELS),
 	choices: z.array(z.string().min(1)).min(2),
 	correct: z.number().int().min(0),
 	explanation: z.string().min(1),
 });
 
-export const quizSchema = z.object({
-	questions: z.array(questionSchema).min(1),
-});
+/**
+ * A quiz has one question per level, ordered from easiest to hardest
+ * (see `QUIZ_LEVELS`).
+ */
+export const quizSchema = z
+	.object({
+		questions: z.array(questionSchema).length(QUIZ_LEVELS.length),
+	})
+	.refine((quiz) => quiz.questions.every((question, i) => question.level === QUIZ_LEVELS[i]), {
+		message: `Quiz questions must be ordered by level: ${QUIZ_LEVELS.join(" → ")}`,
+		path: ["questions"],
+	});
 
 export type Quiz = z.infer<typeof quizSchema>;
 

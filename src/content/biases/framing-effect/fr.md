@@ -32,26 +32,29 @@ situation:
 quiz:
   questions:
     - question: "L'effet de cadrage désigne le fait que..."
+      level: easy
       choices:
         - "Notre décision change selon la façon dont une même information est présentée"
         - "Nous accordons trop d'importance à la première information reçue"
         - "Nous préférons les options qui nous sont déjà familières"
       correct: 0
       explanation: "Deux formulations logiquement équivalentes (gain ou perte, « survivants » ou « morts ») peuvent mener à des choix opposés, simplement parce que le cadre change notre perception."
-    - question: "Dans l'expérience de la « maladie asiatique » de Tversky et Kahneman, que se passe-t-il quand les options sont décrites en termes de morts plutôt que de vies sauvées ?"
-      choices:
-        - "Les participants gardent exactement les mêmes préférences"
-        - "La plupart des participants préfèrent l'option risquée, alors qu'ils choisissaient l'option sûre quand on parlait de vies sauvées"
-        - "Plus personne ne veut choisir"
-      correct: 1
-      explanation: "Avec le cadre « vies sauvées », 72 % choisissent l'option sûre ; avec le cadre « morts », 78 % choisissent l'option risquée, alors que les conséquences sont identiques. Face à un gain on évite le risque, face à une perte on est prêt à le prendre."
     - question: "Comment se protéger de l'effet de cadrage ?"
+      level: medium
       choices:
         - "Se fier à sa première impression"
         - "Reformuler l'information dans le cadre opposé (gain ↔ perte) et voir si le choix reste le même"
         - "Éviter de prendre des décisions chiffrées"
       correct: 1
       explanation: "Traduire la même situation dans l'autre cadre (« 90 % de maigre » devient « 10 % de gras ») permet de vérifier si c'est le fond ou la forme qui guide votre décision."
+    - question: "Dans l'expérience de la « maladie asiatique » de Tversky et Kahneman, que se passe-t-il quand les options sont décrites en termes de morts plutôt que de vies sauvées ?"
+      level: hard
+      choices:
+        - "Les participants gardent exactement les mêmes préférences"
+        - "La plupart des participants préfèrent l'option risquée, alors qu'ils choisissaient l'option sûre quand on parlait de vies sauvées"
+        - "Plus personne ne veut choisir"
+      correct: 1
+      explanation: "Avec le cadre « vies sauvées », 72 % choisissent l'option sûre ; avec le cadre « morts », 78 % choisissent l'option risquée, alors que les conséquences sont identiques. Face à un gain on évite le risque, face à une perte on est prêt à le prendre."
 ---
 
 ## Définition

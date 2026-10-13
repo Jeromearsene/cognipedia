@@ -29,19 +29,29 @@ situation:
 quiz:
   questions:
     - question: "The Dunning-Kruger effect describes..."
+      level: easy
       choices:
         - "Incompetent people overestimating their abilities"
         - "Experts underestimating difficulty for others"
         - "Both phenomena at the same time"
       correct: 2
       explanation: "The effect has two sides: novices overestimate their skills, and experts underestimate how difficult things are for others."
-    - question: "When is confidence highest according to Dunning-Kruger?"
+    - question: "Why do novices struggle to spot their own gaps?"
+      level: medium
       choices:
-        - "When you're a beginner with very little knowledge"
-        - "When you have intermediate expertise"
-        - "When you're an expert"
+        - "Because judging a skill well requires having that skill"
+        - "Because they always compare themselves to experts"
+        - "Because they lack self-confidence"
       correct: 0
-      explanation: "The 'peak of incompetence confidence' occurs early in learning, when you don't yet know what you don't know."
+      explanation: "Novices lack the knowledge needed to see how much they don't know: the skill is needed to do the work, but also to evaluate it."
+    - question: "Which news story inspired Dunning and Kruger's 1999 study?"
+      level: hard
+      choices:
+        - "A bank robber convinced lemon juice made him invisible to cameras"
+        - "A pilot convinced he was better than the average pilot"
+        - "A very confident contestant on a singing competition"
+      correct: 0
+      explanation: "In 1995, McArthur Wheeler robbed two Pittsburgh banks with lemon juice on his face, convinced it made him invisible to cameras. The case led Dunning and Kruger to study why incompetent people fail to see their own incompetence."
 ---
 
 ## Definition

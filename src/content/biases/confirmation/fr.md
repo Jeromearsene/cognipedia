@@ -35,19 +35,29 @@ situation:
 quiz:
   questions:
     - question: "Le biais de confirmation nous pousse à..."
+      level: easy
       choices:
         - "Chercher des informations qui confirment ce qu'on croit déjà"
         - "Remettre en question toutes nos opinions"
         - "Ignorer toute forme d'information"
       correct: 0
       explanation: "Nous cherchons naturellement des preuves qui renforcent nos croyances existantes, et ignorons celles qui les contredisent."
-    - question: "Où le biais de confirmation est-il particulièrement dangereux ?"
+    - question: "Pourquoi les réseaux sociaux peuvent-ils renforcer le biais de confirmation ?"
+      level: medium
       choices:
-        - "Dans la recherche scientifique"
-        - "En cuisine"
-        - "En sport"
+        - "Leurs algorithmes nous montrent surtout du contenu aligné avec nos opinions"
+        - "Ils interdisent les opinions contraires"
+        - "Ils vérifient chaque information avant de l'afficher"
       correct: 0
-      explanation: "En science, le biais de confirmation peut conduire à ne retenir que les résultats qui soutiennent une hypothèse et ignorer les autres."
+      explanation: "En privilégiant ce qui nous plaît et nous ressemble, les algorithmes réduisent notre exposition aux avis contraires et renforcent nos croyances."
+    - question: "Que montre l'anecdote des ex-voto racontée par Francis Bacon en 1620 ?"
+      level: hard
+      choices:
+        - "Qu'on ne regarde que les cas qui confirment la croyance, en oubliant ceux qui la contredisent"
+        - "Que les prières protégeaient réellement les marins en mer"
+        - "Que les marins étaient plus religieux que le reste de la population"
+      correct: 0
+      explanation: "Les églises exposaient les offrandes des marins survivants, preuve apparente de l'efficacité des prières, mais personne ne comptait ceux qui avaient prié et s'étaient noyés. Bacon décrivait ainsi le mécanisme du biais de confirmation, quatre siècles avant que Peter Wason ne lui donne son nom."
 ---
 
 ## Définition

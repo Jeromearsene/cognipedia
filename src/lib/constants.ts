@@ -12,6 +12,13 @@ export const DIFFICULTIES = ["easy", "medium", "hard"] as const;
 export type Difficulty = (typeof DIFFICULTIES)[number];
 
 /**
+ * Level of each quiz question, in the order the questions must appear.
+ * Every quiz has exactly one question per level (so `QUIZ_LEVELS.length`
+ * is also the number of questions): it starts easy and ends hard.
+ */
+export const QUIZ_LEVELS = DIFFICULTIES;
+
+/**
  * Tailwind utility classes for difficulty badge colors.
  * Static class strings (not dynamic) so Tailwind can detect them at build time.
  * Pastel background + dark text is kept in both modes: the light badges pop

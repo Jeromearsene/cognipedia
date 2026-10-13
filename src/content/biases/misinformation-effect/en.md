@@ -33,26 +33,29 @@ situation:
 quiz:
   questions:
     - question: "The misinformation effect describes the fact that..."
+      level: easy
       choices:
         - "Misleading information received after an event can change how we remember it"
         - "We refuse to believe information that contradicts our opinions"
         - "We remember information that suits us better"
       correct: 0
       explanation: "The original memory isn't fixed: suggestive or incorrect information received afterwards blends into it, and we later remember it as part of the event itself."
-    - question: "In Loftus and Palmer's 1974 study, what made participants' speed estimates vary?"
-      choices:
-        - "The color of the vehicles"
-        - "The verb used in the question (\"smashed\" rather than \"contacted\")"
-        - "The length of the film"
-      correct: 1
-      explanation: "A single word in the question was enough to change memory: participants asked about cars that \"smashed\" estimated a much higher speed than those asked about cars that \"contacted\"."
     - question: "How can you limit the misinformation effect when collecting a testimony?"
+      level: medium
       choices:
         - "By rereading several press articles about the event"
         - "By comparing your version with other witnesses' before giving it"
         - "By collecting the account as early as possible, with open, non-leading questions"
       correct: 2
       explanation: "Any information received after the event risks blending into the memory. Collecting the account early, before articles, discussions and leading questions, limits the contamination."
+    - question: "In Loftus and Palmer's 1974 study, what made participants' speed estimates vary?"
+      level: hard
+      choices:
+        - "The color of the vehicles"
+        - "The verb used in the question (\"smashed\" rather than \"contacted\")"
+        - "The length of the film"
+      correct: 1
+      explanation: "A single word in the question was enough to change memory: participants asked about cars that \"smashed\" estimated a much higher speed than those asked about cars that \"contacted\"."
 ---
 
 ## Definition

@@ -28,20 +28,30 @@ situation:
   reveal: "The $500,000 price served as an anchor: it made $320,000 seem attractive without you knowing the property's actual value."
 quiz:
   questions:
-    - question: "Anchoring bias is stronger when..."
+    - question: "Anchoring bias is the tendency to..."
+      level: easy
       choices:
-        - "You lack information about the subject"
-        - "You are an expert in the field"
-        - "You take your time to decide"
+        - "Rely too heavily on the first piece of information received when estimating or deciding"
+        - "Always choose the cheapest option"
+        - "Refuse to change your mind despite new evidence"
       correct: 0
-      explanation: "The less information you have, the more you cling to the first available value as a reference."
+      explanation: "The first value you encounter (the anchor), even an arbitrary one, becomes a starting point, and later adjustments stay insufficient."
     - question: "Which marketing technique exploits anchoring bias?"
+      level: medium
       choices:
         - "Showing a crossed-out price before the real price"
         - "Offering free shipping"
         - "Giving a free sample"
       correct: 0
       explanation: "The crossed-out price serves as a high anchor, making the real price more attractive by comparison."
+    - question: "What does the wheel-of-fortune experiment (Tversky and Kahneman, 1974) show?"
+      level: hard
+      choices:
+        - "That a randomly drawn number, unrelated to the question, still influences the estimate"
+        - "That people neutralize an anchor as soon as they know it is arbitrary"
+        - "That only poorly educated people are anchored"
+      correct: 0
+      explanation: "Participants who saw 10 on the wheel estimated on average that 25% of UN members were African countries, versus 45% for those who saw 65: even a clearly arbitrary anchor weighs on judgment."
 ---
 
 ## Definition

@@ -29,26 +29,29 @@ situation:
 quiz:
   questions:
     - question: "The framing effect is the fact that..."
+      level: easy
       choices:
         - "Our decision changes depending on how the same information is presented"
         - "We give too much weight to the first piece of information we receive"
         - "We prefer options that are already familiar to us"
       correct: 0
       explanation: "Two logically equivalent wordings (gain or loss, \"survivors\" or \"deaths\") can lead to opposite choices, simply because the frame changes how we perceive the options."
-    - question: "In Tversky and Kahneman's \"Asian disease\" experiment, what happens when the options are described in terms of deaths rather than lives saved?"
-      choices:
-        - "Participants keep exactly the same preferences"
-        - "Most participants prefer the risky option, whereas they chose the sure option when the options were described as lives saved"
-        - "Nobody wants to choose anymore"
-      correct: 1
-      explanation: "With the \"lives saved\" frame, 72% pick the sure option; with the \"deaths\" frame, 78% pick the risky one, even though the outcomes are identical. Facing a gain we avoid risk, facing a loss we are willing to take it."
     - question: "How can you protect yourself from the framing effect?"
+      level: medium
       choices:
         - "Trust your first impression"
         - "Restate the information in the opposite frame (gain ↔ loss) and check whether your choice stays the same"
         - "Avoid decisions involving numbers"
       correct: 1
       explanation: "Translating the same situation into the other frame (\"90% lean\" becomes \"10% fat\") lets you check whether substance or wording is driving your decision."
+    - question: "In Tversky and Kahneman's \"Asian disease\" experiment, what happens when the options are described in terms of deaths rather than lives saved?"
+      level: hard
+      choices:
+        - "Participants keep exactly the same preferences"
+        - "Most participants prefer the risky option, whereas they chose the sure option when the options were described as lives saved"
+        - "Nobody wants to choose anymore"
+      correct: 1
+      explanation: "With the \"lives saved\" frame, 72% pick the sure option; with the \"deaths\" frame, 78% pick the risky one, even though the outcomes are identical. Facing a gain we avoid risk, facing a loss we are willing to take it."
 ---
 
 ## Definition
