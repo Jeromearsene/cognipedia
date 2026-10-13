@@ -33,6 +33,7 @@ situation:
 quiz:
   questions:
     - question: "The planning fallacy is the tendency to..."
+      level: easy
       choices:
         - "Underestimate the time, costs and risks of a project, even when we know similar past cases"
         - "Never plan our projects in advance"
@@ -40,6 +41,7 @@ quiz:
       correct: 0
       explanation: "The bias affects our forecasts: we rely on an ideal scenario rather than on experience, including our own."
     - question: "Which method helps limit this bias?"
+      level: medium
       choices:
         - "Picturing the ideal scenario in even more detail"
         - "Relying on the actual duration of comparable projects (the “outside view”)"
@@ -47,6 +49,7 @@ quiz:
       correct: 1
       explanation: "Starting from what really happened on similar projects, rather than from the current project's plan, produces more realistic forecasts. This is called reference class forecasting."
     - question: "In Buehler and colleagues' 1994 study, what share of students finished their thesis within the time they had predicted?"
+      level: hard
       choices:
         - "About 30%"
         - "About 70%"

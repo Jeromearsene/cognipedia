@@ -33,6 +33,7 @@ situation:
 quiz:
   questions:
     - question: "Selon Kahneman et Tversky, une perte est ressentie environ..."
+      level: easy
       choices:
         - "Deux fois plus fort qu'un gain équivalent"
         - "Avec la même intensité qu'un gain"
@@ -40,12 +41,21 @@ quiz:
       correct: 0
       explanation: "Perdre 100€ fait environ deux fois plus mal que gagner 100€ ne fait plaisir. C'est le ratio classique de l'aversion à la perte."
     - question: "L'aversion à la perte explique pourquoi..."
+      level: medium
       choices:
         - "On garde un investissement perdant en espérant qu'il remonte"
         - "On investit toujours dans les valeurs sûres"
         - "On préfère les gains rapides"
       correct: 0
       explanation: "Vendre un investissement en perte rend la perte 'réelle'. On préfère garder et espérer, même quand c'est irrationnel."
+    - question: "Dans l'expérience des mugs (Kahneman, Knetsch et Thaler, 1990), que constate-t-on ?"
+      level: hard
+      choices:
+        - "Ceux qui possèdent un mug en exigent environ deux fois plus que ce que les autres veulent payer"
+        - "Les propriétaires et les acheteurs se mettent d'accord sur le même prix"
+        - "Les propriétaires vendent leur mug moins cher que le prix du marché"
+      correct: 0
+      explanation: "Les propriétaires demandaient environ 7 $ pour leur mug, contre environ 3 $ pour les acheteurs potentiels : posséder un objet augmente sa valeur perçue, car s'en séparer est vécu comme une perte (effet de dotation)."
 ---
 
 ## Définition

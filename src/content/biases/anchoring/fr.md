@@ -28,20 +28,30 @@ situation:
   reveal: "Le prix de 500 000€ a servi d'ancre : il a rendu 320 000€ attractif sans que vous connaissiez la valeur réelle du bien."
 quiz:
   questions:
-    - question: "Le biais d'ancrage est plus fort quand..."
+    - question: "Le biais d'ancrage consiste à..."
+      level: easy
       choices:
-        - "On manque d'information sur le sujet"
-        - "On est expert du domaine"
-        - "On prend son temps pour décider"
+        - "Se fier trop à la première information reçue pour estimer ou décider"
+        - "Toujours choisir l'option la moins chère"
+        - "Refuser de changer d'avis malgré de nouvelles preuves"
       correct: 0
-      explanation: "Moins on a d'information, plus on se raccroche à la première valeur disponible comme référence."
+      explanation: "La première valeur rencontrée (l'ancre), même arbitraire, devient un point de départ, et nos ajustements restent insuffisants."
     - question: "Quelle technique utilise le biais d'ancrage en marketing ?"
+      level: medium
       choices:
         - "Afficher un prix barré avant le prix réel"
         - "Proposer la livraison gratuite"
         - "Offrir un échantillon gratuit"
       correct: 0
       explanation: "Le prix barré sert d'ancre haute, rendant le prix réel plus attractif par comparaison."
+    - question: "Que montre l'expérience de la roue de la fortune (Tversky et Kahneman, 1974) ?"
+      level: hard
+      choices:
+        - "Qu'un nombre tiré au hasard, sans lien avec la question, influence quand même l'estimation"
+        - "Qu'on neutralise l'ancre dès qu'on sait qu'elle est arbitraire"
+        - "Que seules les personnes peu instruites se laissent ancrer"
+      correct: 0
+      explanation: "Les participants qui voyaient 10 sur la roue estimaient en moyenne 25 % de pays africains à l'ONU, contre 45 % pour ceux qui voyaient 65 : même une ancre clairement arbitraire pèse sur le jugement."
 ---
 
 ## Définition

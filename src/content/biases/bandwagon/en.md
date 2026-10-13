@@ -29,19 +29,29 @@ situation:
 quiz:
   questions:
     - question: "The bandwagon effect makes us..."
+      level: easy
       choices:
         - "Adopt an opinion because many people share it"
         - "Systematically reject the majority's view"
         - "Form our own opinion independently"
       correct: 0
       explanation: "The more popular an idea is, the more inclined we are to adopt it, regardless of its truth."
-    - question: "Asch's experiment (1951) showed that..."
+    - question: "Why can political polls influence how people vote?"
+      level: medium
       choices:
-        - "People give wrong answers to conform with the group"
-        - "People always resist social pressure"
-        - "Experts are immune to group pressure"
+        - "People are tempted to side with the candidate who seems to be winning"
+        - "Voters try to pick the least popular candidate"
+        - "Polls always give the right result"
       correct: 0
-      explanation: "In Asch's experiment, 75% of participants gave at least one obviously wrong answer to conform with a unanimous group."
+      explanation: "Seeing a candidate ahead pushes some voters to join them: apparent popularity becomes an argument in itself."
+    - question: "In Asch's experiment (1951), what share of participants gave at least one obviously wrong answer to conform to the group?"
+      level: hard
+      choices:
+        - "About 5%"
+        - "About 25%"
+        - "About 75%"
+      correct: 2
+      explanation: "About 75% of participants conformed to the unanimous group at least once, even though the right answer was obvious; about 25% resisted on every trial."
 ---
 
 ## Definition
