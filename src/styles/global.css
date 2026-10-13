@@ -1,4 +1,6 @@
 @import "tailwindcss";
+@import "@fontsource-variable/baloo-2/index.css";
+@import "@fontsource-variable/figtree/index.css";
 @import "./families.css";
 @plugin "@tailwindcss/typography";
 
@@ -15,8 +17,8 @@
 	--color-accent-ink: #3730a3;
 	--color-accent-2: #f5a623;
 
-	--font-body: "Figtree", system-ui, -apple-system, sans-serif;
-	--font-heading: "Baloo 2", system-ui, -apple-system, sans-serif;
+	--font-body: "Figtree Variable", system-ui, -apple-system, sans-serif;
+	--font-heading: "Baloo 2 Variable", system-ui, -apple-system, sans-serif;
 	--font-mono: ui-monospace, monospace;
 }
 
