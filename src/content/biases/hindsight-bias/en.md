@@ -33,26 +33,29 @@ situation:
 quiz:
   questions:
     - question: "Hindsight bias is the tendency to..."
+      level: easy
       choices:
         - "Believe, once an outcome is known, that it was predictable all along"
         - "Overestimate your own abilities compared to others"
         - "Only look for information that confirms what you already think"
       correct: 0
       explanation: "Hindsight bias is the \"I knew it all along\" effect: knowing the outcome makes it seem more foreseeable than it really was, and we misremember how uncertain we were."
-    - question: "In Fischhoff and Beyth's study on Nixon's trips to Beijing and Moscow, what did participants do after the trips?"
-      choices:
-        - "They recalled their earlier predictions accurately"
-        - "They recalled having given higher probabilities to the events that actually happened"
-        - "They refused to say what they had predicted"
-      correct: 1
-      explanation: "Their memory of their own forecasts had drifted toward the real outcomes: events that occurred were remembered as having been judged more likely than they actually were."
     - question: "How can you check whether you really \"saw it coming\"?"
+      level: medium
       choices:
         - "Try to remember harder how you felt at the time"
         - "Compare with a written prediction made before the outcome was known"
         - "Ask someone who already knows the result"
       correct: 1
       explanation: "Memory is rewritten by the outcome, so it is an unreliable witness. A prediction written down in advance, ideally with a probability, is the only honest record of what you really thought."
+    - question: "In Fischhoff and Beyth's study on Nixon's trips to Beijing and Moscow, what did participants do after the trips?"
+      level: hard
+      choices:
+        - "They recalled their earlier predictions accurately"
+        - "They recalled having given higher probabilities to the events that actually happened"
+        - "They refused to say what they had predicted"
+      correct: 1
+      explanation: "Their memory of their own forecasts had drifted toward the real outcomes: events that occurred were remembered as having been judged more likely than they actually were."
 ---
 
 ## Definition

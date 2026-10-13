@@ -29,6 +29,7 @@ situation:
 quiz:
   questions:
     - question: "According to Kahneman and Tversky, a loss is felt approximately..."
+      level: easy
       choices:
         - "Twice as strongly as an equivalent gain"
         - "With the same intensity as a gain"
@@ -36,12 +37,21 @@ quiz:
       correct: 0
       explanation: "Losing $100 hurts about twice as much as gaining $100 feels good. This is the classic loss aversion ratio."
     - question: "Loss aversion explains why..."
+      level: medium
       choices:
         - "People hold losing investments hoping they'll recover"
         - "People always invest in safe assets"
         - "People prefer quick gains"
       correct: 0
       explanation: "Selling a losing investment makes the loss 'real.' We prefer to hold and hope, even when it's irrational."
+    - question: "What did the mug experiment (Kahneman, Knetsch and Thaler, 1990) find?"
+      level: hard
+      choices:
+        - "Mug owners demanded about twice what others were willing to pay"
+        - "Owners and buyers agreed on the same price"
+        - "Owners sold their mug for less than the market price"
+      correct: 0
+      explanation: "Owners asked for about $7 for their mug versus about $3 for potential buyers: owning an object raises its perceived value, because parting with it feels like a loss (the endowment effect)."
 ---
 
 ## Definition

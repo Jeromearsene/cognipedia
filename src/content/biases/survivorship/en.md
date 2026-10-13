@@ -29,19 +29,29 @@ situation:
 quiz:
   questions:
     - question: "Survivorship bias means..."
+      level: easy
       choices:
         - "Only considering success cases and ignoring failures"
         - "Surviving a dangerous situation"
         - "Believing only the strongest succeed"
       correct: 0
       explanation: "This bias leads us to draw conclusions from visible 'survivors' while forgetting all those who didn't make it through the process."
-    - question: "Which historical example illustrates survivorship bias?"
+    - question: "Why do old buildings often seem better built than recent ones?"
+      level: medium
       choices:
-        - "Abraham Wald's WWII aircraft analysis"
-        - "The Milgram experiment"
-        - "The Turing test"
+        - "The weaker ones have disappeared: we only see the survivors"
+        - "Old master builders were all more skilled"
+        - "Recent buildings age faster"
       correct: 0
-      explanation: "Wald showed that reinforcement should go where returning planes had NO bullet holes, because planes hit in those areas never came back."
+      explanation: "Fragile buildings collapsed or were demolished long ago: only the sturdiest remain, which creates the impression that 'everything used to be built better'."
+    - question: "According to Abraham Wald, where should WWII bombers have been reinforced?"
+      level: hard
+      choices:
+        - "Where returning planes had no bullet holes"
+        - "Where returning planes had the most bullet holes"
+        - "Everywhere, uniformly"
+      correct: 0
+      explanation: "The planes studied had survived: their holes showed areas a plane could take hits in and still return. The untouched areas were those where a hit kept the plane from coming back, so that is where armor was needed."
 ---
 
 ## Definition

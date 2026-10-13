@@ -36,26 +36,29 @@ situation:
 quiz:
   questions:
     - question: "Le biais rétrospectif est la tendance à..."
+      level: easy
       choices:
         - "Croire, une fois le résultat connu, qu'il était prévisible depuis le début"
         - "Surestimer ses propres capacités par rapport aux autres"
         - "Ne chercher que les informations qui confirment ce que l'on pense déjà"
       correct: 0
       explanation: "C'est l'effet « je le savais » : connaître l'issue la rend plus prévisible qu'elle ne l'était vraiment, et on se souvient mal de l'incertitude qu'on ressentait."
-    - question: "Dans l'étude de Fischhoff et Beyth sur les voyages de Nixon à Pékin et à Moscou, que faisaient les participants après les voyages ?"
-      choices:
-        - "Ils se rappelaient fidèlement leurs prédictions initiales"
-        - "Ils se rappelaient avoir attribué des probabilités plus élevées aux événements qui s'étaient réellement produits"
-        - "Ils refusaient de dire ce qu'ils avaient prédit"
-      correct: 1
-      explanation: "Leur souvenir de leurs propres prévisions avait glissé vers les résultats réels : les événements survenus étaient jugés avoir été plus probables qu'ils ne l'avaient vraiment été."
     - question: "Comment vérifier que vous « l'aviez vraiment vu venir » ?"
+      level: medium
       choices:
         - "Essayer de se rappeler plus précisément ce que l'on ressentait à l'époque"
         - "Comparer avec une prédiction écrite avant que le résultat soit connu"
         - "Demander à quelqu'un qui connaît déjà l'issue"
       correct: 1
       explanation: "La mémoire est réécrite par le résultat : c'est un témoin peu fiable. Une prédiction notée à l'avance, idéalement avec une probabilité, est la seule trace honnête de ce que vous pensiez vraiment."
+    - question: "Dans l'étude de Fischhoff et Beyth sur les voyages de Nixon à Pékin et à Moscou, que faisaient les participants après les voyages ?"
+      level: hard
+      choices:
+        - "Ils se rappelaient fidèlement leurs prédictions initiales"
+        - "Ils se rappelaient avoir attribué des probabilités plus élevées aux événements qui s'étaient réellement produits"
+        - "Ils refusaient de dire ce qu'ils avaient prédit"
+      correct: 1
+      explanation: "Leur souvenir de leurs propres prévisions avait glissé vers les résultats réels : les événements survenus étaient jugés avoir été plus probables qu'ils ne l'avaient vraiment été."
 ---
 
 ## Définition

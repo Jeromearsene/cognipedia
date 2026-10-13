@@ -33,19 +33,29 @@ situation:
 quiz:
   questions:
     - question: "Le biais du survivant consiste à..."
+      level: easy
       choices:
         - "Ne prendre en compte que les cas de réussite et ignorer les échecs"
         - "Survivre à une situation dangereuse"
         - "Croire que seuls les plus forts réussissent"
       correct: 0
       explanation: "Ce biais nous fait tirer des conclusions à partir des 'survivants' visibles, en oubliant tous ceux qui n'ont pas survécu au processus."
-    - question: "Quel exemple historique illustre le biais du survivant ?"
+    - question: "Pourquoi les bâtiments anciens paraissent-ils souvent mieux construits que les récents ?"
+      level: medium
       choices:
-        - "Les avions de la Seconde Guerre mondiale d'Abraham Wald"
-        - "L'expérience de Milgram"
-        - "Le test de Turing"
+        - "Parce que les plus fragiles ont disparu : nous ne voyons que les survivants"
+        - "Parce que les anciens maîtres d'œuvre étaient tous plus compétents"
+        - "Parce que les bâtiments récents vieillissent plus vite"
       correct: 0
-      explanation: "Wald a montré qu'il fallait renforcer les zones SANS impacts de balles sur les avions qui rentraient, car ceux touchés à ces endroits ne revenaient jamais."
+      explanation: "Les constructions fragiles se sont effondrées ou ont été démolies depuis longtemps : il ne reste que les plus solides, ce qui donne l'impression que « tout était mieux construit avant »."
+    - question: "Selon Abraham Wald, où fallait-il renforcer les bombardiers de la Seconde Guerre mondiale ?"
+      level: hard
+      choices:
+        - "Là où les avions revenus n'avaient pas d'impacts de balles"
+        - "Là où les avions revenus avaient le plus d'impacts de balles"
+        - "Partout, de façon uniforme"
+      correct: 0
+      explanation: "Les avions étudiés avaient survécu : leurs impacts montraient les zones qu'un avion pouvait subir sans tomber. Les zones intactes étaient celles qui, une fois touchées, empêchaient l'avion de revenir : c'est là qu'il fallait renforcer le blindage."
 ---
 
 ## Définition

@@ -39,6 +39,7 @@ situation:
 quiz:
   questions:
     - question: "L'erreur de planification est la tendance à..."
+      level: easy
       choices:
         - "Sous-estimer le temps, les coûts et les risques d'un projet, même en connaissant des cas passés similaires"
         - "Ne jamais planifier ses projets à l'avance"
@@ -46,6 +47,7 @@ quiz:
       correct: 0
       explanation: "Le biais touche nos prévisions : on se fie à un scénario idéal plutôt qu'à l'expérience, y compris la nôtre."
     - question: "Quelle méthode permet de limiter ce biais ?"
+      level: medium
       choices:
         - "Imaginer plus en détail le scénario idéal"
         - "S'appuyer sur la durée réelle de projets comparables (« vue extérieure »)"
@@ -53,6 +55,7 @@ quiz:
       correct: 1
       explanation: "Partir de ce qui s'est réellement passé pour des projets similaires, plutôt que du plan du projet en cours, donne des prévisions plus réalistes. On parle de prévision par classe de référence."
     - question: "Dans l'étude de Buehler et ses collègues (1994), quelle part des étudiants a terminé son mémoire dans le délai qu'elle avait elle-même prévu ?"
+      level: hard
       choices:
         - "Environ 30 %"
         - "Environ 70 %"

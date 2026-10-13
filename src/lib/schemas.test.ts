@@ -75,28 +75,71 @@ describe("situationSchema", () => {
 });
 
 describe("quizSchema", () => {
-	it("validates a quiz with questions", () => {
-		const result = quizSchema.safeParse({
-			questions: [
-				{
-					question: "What is anchoring?",
-					choices: ["A", "B", "C"],
-					correct: 0,
-					explanation: "Because...",
-				},
-			],
-		});
-		expect(result.success).toBe(true);
+	const question = (level: string, overrides = {}) => ({
+		question: `A ${level} question?`,
+		level,
+		choices: ["A", "B", "C"],
+		correct: 0,
+		explanation: "Because...",
+		...overrides,
 	});
 
-	it("rejects quiz with no questions", () => {
-		const result = quizSchema.safeParse({ questions: [] });
+	const validQuiz = {
+		questions: [question("easy"), question("medium"), question("hard")],
+	};
+
+	it("validates a quiz with one question per level, from easy to hard", () => {
+		expect(quizSchema.safeParse(validQuiz).success).toBe(true);
+	});
+
+	it("rejects a quiz with no questions", () => {
+		expect(quizSchema.safeParse({ questions: [] }).success).toBe(false);
+	});
+
+	it("rejects a quiz with fewer than 3 questions", () => {
+		const result = quizSchema.safeParse({ questions: [question("easy"), question("medium")] });
 		expect(result.success).toBe(false);
 	});
 
-	it("rejects question with fewer than 2 choices", () => {
+	it("rejects a quiz with more than 3 questions", () => {
 		const result = quizSchema.safeParse({
-			questions: [{ question: "Q?", choices: ["A"], correct: 0, explanation: "E" }],
+			questions: [question("easy"), question("medium"), question("hard"), question("hard")],
+		});
+		expect(result.success).toBe(false);
+	});
+
+	it("rejects questions that are not ordered from easy to hard", () => {
+		const result = quizSchema.safeParse({
+			questions: [question("medium"), question("easy"), question("hard")],
+		});
+		expect(result.success).toBe(false);
+	});
+
+	it("rejects a quiz that repeats a level", () => {
+		const result = quizSchema.safeParse({
+			questions: [question("easy"), question("easy"), question("hard")],
+		});
+		expect(result.success).toBe(false);
+	});
+
+	it("rejects a question without a level", () => {
+		const { level, ...withoutLevel } = question("easy");
+		const result = quizSchema.safeParse({
+			questions: [withoutLevel, question("medium"), question("hard")],
+		});
+		expect(result.success).toBe(false);
+	});
+
+	it("rejects an unknown level", () => {
+		const result = quizSchema.safeParse({
+			questions: [question("trivial"), question("medium"), question("hard")],
+		});
+		expect(result.success).toBe(false);
+	});
+
+	it("rejects a question with fewer than 2 choices", () => {
+		const result = quizSchema.safeParse({
+			questions: [question("easy", { choices: ["A"] }), question("medium"), question("hard")],
 		});
 		expect(result.success).toBe(false);
 	});

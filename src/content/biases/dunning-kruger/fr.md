@@ -35,19 +35,29 @@ situation:
 quiz:
   questions:
     - question: "L'effet Dunning-Kruger décrit..."
+      level: easy
       choices:
         - "Les incompétents qui surestiment leurs capacités"
         - "Les experts qui sous-estiment la difficulté pour les autres"
         - "Les deux phénomènes à la fois"
       correct: 2
       explanation: "L'effet a deux faces : les novices surestiment leurs compétences, et les experts sous-estiment la difficulté de ce qu'ils maîtrisent."
-    - question: "À quel moment la confiance est-elle la plus élevée selon Dunning-Kruger ?"
+    - question: "Pourquoi les novices ont-ils du mal à repérer leurs propres lacunes ?"
+      level: medium
       choices:
-        - "Quand on débute et qu'on connaît très peu le sujet"
-        - "Quand on a une expertise intermédiaire"
-        - "Quand on est expert"
+        - "Parce que bien évaluer une compétence demande justement de la posséder"
+        - "Parce qu'ils se comparent toujours aux experts"
+        - "Parce qu'ils manquent de confiance en eux"
       correct: 0
-      explanation: "Le 'pic de confiance des incompétents' survient au début de l'apprentissage, quand on ne sait pas encore ce qu'on ne sait pas."
+      explanation: "Les novices n'ont pas les connaissances nécessaires pour mesurer l'étendue de leur ignorance : la compétence sert à faire le travail, mais aussi à l'évaluer."
+    - question: "Quel fait divers a inspiré l'étude de Dunning et Kruger (1999) ?"
+      level: hard
+      choices:
+        - "Un braqueur de banque persuadé que le jus de citron le rendait invisible aux caméras"
+        - "Un pilote convaincu d'être meilleur que la moyenne des pilotes"
+        - "Un candidat très sûr de lui lors d'un concours de chant"
+      correct: 0
+      explanation: "En 1995, McArthur Wheeler a braqué deux banques de Pittsburgh le visage enduit de jus de citron, convaincu d'être invisible aux caméras. Cette affaire a poussé Dunning et Kruger à étudier pourquoi les personnes incompétentes ne perçoivent pas leur incompétence."
 ---
 
 ## Définition

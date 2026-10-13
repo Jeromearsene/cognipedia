@@ -29,6 +29,7 @@ situation:
 quiz:
   questions:
     - question: "Un coût irrécupérable est..."
+      level: easy
       choices:
         - "Une dépense déjà engagée qui ne peut plus être récupérée"
         - "Une dépense future dont on peut encore se dispenser"
@@ -36,6 +37,7 @@ quiz:
       correct: 0
       explanation: "Un coût irrécupérable est définitivement dépensé (argent, temps, effort). Il ne devrait donc pas peser sur les décisions à venir."
     - question: "Quelle décision est la plus rationnelle face à un projet qui ne sera jamais rentable ?"
+      level: medium
       choices:
         - "Continuer pour ne pas gaspiller ce qui a déjà été investi"
         - "Comparer uniquement les coûts et bénéfices à venir"
@@ -43,6 +45,7 @@ quiz:
       correct: 1
       explanation: "Seuls les coûts et bénéfices futurs comptent. Ce qui a déjà été dépensé l'est dans tous les cas, que l'on continue ou non."
     - question: "Pourquoi parle-t-on d'« effet Concorde » ?"
+      level: hard
       choices:
         - "Parce que le projet a coûté moins cher que prévu"
         - "Parce que deux gouvernements ont persévéré dans un projet pourtant jugé non rentable"
