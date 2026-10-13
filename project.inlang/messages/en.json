@@ -17,6 +17,7 @@
 	"quiz_incorrect": "Incorrect",
 	"quiz_score": "Score: {score}/{total}",
 	"quiz_next": "Next",
+	"quiz_level_aria": "Question level: {level}",
 	"quiz_results": "Results",
 	"situation_title": "Put yourself in the situation",
 	"situation_reveal": "You just fell for...",

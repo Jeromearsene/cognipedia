@@ -1,4 +1,5 @@
 import type { Locale } from "@/i18n/i18n";
+import type { Difficulty } from "@/lib/constants";
 import { m } from "@/paraglide/messages";
 
 // --- Label type definitions ---
@@ -9,6 +10,8 @@ export interface QuizLabels {
 	results: string;
 	correct: string;
 	incorrect: string;
+	levels: Record<Difficulty, string>;
+	levelAria: Record<Difficulty, string>;
 }
 
 /** Labels for score submission feedback. */
@@ -93,6 +96,16 @@ export const getBiasInteractiveLabels = (locale: Locale): BiasInteractiveLabels 
 		results: m.quiz_results({}, { locale }),
 		correct: m.quiz_correct({}, { locale }),
 		incorrect: m.quiz_incorrect({}, { locale }),
+		levels: {
+			easy: m.bias_difficulty_easy({}, { locale }),
+			medium: m.bias_difficulty_medium({}, { locale }),
+			hard: m.bias_difficulty_hard({}, { locale }),
+		},
+		levelAria: {
+			easy: m.quiz_level_aria({ level: m.bias_difficulty_easy({}, { locale }) }, { locale }),
+			medium: m.quiz_level_aria({ level: m.bias_difficulty_medium({}, { locale }) }, { locale }),
+			hard: m.quiz_level_aria({ level: m.bias_difficulty_hard({}, { locale }) }, { locale }),
+		},
 	},
 	score: {
 		submitting: m.score_submitting({}, { locale }),

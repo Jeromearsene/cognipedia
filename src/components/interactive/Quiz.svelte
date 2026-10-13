@@ -1,14 +1,20 @@
 <script lang="ts">
 import Mascot from "@/components/Mascot.svelte";
 import { cn } from "@/lib/cn";
+import type { Difficulty } from "@/lib/constants";
 import type { Quiz } from "@/lib/schemas";
 import { computeQuizScore } from "@/lib/scoring";
+import QuestionLevel from "./QuestionLevel.svelte";
 
 interface Labels {
 	next: string;
 	results: string;
 	correct: string;
 	incorrect: string;
+	/** Level names, by question level (e.g. "Facile"). */
+	levels: Record<Difficulty, string>;
+	/** Accessible names of the level indicator, by question level. */
+	levelAria: Record<Difficulty, string>;
 }
 
 interface Props {
@@ -65,9 +71,16 @@ const handleNext = () => {
 <section class="rounded-3xl bg-surface p-6.5 shadow-brand-sm">
   {#if !finished}
     <div class="mb-3.5 flex items-center justify-between">
-      <span class="text-xs font-bold text-text-secondary">
-        {currentIndex + 1} / {data.questions.length}
-      </span>
+      <div class="flex items-center gap-2.5">
+        <span class="text-xs font-bold text-text-secondary">
+          {currentIndex + 1} / {data.questions.length}
+        </span>
+        <QuestionLevel
+          level={currentQuestion.level}
+          label={labels.levels[currentQuestion.level]}
+          ariaLabel={labels.levelAria[currentQuestion.level]}
+        />
+      </div>
       <span class="text-sm font-bold tabular-nums">
         {score.correct} / {answers.length}
       </span>

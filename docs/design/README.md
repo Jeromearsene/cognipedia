@@ -19,6 +19,7 @@ Visual reference for the redesign implemented in this repository (see `src/style
 - **Depth**: indigo-tinted shadows instead of neutral gray ones, plus a very light SVG grain (~3% perceived opacity) on the background, served as a small static file (`public/grain.svg`).
 - **Mascot — Cogni**: a single SVG + CSS character reused everywhere (no per-bias illustration), with 4 poses: idle, correct answer, small bias detected, thinking.
 - **Dark mode**: same tokens, inverted values — families get lighter to stay readable on a dark background, and shadows lose their indigo tint in favor of plain black. Cogni's gradient is the same in both themes.
+- **Quiz question level**: deliberately unlike the bias difficulty badge (rounded pill with a status dot). It is a small squared tag with three ascending bars, in the neutral accent color: green/orange/red stay reserved for the bias difficulty and for right/wrong answer feedback, so a "hard" question is never read as a mistake. It sits next to the `1 / 3` counter inside the quiz card, never in the bias page header.
 - **Sizing**: components use Tailwind's predefined scale (spacing, font sizes, radii) rather than hardcoded pixel values.
 
 Two suggestions were explicitly ruled out during the design: an indigo border on the "in progress" card, and an "Explore the biases" button in the hero (the anchor to the catalog is enough).

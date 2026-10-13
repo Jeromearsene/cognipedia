@@ -17,6 +17,7 @@
 	"quiz_incorrect": "Mauvaise réponse",
 	"quiz_score": "Score : {score}/{total}",
 	"quiz_next": "Suivant",
+	"quiz_level_aria": "Niveau de la question : {level}",
 	"quiz_results": "Résultats",
 	"situation_title": "Mise en situation",
 	"situation_reveal": "Vous venez de tomber dans...",
