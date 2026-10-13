@@ -69,7 +69,7 @@ const hasFilters = filterFamily !== null || filterDifficulty !== null;
 
 <BaseLayout title={title} description={description} lang={locale}>
   <!-- Hero -->
-  <section class="flex flex-col items-center gap-[18px] py-10 text-center sm:py-16">
+  <section class="flex flex-col items-center gap-4.5 py-10 text-center sm:py-16">
     <Mascot pose="idle" size={84} />
     <h1 class="text-4xl font-bold text-balance sm:text-5xl">{title}</h1>
     <p class="max-w-[34ch] text-lg text-text-secondary">{description}</p>
@@ -97,23 +97,23 @@ const hasFilters = filterFamily !== null || filterDifficulty !== null;
     <div id="view-grouped" class={hasFilters ? "hidden" : ""}>
       {groupedByFamily.map(({ key, label, biases: familyBiases }) => (
         <div class="mb-10">
-          <div class="mb-4 flex items-center gap-[10px]">
-            <span class="inline-block h-[13px] w-[13px] rounded-full" style={familyDotStyle(key)} />
+          <div class="mb-4 flex items-center gap-2.5">
+            <span class="inline-block size-3.25 rounded-full" style={familyDotStyle(key)} />
             <h2 class="text-2xl font-bold">{label}</h2>
             <span class="text-sm text-text-secondary">
               {m.home_family_count({ count: familyBiases.length })}
             </span>
           </div>
           {familyBiases.length > 0 ? (
-            <div class="grid grid-cols-1 gap-[18px] sm:grid-cols-2 lg:grid-cols-3">
+            <div class="grid grid-cols-1 gap-4.5 sm:grid-cols-2 lg:grid-cols-3">
               {familyBiases.map((bias, index) => (
                 <BiasCard {...bias} delay={Math.min(index * 40, 400)} client:visible />
               ))}
             </div>
           ) : (
-            <div class="flex items-center justify-center gap-4 rounded-[20px] border-[1.5px] border-dashed border-border p-7">
+            <div class="flex items-center justify-center gap-4 rounded-3xl border-2 border-dashed border-border p-7">
               <Mascot pose="confused" size={44} />
-              <span class="text-[15px] font-semibold text-text-secondary">{m.home_empty()}</span>
+              <span class="text-base font-semibold text-text-secondary">{m.home_empty()}</span>
             </div>
           )}
         </div>

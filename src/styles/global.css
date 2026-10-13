@@ -112,7 +112,7 @@
 		color: white;
 		background: linear-gradient(135deg, #6d5ef0, var(--color-accent));
 		border: none;
-		border-radius: 14px;
+		border-radius: var(--radius-2xl);
 		box-shadow: var(--shadow-sm);
 		transition:
 			transform 0.15s ease,
@@ -129,8 +129,8 @@
 		font-weight: 700;
 		color: var(--color-accent-ink);
 		background: var(--color-surface);
-		border: 1.5px solid var(--color-border);
-		border-radius: 14px;
+		border: 2px solid var(--color-border);
+		border-radius: var(--radius-2xl);
 		transition:
 			background 0.15s ease,
 			border-color 0.15s ease;

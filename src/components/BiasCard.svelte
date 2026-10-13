@@ -28,29 +28,29 @@ const status = $derived(biasProgressStore.getStatus(slug));
 
 <a
   {href}
-  class="hoverlift block rounded-[22px] border bg-surface p-[22px] no-underline shadow-brand-sm {status === 'completed'
+  class="hoverlift block rounded-3xl border bg-surface p-5.5 no-underline shadow-brand-sm {status === 'completed'
     ? 'border-accent/40'
     : 'border-transparent'}"
   use:tilt={{ scale: 1.02, glare: true, maxGlare: 0.15 }}
   in:fade={{ duration: 300, delay }}
 >
   <div class="mb-3 flex items-start justify-between gap-2">
-    <h3 class="text-[17px] font-bold text-text">{title}</h3>
+    <h3 class="text-lg font-bold text-text">{title}</h3>
     {#if status === "completed"}
       <CheckCircle size={18} class="shrink-0 text-accent" />
     {:else if status === "seen"}
       <Eye size={18} class="shrink-0 text-text-secondary" />
     {/if}
   </div>
-  <div class="flex flex-wrap gap-[7px]">
+  <div class="flex flex-wrap gap-1.75">
     <span
-      class="rounded-full px-[11px] py-[5px] text-[11px] font-bold"
+      class="rounded-full px-2.75 py-1.25 text-xs font-bold"
       style={familyBadgeStyle(family)}
     >
       {familyLabel}
     </span>
     <span
-      class="flex items-center gap-[5px] rounded-full py-[5px] pl-[8px] pr-[11px] text-[11px] font-bold"
+      class="flex items-center gap-1.25 rounded-full py-1.25 pl-2 pr-2.75 text-xs font-bold"
       style={difficultyBadgeStyle(difficulty)}
     >
       <span class="inline-block h-1.5 w-1.5 rounded-full" style={difficultyDotStyle(difficulty)}></span>

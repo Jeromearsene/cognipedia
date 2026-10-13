@@ -24,14 +24,14 @@ const handleChoice = (index: number) => {
 };
 </script>
 
-<section class="rounded-[22px] bg-surface p-[26px] shadow-brand-sm">
-  <p class="mb-[18px] text-base">{data.scenario}</p>
+<section class="rounded-3xl bg-surface p-6.5 shadow-brand-sm">
+  <p class="mb-4.5 text-base">{data.scenario}</p>
 
-  <div class="flex flex-col gap-[10px]">
+  <div class="flex flex-col gap-2.5">
     {#each data.choices as choice, i}
       <button
         class={cn(
-          "flex cursor-pointer items-center justify-between gap-3 rounded-[14px] border-[1.5px] border-border bg-surface px-[18px] py-[14px] text-left text-[15px] transition-colors",
+          "flex cursor-pointer items-center justify-between gap-3 rounded-2xl border-2 border-border bg-surface px-4.5 py-3.5 text-left text-base transition-colors",
           "hover:not-disabled:border-accent disabled:cursor-default",
           revealed && selectedIndex !== i && "opacity-60",
           revealed && !choice.bias && "border-[color:var(--success-border)] font-semibold",
@@ -42,16 +42,16 @@ const handleChoice = (index: number) => {
       >
         <span>{choice.label}</span>
         {#if revealed && !choice.bias}
-          <span class="text-[13px] font-bold">✓</span>
+          <span class="text-sm font-bold">✓</span>
         {/if}
       </button>
     {/each}
   </div>
 
   {#if revealed}
-    <div class="mt-[18px] border-t border-border pt-4">
+    <div class="mt-4.5 border-t border-border pt-4">
       <span class="text-xs font-bold uppercase tracking-wide text-accent-ink">{labels.revealLabel}</span>
-      <p class="mt-1.5 text-[15px] text-text-secondary">{data.reveal}</p>
+      <p class="mt-1.5 text-base text-text-secondary">{data.reveal}</p>
     </div>
   {/if}
 </section>

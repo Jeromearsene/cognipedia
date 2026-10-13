@@ -45,12 +45,12 @@ const showOriginalName = data.originalName !== data.title;
   <Breadcrumb family={data.family} title={data.title} />
 
   <!-- Header: title, original name, badges -->
-  <header class="mb-10 flex flex-col gap-[10px]">
+  <header class="mb-10 flex flex-col gap-2.5">
     <h1 class="text-4xl font-bold text-balance">{data.title}</h1>
     {showOriginalName && (
       <p class="italic text-text-secondary">{data.originalName}</p>
     )}
-    <div class="flex flex-wrap gap-[10px] text-xs text-text-secondary">
+    <div class="flex flex-wrap gap-2.5 text-xs text-text-secondary">
       {data.tags.map((tag) => (
         <span>#{tag}</span>
       ))}
@@ -58,14 +58,14 @@ const showOriginalName = data.originalName !== data.title;
     <div class="mt-1.5 flex flex-wrap items-center gap-2">
       <a
         href={`/${locale}/?family=${data.family}`}
-        class="rounded-full px-3 py-[5px] text-xs font-bold no-underline"
+        class="rounded-full px-3 py-1.25 text-xs font-bold no-underline"
         style={familyBadgeStyle(data.family)}
       >
         {familyLabel[data.family]()}
       </a>
       <a
         href={`/${locale}/?difficulty=${data.difficulty}`}
-        class="flex items-center gap-[5px] rounded-full py-[5px] pl-2 pr-3 text-xs font-bold no-underline"
+        class="flex items-center gap-1.25 rounded-full py-1.25 pl-2 pr-3 text-xs font-bold no-underline"
         style={difficultyBadgeStyle(data.difficulty)}
       >
         <span class="inline-block h-1.5 w-1.5 rounded-full" style={difficultyDotStyle(data.difficulty)}></span>

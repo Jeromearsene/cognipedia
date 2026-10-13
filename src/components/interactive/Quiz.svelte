@@ -62,24 +62,24 @@ const handleNext = () => {
 };
 </script>
 
-<section class="rounded-[22px] bg-surface p-[26px] shadow-brand-sm">
+<section class="rounded-3xl bg-surface p-6.5 shadow-brand-sm">
   {#if !finished}
-    <div class="mb-[14px] flex items-center justify-between">
+    <div class="mb-3.5 flex items-center justify-between">
       <span class="text-xs font-bold text-text-secondary">
         {currentIndex + 1} / {data.questions.length}
       </span>
-      <span class="text-[13px] font-bold tabular-nums">
+      <span class="text-sm font-bold tabular-nums">
         {score.correct} / {answers.length}
       </span>
     </div>
 
-    <p class="mb-[18px] text-base font-semibold">{currentQuestion.question}</p>
+    <p class="mb-4.5 text-base font-semibold">{currentQuestion.question}</p>
 
-    <div class="flex flex-col gap-[10px]">
+    <div class="flex flex-col gap-2.5">
       {#each currentQuestion.choices as choice, i}
         <button
           class={cn(
-            "flex cursor-pointer items-center justify-between gap-3 rounded-[14px] border-[1.5px] border-border bg-surface px-[18px] py-[14px] text-left text-[15px] transition-colors",
+            "flex cursor-pointer items-center justify-between gap-3 rounded-2xl border-2 border-border bg-surface px-4.5 py-3.5 text-left text-base transition-colors",
             "hover:not-disabled:border-accent disabled:cursor-default",
             showExplanation && i !== currentQuestion.correct && "opacity-60",
             showExplanation && i === currentQuestion.correct && "border-[color:var(--success-border)] font-semibold",
@@ -92,7 +92,7 @@ const handleNext = () => {
         >
           <span>{choice}</span>
           {#if showExplanation && i === currentQuestion.correct}
-            <span class="text-[13px] font-bold">✓</span>
+            <span class="text-sm font-bold">✓</span>
           {/if}
         </button>
       {/each}
@@ -100,18 +100,18 @@ const handleNext = () => {
 
     {#if showExplanation}
       <div
-        class="mt-[18px] flex items-center gap-4 rounded-2xl p-4"
+        class="mt-4.5 flex items-center gap-4 rounded-2xl p-4"
         style="background-color: var(--success-bg)"
       >
         <Mascot pose={isCorrect ? "happy" : "confused"} size={56} />
         <div class="flex flex-col gap-1">
-          <span class="text-[15px] font-bold" style="color: var(--success-text)">
+          <span class="text-base font-bold" style="color: var(--success-text)">
             {isCorrect ? labels.correct : labels.incorrect}
           </span>
           <span class="text-sm">{currentQuestion.explanation}</span>
         </div>
       </div>
-      <button class="btn-primary float-right mt-4 cursor-pointer px-[22px] py-[11px] text-sm" onclick={handleNext}>
+      <button class="btn-primary float-right mt-4 cursor-pointer px-5.5 py-2.75 text-sm" onclick={handleNext}>
         {isLastQuestion ? labels.results : labels.next}
       </button>
     {/if}
