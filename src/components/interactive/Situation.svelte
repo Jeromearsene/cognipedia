@@ -34,6 +34,7 @@ const handleChoice = (index: number) => {
           "flex cursor-pointer items-center justify-between gap-3 rounded-2xl border-2 border-border bg-surface px-4.5 py-3.5 text-left text-base transition-colors",
           "hover:not-disabled:border-accent disabled:cursor-default",
           revealed && selectedIndex !== i && "opacity-60",
+          revealed && selectedIndex === i && choice.bias && "border-text-secondary font-semibold",
           revealed && !choice.bias && "border-[color:var(--success-border)] font-semibold",
         )}
         style={revealed && !choice.bias ? "background-color: var(--success-bg); color: var(--success-text)" : ""}
@@ -43,6 +44,8 @@ const handleChoice = (index: number) => {
         <span>{choice.label}</span>
         {#if revealed && !choice.bias}
           <span class="text-sm font-bold">✓</span>
+        {:else if revealed && selectedIndex === i}
+          <span class="text-sm font-bold">✗</span>
         {/if}
       </button>
     {/each}

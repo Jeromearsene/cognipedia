@@ -73,6 +73,7 @@
 	"theme_auto": "Automatique",
 	"theme_light": "Clair",
 	"theme_dark": "Sombre",
+	"theme_group": "Thème",
 	"home_view_grouped": "Par famille",
 	"home_view_flat": "Tous",
 	"home_filter_family": "Famille",

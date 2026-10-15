@@ -17,9 +17,11 @@ interface Props {
 
 const { pose = "idle", size = 84, class: className = "" }: Props = $props();
 
-// Each pose needs its own gradient id — reusing one across multiple mascots on
+// Each instance needs its own gradient id — reusing one across multiple mascots on
 // the same page would make later instances point at the first one's <defs>.
-const gradientId = `cogni-gradient-${Math.random().toString(36).slice(2, 9)}`;
+// `$props.id()` is stable between SSR and hydration, unlike Math.random().
+const uid = $props.id();
+const gradientId = `cogni-gradient-${uid}`;
 </script>
 
 <div

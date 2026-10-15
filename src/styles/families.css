@@ -4,13 +4,13 @@
  * styles, which `@theme` utilities can't express.
  */
 :root {
-	--family-too-much-information-1: #6477f2;
+	--family-too-much-information-1: #5568e8;
 	--family-too-much-information-2: #3346d1;
-	--family-not-enough-meaning-1: #b370f0;
+	--family-not-enough-meaning-1: #9e48ec;
 	--family-not-enough-meaning-2: #9333ea;
-	--family-need-to-act-fast-1: #f472b6;
+	--family-need-to-act-fast-1: #d1387c;
 	--family-need-to-act-fast-2: #be185d;
-	--family-what-to-remember-1: #22d3ee;
+	--family-what-to-remember-1: #107e99;
 	--family-what-to-remember-2: #0e7490;
 
 	/* Text color on top of a family gradient: white in light mode (saturated gradients),

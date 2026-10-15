@@ -94,6 +94,18 @@
 		box-shadow: var(--shadow-lg);
 	}
 
+	@media (prefers-reduced-motion: reduce) {
+		.hoverlift,
+		.btn-primary {
+			transition: none;
+		}
+
+		.hoverlift:hover,
+		.btn-primary:hover {
+			transform: none;
+		}
+	}
+
 	/* Typography plugin colors follow the theme tokens, so `prose` content reads in both light and dark. */
 	.prose {
 		--tw-prose-body: var(--color-text);

@@ -28,9 +28,10 @@ const status = $derived(biasProgressStore.getStatus(slug));
 
 <a
   {href}
-  class="hoverlift block rounded-3xl border bg-surface p-5.5 no-underline shadow-brand-sm {status === 'completed'
+  class="block rounded-3xl border bg-surface p-5.5 no-underline shadow-brand-sm {status === 'completed'
     ? 'border-accent/40'
     : 'border-transparent'}"
+  style="touch-action: manipulation"
   use:tilt={{ scale: 1.02, glare: true, maxGlare: 0.15 }}
   in:fade={{ duration: 300, delay }}
 >
