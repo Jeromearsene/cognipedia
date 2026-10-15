@@ -31,3 +31,9 @@ docs/plans/
 # wrangler
 .wrangler/
 .lighthouseci/
+
+# playwright
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
