@@ -12,6 +12,10 @@ sources:
       urls:
         - label: "DOI"
           url: "https://doi.org/10.1037/1089-2680.5.4.323"
+    - title: "Negative Information Weighs More Heavily on the Brain — Ito, Larsen, Smith & Cacioppo, 1998"
+      urls:
+        - label: "DOI"
+          url: "https://doi.org/10.1037/0022-3514.75.4.887"
 relatedBiases: ["loss-aversion", "availability"]
 situation:
   type: "choice"
@@ -25,6 +29,7 @@ situation:
 quiz:
   questions:
     - question: "Negativity bias refers to the fact that..."
+      level: easy
       choices:
         - "Negative events carry more psychological weight than equivalent positive events"
         - "People only remember negative events"
@@ -32,12 +37,21 @@ quiz:
       correct: 0
       explanation: "It isn't about personality: at comparable intensity, our brain spontaneously gives more weight to negative information than to positive information."
     - question: "Why might this bias have been useful in human evolution?"
+      level: medium
       choices:
         - "Because quickly spotting a threat improves the odds of survival"
         - "Because it makes groups more cohesive"
         - "Because it improves long-term memory in general"
       correct: 0
       explanation: "Missing a danger could cost a life, while missing a positive opportunity rarely was fatal. This survival asymmetry favored heightened attention to the negative."
+    - question: "What does the Ito, Larsen, Smith & Cacioppo (1998) electrophysiology study show?"
+      level: hard
+      choices:
+        - "Negative images trigger a larger electrical brain response than positive images of equal intensity"
+        - "The brain processes positive and negative images in exactly the same way"
+        - "Only anxious individuals show this kind of brain asymmetry"
+      correct: 0
+      explanation: "By measuring participants' event-related brain potentials while they viewed images, the researchers found a larger amplitude in response to negative images than to equally intense positive ones: the asymmetry shows up at the neural level, before any conscious reflection."
 ---
 
 ## Definition

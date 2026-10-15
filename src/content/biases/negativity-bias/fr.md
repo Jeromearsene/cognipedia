@@ -12,6 +12,10 @@ sources:
       urls:
         - label: "DOI"
           url: "https://doi.org/10.1037/1089-2680.5.4.323"
+    - title: "Negative Information Weighs More Heavily on the Brain — Ito, Larsen, Smith & Cacioppo, 1998"
+      urls:
+        - label: "DOI"
+          url: "https://doi.org/10.1037/0022-3514.75.4.887"
 relatedBiases: ["loss-aversion", "availability"]
 situation:
   type: "choice"
@@ -25,6 +29,7 @@ situation:
 quiz:
   questions:
     - question: "Le biais de négativité désigne le fait que..."
+      level: easy
       choices:
         - "Les événements négatifs ont plus de poids psychologique que les événements positifs équivalents"
         - "On ne se souvient que des événements négatifs"
@@ -32,12 +37,21 @@ quiz:
       correct: 0
       explanation: "Ce n'est pas une question de caractère : à intensité comparable, notre cerveau accorde spontanément plus de poids à une information négative qu'à une information positive."
     - question: "Pourquoi ce biais aurait-il été utile dans l'évolution humaine ?"
+      level: medium
       choices:
         - "Parce que repérer rapidement une menace augmente les chances de survie"
         - "Parce qu'il rend les groupes plus solidaires"
         - "Parce qu'il améliore la mémoire à long terme en général"
       correct: 0
       explanation: "Ignorer un danger pouvait coûter la vie, alors qu'ignorer une opportunité positive était rarement fatal. Ce déséquilibre de survie a favorisé une attention accrue au négatif."
+    - question: "Que montre l'étude d'Ito, Larsen, Smith et Cacioppo (1998) en électrophysiologie ?"
+      level: hard
+      choices:
+        - "Les images négatives déclenchent une réponse électrique cérébrale plus ample que des images positives de même intensité"
+        - "Le cerveau traite les images positives et négatives de façon strictement identique"
+        - "Seules les personnes anxieuses montrent une telle asymétrie cérébrale"
+      correct: 0
+      explanation: "En mesurant les potentiels évoqués cérébraux de participants regardant des images, les chercheurs ont observé une amplitude plus grande face aux images négatives qu'aux images positives équivalentes : l'asymétrie apparaît dès le traitement neuronal, avant toute réflexion consciente."
 ---
 
 ## Définition
