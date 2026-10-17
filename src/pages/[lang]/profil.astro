@@ -16,6 +16,7 @@ Astro.locals.altLangHrefs = buildAltLangHrefs(locale, "profile");
 ---
 
 <BaseLayout title={title} description={m.site_description()} lang={locale}>
+	<h1 class="mb-8 text-3xl font-bold">{m.profile_title()}</h1>
 	<ProfilePage
 		totalBiasCount={biases.length}
 		{biasMap}
