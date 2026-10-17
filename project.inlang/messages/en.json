@@ -137,5 +137,9 @@
 	"bias_status_completed": "Completed",
 	"answer_correct_mark": "Correct answer",
 	"answer_wrong_mark": "Your answer (incorrect)",
-	"menu_title": "Main menu"
+	"menu_title": "Main menu",
+	"quiz_progress": "Question {current} of {total}",
+	"quiz_result_perfect": "Perfect score, well done!",
+	"quiz_result_good": "Nicely done, you have the essentials down.",
+	"quiz_result_retry": "No worries: reread the page, then give it another go."
 }
