@@ -55,26 +55,26 @@ const setMode = (themeMode: ThemeMode) => {
     aria-label={labels.auto}
     aria-pressed={mode === 'auto'}
     onclick={() => setMode('auto')}
-    class="flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs font-medium transition-colors {mode === 'auto' ? 'bg-accent text-on-accent' : 'text-text-secondary hover:text-text'}"
+    class="flex size-9 items-center justify-center rounded-lg text-xs font-medium transition-colors pointer-coarse:size-11 {mode === 'auto' ? 'bg-accent text-on-accent' : 'text-text-secondary hover:text-text'}"
   >
-    <Monitor size={14} />
+    <Monitor size={16} aria-hidden="true" />
   </button>
   <button
     type="button"
     aria-label={labels.light}
     aria-pressed={mode === 'light'}
     onclick={() => setMode('light')}
-    class="flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs font-medium transition-colors {mode === 'light' ? 'bg-accent text-on-accent' : 'text-text-secondary hover:text-text'}"
+    class="flex size-9 items-center justify-center rounded-lg text-xs font-medium transition-colors pointer-coarse:size-11 {mode === 'light' ? 'bg-accent text-on-accent' : 'text-text-secondary hover:text-text'}"
   >
-    <Sun size={14} />
+    <Sun size={16} aria-hidden="true" />
   </button>
   <button
     type="button"
     aria-label={labels.dark}
     aria-pressed={mode === 'dark'}
     onclick={() => setMode('dark')}
-    class="flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs font-medium transition-colors {mode === 'dark' ? 'bg-accent text-on-accent' : 'text-text-secondary hover:text-text'}"
+    class="flex size-9 items-center justify-center rounded-lg text-xs font-medium transition-colors pointer-coarse:size-11 {mode === 'dark' ? 'bg-accent text-on-accent' : 'text-text-secondary hover:text-text'}"
   >
-    <Moon size={14} />
+    <Moon size={16} aria-hidden="true" />
   </button>
 </div>
