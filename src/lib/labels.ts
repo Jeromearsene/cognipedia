@@ -9,6 +9,10 @@ export interface QuizLabels {
 	results: string;
 	correct: string;
 	incorrect: string;
+	/** Screen-reader text for the ✓ on the right answer. */
+	correctMark: string;
+	/** Screen-reader text for the ✗ on the user's wrong answer. */
+	wrongMark: string;
 }
 
 /** Labels for score submission feedback. */
@@ -46,9 +50,17 @@ export interface PseudoEditorLabels {
 	edit: string;
 }
 
+/** Labels for the Situation component. */
+export interface SituationLabels {
+	revealLabel: string;
+	correctMark: string;
+	wrongMark: string;
+}
+
 /** Labels for the BiasInteractive orchestrator. */
 export interface BiasInteractiveLabels {
 	situationTitle: string;
+	situation: SituationLabels;
 	quizTitle: string;
 	quiz: QuizLabels;
 	score: ScoreLabels;
@@ -78,12 +90,19 @@ export interface ProfilePageLabels {
 /** Builds all labels needed by the BiasInteractive orchestrator. */
 export const getBiasInteractiveLabels = (locale: Locale): BiasInteractiveLabels => ({
 	situationTitle: m.situation_title({}, { locale }),
+	situation: {
+		revealLabel: m.situation_reveal({}, { locale }),
+		correctMark: m.answer_correct_mark({}, { locale }),
+		wrongMark: m.answer_wrong_mark({}, { locale }),
+	},
 	quizTitle: m.quiz_title({}, { locale }),
 	quiz: {
 		next: m.quiz_next({}, { locale }),
 		results: m.quiz_results({}, { locale }),
 		correct: m.quiz_correct({}, { locale }),
 		incorrect: m.quiz_incorrect({}, { locale }),
+		correctMark: m.answer_correct_mark({}, { locale }),
+		wrongMark: m.answer_wrong_mark({}, { locale }),
 	},
 	score: {
 		submitting: m.score_submitting({}, { locale }),
