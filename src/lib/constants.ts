@@ -27,4 +27,8 @@ export interface BiasCardData {
 	difficulty: Difficulty;
 	/** Translated difficulty label. */
 	difficultyLabel: string;
+	/** Accessible name of the "seen" status icon. */
+	seenLabel: string;
+	/** Accessible name of the "completed" status icon. */
+	completedLabel: string;
 }

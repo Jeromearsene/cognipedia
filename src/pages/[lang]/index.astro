@@ -38,6 +38,8 @@ const toBiasItem = (entry: (typeof biases)[number]) => ({
 	familyLabel: familyLabel[entry.data.family](),
 	difficulty: entry.data.difficulty,
 	difficultyLabel: difficultyLabel[entry.data.difficulty](),
+	seenLabel: m.bias_status_seen(),
+	completedLabel: m.bias_status_completed(),
 });
 
 const biasItems = biases.map(toBiasItem);

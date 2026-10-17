@@ -9,6 +9,8 @@ interface Labels {
 	results: string;
 	correct: string;
 	incorrect: string;
+	correctMark: string;
+	wrongMark: string;
 }
 
 interface Props {
@@ -93,9 +95,11 @@ const handleNext = () => {
         >
           <span>{choice}</span>
           {#if showExplanation && i === currentQuestion.correct}
-            <span class="text-sm font-bold">✓</span>
+            <span class="text-sm font-bold" aria-hidden="true">✓</span>
+            <span class="sr-only">{labels.correctMark}</span>
           {:else if showExplanation && selectedAnswer === i}
-            <span class="text-sm font-bold">✗</span>
+            <span class="text-sm font-bold" aria-hidden="true">✗</span>
+            <span class="sr-only">{labels.wrongMark}</span>
           {/if}
         </button>
       {/each}

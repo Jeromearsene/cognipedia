@@ -21,6 +21,8 @@ const {
 	familyLabel,
 	difficulty,
 	difficultyLabel,
+	seenLabel,
+	completedLabel,
 	delay = 0,
 }: Props = $props();
 
@@ -43,9 +45,11 @@ const motionSafeTilt = (node: HTMLElement, options: Parameters<typeof tilt>[1]) 
   <div class="mb-3 flex items-start justify-between gap-2">
     <h3 class="text-lg font-bold text-text">{title}</h3>
     {#if status === "completed"}
-      <CheckCircle size={18} class="shrink-0 text-accent" />
+      <CheckCircle size={18} class="shrink-0 text-accent" aria-hidden="true" />
+      <span class="sr-only">{completedLabel}</span>
     {:else if status === "seen"}
-      <Eye size={18} class="shrink-0 text-text-secondary" />
+      <Eye size={18} class="shrink-0 text-text-secondary" aria-hidden="true" />
+      <span class="sr-only">{seenLabel}</span>
     {/if}
   </div>
   <div class="flex flex-wrap gap-1.75">

@@ -132,5 +132,9 @@
 	"footer_existing_account": "Déjà un compte ?",
 	"profile_recovery_hint": "Ce code permet de retrouver votre compte sur un autre appareil ou navigateur. Rendez-vous sur Cognipedia depuis votre nouvel appareil et cliquez sur « Déjà un compte ? » en bas de page.",
 	"menu_open": "Ouvrir le menu",
-	"menu_close": "Fermer le menu"
+	"menu_close": "Fermer le menu",
+	"bias_status_seen": "Déjà vu",
+	"bias_status_completed": "Complété",
+	"answer_correct_mark": "Bonne réponse",
+	"answer_wrong_mark": "Votre réponse (incorrecte)"
 }

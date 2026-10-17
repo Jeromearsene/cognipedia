@@ -43,9 +43,11 @@ const handleChoice = (index: number) => {
       >
         <span>{choice.label}</span>
         {#if revealed && !choice.bias}
-          <span class="text-sm font-bold">✓</span>
+          <span class="text-sm font-bold" aria-hidden="true">✓</span>
+          <span class="sr-only">{labels.correctMark}</span>
         {:else if revealed && selectedIndex === i}
-          <span class="text-sm font-bold">✗</span>
+          <span class="text-sm font-bold" aria-hidden="true">✗</span>
+          <span class="sr-only">{labels.wrongMark}</span>
         {/if}
       </button>
     {/each}

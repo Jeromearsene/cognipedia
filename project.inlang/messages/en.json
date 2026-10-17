@@ -132,5 +132,9 @@
 	"footer_existing_account": "Already have an account?",
 	"profile_recovery_hint": "This code lets you access your account on another device or browser. Go to Cognipedia on your new device and click \"Already have an account?\" at the bottom of the page.",
 	"menu_open": "Open menu",
-	"menu_close": "Close menu"
+	"menu_close": "Close menu",
+	"bias_status_seen": "Seen",
+	"bias_status_completed": "Completed",
+	"answer_correct_mark": "Correct answer",
+	"answer_wrong_mark": "Your answer (incorrect)"
 }
