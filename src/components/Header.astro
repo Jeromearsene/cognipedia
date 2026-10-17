@@ -38,6 +38,12 @@ const mobileLangLinks = SUPPORTED_LOCALES.map((lang) => ({
 	href: switchLangPath(lang),
 	active: lang === locale,
 }));
+const themeLabels = {
+	group: m.theme_group(),
+	auto: m.theme_auto(),
+	light: m.theme_light(),
+	dark: m.theme_dark(),
+};
 ---
 
 <header class="border-b border-border bg-surface">
@@ -65,7 +71,7 @@ const mobileLangLinks = SUPPORTED_LOCALES.map((lang) => ({
 
     <!-- Desktop language switcher (hidden below lg) -->
     <div class="hidden lg:flex items-center gap-4">
-      <ThemeToggle client:load />
+      <ThemeToggle labels={themeLabels} client:load />
 
       <div class="flex gap-2 text-sm">
         {SUPPORTED_LOCALES.map((lang) => (
@@ -86,6 +92,7 @@ const mobileLangLinks = SUPPORTED_LOCALES.map((lang) => ({
     <MobileMenu
       navLinks={mobileNavLinks}
       langLinks={mobileLangLinks}
+      labels={{ open: m.menu_open(), close: m.menu_close(), theme: themeLabels }}
       client:load
     />
   </nav>

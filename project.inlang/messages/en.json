@@ -130,5 +130,7 @@
 	"slug_profile": "profile",
 	"footer_recover": "Recover my account",
 	"footer_existing_account": "Already have an account?",
-	"profile_recovery_hint": "This code lets you access your account on another device or browser. Go to Cognipedia on your new device and click \"Already have an account?\" at the bottom of the page."
+	"profile_recovery_hint": "This code lets you access your account on another device or browser. Go to Cognipedia on your new device and click \"Already have an account?\" at the bottom of the page.",
+	"menu_open": "Open menu",
+	"menu_close": "Close menu"
 }

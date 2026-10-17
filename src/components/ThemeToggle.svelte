@@ -1,6 +1,18 @@
 <script lang="ts">
 import { Monitor, Moon, Sun } from "lucide-svelte";
-import { m } from "@/paraglide/messages";
+export interface ThemeLabels {
+	group: string;
+	auto: string;
+	light: string;
+	dark: string;
+}
+
+interface Props {
+	/** Translated labels, resolved server-side so they match the page locale on hydration. */
+	labels: ThemeLabels;
+}
+
+const { labels }: Props = $props();
 
 type ThemeMode = "auto" | "light" | "dark";
 
@@ -37,10 +49,10 @@ const setMode = (themeMode: ThemeMode) => {
 };
 </script>
 
-<div role="group" aria-label={m.theme_group()} class="flex gap-0.5 rounded-xl border border-border bg-surface p-0.5">
+<div role="group" aria-label={labels.group} class="flex gap-0.5 rounded-xl border border-border bg-surface p-0.5">
   <button
     type="button"
-    aria-label={m.theme_auto()}
+    aria-label={labels.auto}
     aria-pressed={mode === 'auto'}
     onclick={() => setMode('auto')}
     class="flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs font-medium transition-colors {mode === 'auto' ? 'bg-accent text-on-accent' : 'text-text-secondary hover:text-text'}"
@@ -49,7 +61,7 @@ const setMode = (themeMode: ThemeMode) => {
   </button>
   <button
     type="button"
-    aria-label={m.theme_light()}
+    aria-label={labels.light}
     aria-pressed={mode === 'light'}
     onclick={() => setMode('light')}
     class="flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs font-medium transition-colors {mode === 'light' ? 'bg-accent text-on-accent' : 'text-text-secondary hover:text-text'}"
@@ -58,7 +70,7 @@ const setMode = (themeMode: ThemeMode) => {
   </button>
   <button
     type="button"
-    aria-label={m.theme_dark()}
+    aria-label={labels.dark}
     aria-pressed={mode === 'dark'}
     onclick={() => setMode('dark')}
     class="flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs font-medium transition-colors {mode === 'dark' ? 'bg-accent text-on-accent' : 'text-text-secondary hover:text-text'}"
