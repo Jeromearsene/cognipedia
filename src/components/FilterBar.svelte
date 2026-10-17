@@ -61,7 +61,7 @@ const {
         value={searchQuery}
         oninput={(e) => onSearchChange(e.currentTarget.value)}
         placeholder={labels.searchPlaceholder}
-        class="w-full rounded-full border border-border bg-bg py-1.5 pl-9 pr-3 text-sm text-text placeholder:text-text-secondary focus:border-accent focus:outline-none"
+        class="w-full rounded-full border border-border bg-bg py-1.5 pl-9 pr-3 text-sm text-text placeholder:text-text-secondary focus:border-accent"
       />
     </div>
   </div>
