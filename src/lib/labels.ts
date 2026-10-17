@@ -27,6 +27,8 @@ export interface RecoveryModalLabels {
 	title: string;
 	description: string;
 	profileHint: string;
+	/** Text of the link to the profile page inside the hint. */
+	profileLink: string;
 	dismiss: string;
 	copied: string;
 	copy: string;
@@ -113,6 +115,7 @@ export const getBiasInteractiveLabels = (locale: Locale): BiasInteractiveLabels 
 		title: m.recovery_modal_title({}, { locale }),
 		description: m.recovery_modal_description({}, { locale }),
 		profileHint: m.recovery_modal_profile_hint({}, { locale }),
+		profileLink: m.nav_profile({}, { locale }),
 		dismiss: m.recovery_modal_dismiss({}, { locale }),
 		copied: m.recovery_modal_copied({}, { locale }),
 		copy: m.user_recovery_copy({}, { locale }),
