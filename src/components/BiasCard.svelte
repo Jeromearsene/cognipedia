@@ -5,6 +5,7 @@ import { CheckCircle, Eye } from "lucide-svelte";
 import { fade } from "svelte/transition";
 import { difficultyBadgeStyle, difficultyDotStyle, familyBadgeStyle } from "@/lib/badges";
 import type { BiasCardData } from "@/lib/constants";
+import { prefersReducedMotion } from "@/lib/motion";
 import { biasProgressStore } from "@/lib/seenBiasesStore.svelte";
 
 interface Props extends BiasCardData {
@@ -24,6 +25,10 @@ const {
 }: Props = $props();
 
 const status = $derived(biasProgressStore.getStatus(slug));
+
+/** Levita ignores `prefers-reduced-motion`, so only attach the tilt/glare when motion is welcome. */
+const motionSafeTilt = (node: HTMLElement, options: Parameters<typeof tilt>[1]) =>
+	prefersReducedMotion() ? undefined : tilt(node, options);
 </script>
 
 <a
@@ -32,8 +37,8 @@ const status = $derived(biasProgressStore.getStatus(slug));
     ? 'border-accent/40'
     : 'border-transparent'}"
   style="touch-action: manipulation"
-  use:tilt={{ scale: 1.02, glare: true, maxGlare: 0.15 }}
-  in:fade={{ duration: 300, delay }}
+  use:motionSafeTilt={{ scale: 1.02, glare: true, maxGlare: 0.15 }}
+  in:fade={{ duration: prefersReducedMotion() ? 0 : 300, delay: prefersReducedMotion() ? 0 : delay }}
 >
   <div class="mb-3 flex items-start justify-between gap-2">
     <h3 class="text-lg font-bold text-text">{title}</h3>
