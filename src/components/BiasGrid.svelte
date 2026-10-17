@@ -1,5 +1,6 @@
 <script lang="ts">
 import autoAnimate from "@formkit/auto-animate";
+import type { Locale } from "@/i18n/i18n";
 import type { BiasCardData, Difficulty, Family } from "@/lib/constants";
 import { biasProgressStore } from "@/lib/seenBiasesStore.svelte";
 import { isDifficulty, isFamily } from "@/lib/utils";
@@ -27,6 +28,8 @@ interface Props {
 	biases: BiasCardData[];
 	families: FamilyOption[];
 	difficulties: DifficultyOption[];
+	/** Page locale: islands resolve to the base locale on the client, so message calls must pass it. */
+	locale: Locale;
 	/** Pre-selected family filter from query params (passed by Astro SSR). */
 	initialFamily?: string | null;
 	/** Pre-selected difficulty filter from query params (passed by Astro SSR). */
@@ -43,7 +46,7 @@ interface Props {
 	};
 }
 
-const { biases, families, difficulties, initialFamily, initialDifficulty, labels }: Props =
+const { biases, families, difficulties, locale, initialFamily, initialDifficulty, labels }: Props =
 	$props();
 
 // svelte-ignore state_referenced_locally — props are static (from Astro), won't change after mount
@@ -100,8 +103,8 @@ const filtered = $derived.by(() => {
 	});
 });
 
-/** Formatted result count — uses Paraglide ICU plurals directly from the client. */
-const resultsLabel = $derived(home_results_count({ count: filtered.length }));
+/** Formatted result count — Paraglide ICU plural, in the page locale. */
+const resultsLabel = $derived(home_results_count({ count: filtered.length }, { locale }));
 
 /** True when any filter is narrowed (at least one family/difficulty disabled or search active). */
 const hasActiveFilters = $derived(

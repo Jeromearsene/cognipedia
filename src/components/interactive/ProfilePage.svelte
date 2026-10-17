@@ -1,4 +1,5 @@
 <script lang="ts">
+import type { Locale } from "@/i18n/i18n";
 import type { ProfilePageLabels } from "@/lib/labels";
 import { userScoresResponseSchema } from "@/lib/schemas";
 import type { ScoreEntry } from "@/lib/types";
@@ -14,9 +15,11 @@ interface Props {
 	/** Map bias slug → { title, href } for displaying translated titles and links. */
 	biasMap: Record<string, { title: string; href: string }>;
 	labels: ProfilePageLabels;
+	/** Page locale: islands resolve to the base locale on the client, so message calls must pass it. */
+	locale: Locale;
 }
 
-let { totalBiasCount, biasMap, labels }: Props = $props();
+let { totalBiasCount, biasMap, labels, locale }: Props = $props();
 
 let scores = $state<ScoreEntry[]>([]);
 let totalScore = $state(0);
@@ -85,7 +88,7 @@ const progressPercent = $derived(
 				></div>
 			</div>
 			<p class="text-sm text-text-secondary">
-				{profile_progression_biases({ count: scores.length, total: totalBiasCount })}
+				{profile_progression_biases({ count: scores.length, total: totalBiasCount }, { locale })}
 			</p>
 			<p class="mt-1 text-sm font-medium">{labels.totalScore} : {totalScore}</p>
 		</div>

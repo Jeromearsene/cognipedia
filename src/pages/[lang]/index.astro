@@ -130,6 +130,7 @@ const hasFilters = filterFamily !== null || filterDifficulty !== null;
     <div id="view-flat" class={hasFilters ? "" : "hidden"}>
       <BiasGrid
         biases={biasItems}
+        locale={locale}
         families={familyOptions}
         difficulties={difficultyOptions}
         initialFamily={filterFamily}
