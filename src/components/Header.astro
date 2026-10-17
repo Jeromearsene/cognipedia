@@ -52,8 +52,8 @@ const themeLabels = {
       Cognipedia
     </a>
 
-    <!-- Desktop nav (hidden below lg) -->
-    <ul class="hidden lg:flex gap-6 list-none m-0 p-0">
+    <!-- Desktop nav (hidden below md) -->
+    <ul class="hidden md:flex gap-6 list-none m-0 p-0">
       {navLinks.map(({ label, href }) => (
         <li>
           <a
@@ -70,8 +70,8 @@ const themeLabels = {
       ))}
     </ul>
 
-    <!-- Desktop language switcher (hidden below lg) -->
-    <div class="hidden lg:flex items-center gap-4">
+    <!-- Desktop language switcher (hidden below md) -->
+    <div class="hidden md:flex items-center gap-4">
       <ThemeToggle labels={themeLabels} client:load />
 
       <div class="flex gap-2 text-sm">
@@ -92,7 +92,7 @@ const themeLabels = {
       </div>
     </div>
 
-    <!-- Mobile burger (hidden above lg) -->
+    <!-- Mobile burger (hidden above md) -->
     <MobileMenu
       navLinks={mobileNavLinks}
       langLinks={mobileLangLinks}

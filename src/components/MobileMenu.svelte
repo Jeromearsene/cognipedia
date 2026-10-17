@@ -78,7 +78,7 @@ const onKeydown = (event: KeyboardEvent) => {
 <button
 	bind:this={burger}
 	onclick={toggle}
-	class="flex size-11 cursor-pointer items-center justify-center rounded-lg border border-border bg-surface text-text transition-colors hover:bg-bg lg:hidden"
+	class="flex size-11 cursor-pointer items-center justify-center rounded-lg border border-border bg-surface text-text transition-colors hover:bg-bg md:hidden"
 	aria-label={labels.open}
 	aria-expanded={open}
 	aria-haspopup="dialog"
@@ -91,7 +91,7 @@ const onKeydown = (event: KeyboardEvent) => {
 {#if open}
 	<div
 		bind:this={dialog}
-		class="fixed inset-0 z-50 flex flex-col bg-bg lg:hidden"
+		class="fixed inset-0 z-50 flex flex-col bg-bg md:hidden"
 		role="dialog"
 		aria-modal="true"
 		aria-label={labels.title}
