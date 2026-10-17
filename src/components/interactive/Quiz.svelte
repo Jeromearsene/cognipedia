@@ -1,4 +1,5 @@
 <script lang="ts">
+import { tick } from "svelte";
 import Mascot from "@/components/Mascot.svelte";
 import { cn } from "@/lib/cn";
 import type { Quiz } from "@/lib/schemas";
@@ -28,6 +29,9 @@ let answers: number[] = $state([]);
 let selectedAnswer: number | null = $state(null);
 let showExplanation = $state(false);
 let finished = $state(false);
+let questionEl = $state<HTMLElement>();
+let feedbackEl = $state<HTMLElement>();
+let resultEl = $state<HTMLElement>();
 
 const currentQuestion = $derived(data.questions[currentIndex]);
 const isCorrect = $derived(selectedAnswer === currentQuestion?.correct);
@@ -39,13 +43,16 @@ const score = $derived(
 );
 const isLastQuestion = $derived(currentIndex + 1 >= data.questions.length);
 
-const handleAnswer = (index: number) => {
+/** Answering disables the choices, so move focus to the feedback to keep keyboard and screen-reader users in flow. */
+const handleAnswer = async (index: number) => {
 	if (showExplanation) return;
 	selectedAnswer = index;
 	showExplanation = true;
+	await tick();
+	feedbackEl?.focus();
 };
 
-const handleNext = () => {
+const handleNext = async () => {
 	if (selectedAnswer === null) return;
 	answers = [...answers, selectedAnswer];
 	selectedAnswer = null;
@@ -58,8 +65,12 @@ const handleNext = () => {
 			data.questions.map((q) => q.correct),
 		);
 		onComplete?.(finalScore.correct, finalScore.total);
+		await tick();
+		resultEl?.focus();
 	} else {
 		currentIndex += 1;
+		await tick();
+		questionEl?.focus();
 	}
 };
 </script>
@@ -75,7 +86,7 @@ const handleNext = () => {
       </span>
     </div>
 
-    <p class="mb-4.5 text-base font-semibold">{currentQuestion.question}</p>
+    <p bind:this={questionEl} tabindex="-1" class="mb-4.5 text-base font-semibold">{currentQuestion.question}</p>
 
     <div class="flex flex-col gap-2.5">
       {#each currentQuestion.choices as choice, i}
@@ -107,6 +118,8 @@ const handleNext = () => {
 
     {#if showExplanation}
       <div
+        bind:this={feedbackEl}
+        tabindex="-1"
         class={cn("mt-4.5 flex items-center gap-4 rounded-2xl p-4", !isCorrect && "bg-bg")}
         style={isCorrect ? "background-color: var(--success-bg)" : ""}
       >
@@ -128,7 +141,7 @@ const handleNext = () => {
       </div>
     {/if}
   {:else}
-    <div class="text-center">
+    <div bind:this={resultEl} tabindex="-1" class="text-center">
       <p class="text-3xl font-bold">{score.correct} / {score.total}</p>
     </div>
   {/if}
