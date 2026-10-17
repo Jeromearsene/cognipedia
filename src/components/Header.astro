@@ -58,6 +58,7 @@ const themeLabels = {
         <li>
           <a
             href={href}
+            aria-current={currentPath === href ? "page" : undefined}
             class:list={[
               "no-underline hover:underline",
               currentPath === href ? "font-bold text-accent" : "text-text-secondary",
@@ -77,6 +78,9 @@ const themeLabels = {
         {SUPPORTED_LOCALES.map((lang) => (
           <a
             href={switchLangPath(lang)}
+            hreflang={lang}
+            lang={lang}
+            aria-current={lang === locale ? "true" : undefined}
             class:list={[
               "no-underline uppercase",
               lang === locale ? "font-bold text-accent" : "text-text-secondary hover:underline",
@@ -92,7 +96,7 @@ const themeLabels = {
     <MobileMenu
       navLinks={mobileNavLinks}
       langLinks={mobileLangLinks}
-      labels={{ open: m.menu_open(), close: m.menu_close(), theme: themeLabels }}
+      labels={{ title: m.menu_title(), open: m.menu_open(), close: m.menu_close(), theme: themeLabels }}
       client:load
     />
   </nav>
