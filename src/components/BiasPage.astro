@@ -58,14 +58,14 @@ const showOriginalName = data.originalName !== data.title;
     <div class="mt-1.5 flex flex-wrap items-center gap-2">
       <a
         href={`/${locale}/?family=${data.family}`}
-        class="rounded-full px-3 py-1.25 text-xs font-bold no-underline"
+        class="rounded-full px-3 py-1.25 text-xs font-bold no-underline transition-shadow hover:shadow-brand-md motion-reduce:transition-none"
         style={familyBadgeStyle(data.family)}
       >
         {familyLabel[data.family]()}
       </a>
       <a
         href={`/${locale}/?difficulty=${data.difficulty}`}
-        class="flex items-center gap-1.25 rounded-full py-1.25 pl-2 pr-3 text-xs font-bold no-underline"
+        class="flex items-center gap-1.25 rounded-full py-1.25 pl-2 pr-3 text-xs font-bold no-underline transition-shadow hover:shadow-brand-md motion-reduce:transition-none"
         style={difficultyBadgeStyle(data.difficulty)}
       >
         <span class="inline-block h-1.5 w-1.5 rounded-full" style={difficultyDotStyle(data.difficulty)}></span>
