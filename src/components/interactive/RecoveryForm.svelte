@@ -45,7 +45,7 @@ const handleSubmit = async () => {
 		/>
 		<button
 			type="submit"
-			class="cursor-pointer rounded-lg bg-accent px-4 py-2 text-white transition-colors hover:opacity-80 disabled:opacity-50"
+			class="cursor-pointer rounded-lg bg-accent px-4 py-2 text-on-accent transition-colors hover:opacity-80 disabled:opacity-50"
 			disabled={status === "loading"}
 		>
 			{labels.submit}

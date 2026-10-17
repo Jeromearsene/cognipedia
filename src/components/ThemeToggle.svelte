@@ -43,7 +43,7 @@ const setMode = (themeMode: ThemeMode) => {
     aria-label={m.theme_auto()}
     aria-pressed={mode === 'auto'}
     onclick={() => setMode('auto')}
-    class="flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs font-medium transition-colors {mode === 'auto' ? 'bg-accent text-white' : 'text-text-secondary hover:text-text'}"
+    class="flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs font-medium transition-colors {mode === 'auto' ? 'bg-accent text-on-accent' : 'text-text-secondary hover:text-text'}"
   >
     <Monitor size={14} />
   </button>
@@ -52,7 +52,7 @@ const setMode = (themeMode: ThemeMode) => {
     aria-label={m.theme_light()}
     aria-pressed={mode === 'light'}
     onclick={() => setMode('light')}
-    class="flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs font-medium transition-colors {mode === 'light' ? 'bg-accent text-white' : 'text-text-secondary hover:text-text'}"
+    class="flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs font-medium transition-colors {mode === 'light' ? 'bg-accent text-on-accent' : 'text-text-secondary hover:text-text'}"
   >
     <Sun size={14} />
   </button>
@@ -61,7 +61,7 @@ const setMode = (themeMode: ThemeMode) => {
     aria-label={m.theme_dark()}
     aria-pressed={mode === 'dark'}
     onclick={() => setMode('dark')}
-    class="flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs font-medium transition-colors {mode === 'dark' ? 'bg-accent text-white' : 'text-text-secondary hover:text-text'}"
+    class="flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs font-medium transition-colors {mode === 'dark' ? 'bg-accent text-on-accent' : 'text-text-secondary hover:text-text'}"
   >
     <Moon size={14} />
   </button>

@@ -112,7 +112,7 @@ const {
       {#each labels.statusOptions as { key, label }}
         <button
           class="cursor-pointer rounded-full border px-3 py-1 text-sm transition-colors hover:border-accent hover:bg-transparent hover:text-accent {activeStatus === key
-            ? 'border-accent bg-accent text-white'
+            ? 'border-accent bg-accent text-on-accent'
             : 'border-border bg-bg text-text-secondary'}"
           onclick={() => onStatusChange(key)}
         >

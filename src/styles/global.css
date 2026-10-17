@@ -15,6 +15,8 @@
 	--color-border: #e7e3f0;
 	--color-accent: #4f46e5;
 	--color-accent-ink: #3730a3;
+	/* Text/icon color to use on top of `bg-accent` (white in light, near-black in dark to stay >= 4.5:1). */
+	--color-on-accent: #ffffff;
 	--color-accent-2: #f5a623;
 
 	--font-body: "Figtree Variable", system-ui, -apple-system, sans-serif;
@@ -24,6 +26,7 @@
 
 @layer base {
 	:root {
+		--btn-gradient-start: #6d5ef0;
 		--shadow-sm: 0 1px 2px rgba(79, 70, 229, 0.07), 0 1px 1px rgba(30, 27, 46, 0.05);
 		--shadow-md: 0 6px 16px rgba(79, 70, 229, 0.12), 0 2px 5px rgba(30, 27, 46, 0.06);
 		--shadow-lg: 0 16px 34px rgba(79, 70, 229, 0.18), 0 6px 12px rgba(30, 27, 46, 0.09);
@@ -42,6 +45,8 @@
 		--color-border: #332d49;
 		--color-accent: #8b7cf6;
 		--color-accent-ink: #c7bbfc;
+		--color-on-accent: #15131f;
+		--btn-gradient-start: #a89cf9;
 
 		--shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.35);
 		--shadow-md: 0 6px 16px rgba(0, 0, 0, 0.4);
@@ -77,7 +82,7 @@
 
 	::selection {
 		background-color: var(--color-accent);
-		color: white;
+		color: var(--color-on-accent);
 	}
 }
 
@@ -139,8 +144,8 @@
 	/* Primary call-to-action: indigo gradient, lifts on hover. */
 	.btn-primary {
 		font-weight: 700;
-		color: white;
-		background: linear-gradient(135deg, #6d5ef0, var(--color-accent));
+		color: var(--color-on-accent);
+		background: linear-gradient(135deg, var(--btn-gradient-start), var(--color-accent));
 		border: none;
 		border-radius: var(--radius-2xl);
 		box-shadow: var(--shadow-sm);

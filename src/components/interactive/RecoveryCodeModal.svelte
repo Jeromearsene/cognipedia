@@ -39,7 +39,7 @@ const dismiss = () => {
 		</p>
 
 		<button
-			class="w-full cursor-pointer rounded-lg bg-accent px-4 py-3 font-medium text-white transition-colors hover:opacity-80"
+			class="w-full cursor-pointer rounded-lg bg-accent px-4 py-3 font-medium text-on-accent transition-colors hover:opacity-80"
 			onclick={dismiss}
 		>
 			{labels.dismiss}

@@ -80,13 +80,13 @@ const hasFilters = filterFamily !== null || filterDifficulty !== null;
     <!-- View toggle tabs -->
     <div class="mb-8 flex gap-2" id="view-tabs">
       <button
-        class={`cursor-pointer rounded-lg border px-5 py-2.5 text-sm font-semibold transition-colors ${hasFilters ? "border-border bg-surface text-text hover:border-accent hover:text-accent" : "border-accent bg-accent text-white"}`}
+        class={`cursor-pointer rounded-lg border px-5 py-2.5 text-sm font-semibold transition-colors ${hasFilters ? "border-border bg-surface text-text hover:border-accent hover:text-accent" : "border-accent bg-accent text-on-accent"}`}
         data-view="grouped"
       >
         {m.home_view_grouped()}
       </button>
       <button
-        class={`cursor-pointer rounded-lg border px-5 py-2.5 text-sm font-semibold transition-colors ${hasFilters ? "border-accent bg-accent text-white" : "border-border bg-surface text-text hover:border-accent hover:text-accent"}`}
+        class={`cursor-pointer rounded-lg border px-5 py-2.5 text-sm font-semibold transition-colors ${hasFilters ? "border-accent bg-accent text-on-accent" : "border-border bg-surface text-text hover:border-accent hover:text-accent"}`}
         data-view="flat"
       >
         {m.home_view_flat()}
@@ -161,7 +161,7 @@ const hasFilters = filterFamily !== null || filterDifficulty !== null;
       buttons.forEach((btn) => {
         const isActive = btn.dataset.view === view;
         btn.classList.toggle("bg-accent", isActive);
-        btn.classList.toggle("text-white", isActive);
+        btn.classList.toggle("text-on-accent", isActive);
         btn.classList.toggle("border-accent", isActive);
         btn.classList.toggle("bg-surface", !isActive);
         btn.classList.toggle("text-text", !isActive);
