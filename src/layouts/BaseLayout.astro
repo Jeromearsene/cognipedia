@@ -25,10 +25,16 @@ const { title, description = "", lang = DEFAULT_LOCALE } = Astro.props;
     <!-- Anti-FOUC: apply dark class before paint to prevent theme flash on load -->
     <script is:inline>
       (function() {
-        var stored = localStorage.getItem('theme');
-        if (stored === 'dark' || (!stored && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-          document.documentElement.classList.add('dark');
+        function prefersDark() {
+          var stored = localStorage.getItem('theme');
+          return stored === 'dark' || (!stored && window.matchMedia('(prefers-color-scheme: dark)').matches);
         }
+        if (prefersDark()) document.documentElement.classList.add('dark');
+        // ClientRouter replaces the <html> attributes on navigation, which would drop the `dark`
+        // class until hydration. Re-apply it on the incoming document before it is swapped in.
+        document.addEventListener('astro:before-swap', function(event) {
+          event.newDocument.documentElement.classList.toggle('dark', prefersDark());
+        });
       })();
     </script>
     <ClientRouter />
