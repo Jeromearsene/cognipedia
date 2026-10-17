@@ -13,7 +13,23 @@ export interface QuizLabels {
 	correctMark: string;
 	/** Screen-reader text for the ✗ on the user's wrong answer. */
 	wrongMark: string;
+	/** Progress template with `{current}` and `{total}` placeholders. */
+	progress: string;
+	/** Running score template with `{score}` and `{total}` placeholders. */
+	runningScore: string;
+	scoreLabel: string;
+	retry: string;
+	resultPerfect: string;
+	resultGood: string;
+	resultRetry: string;
 }
+
+/** Fills `{name}` placeholders of a label template (islands can't receive message functions). */
+export const fillLabel = (template: string, values: Record<string, string | number>): string =>
+	Object.entries(values).reduce(
+		(text, [key, value]) => text.replaceAll(`{${key}}`, String(value)),
+		template,
+	);
 
 /** Labels for score submission feedback. */
 export interface ScoreLabels {
@@ -105,6 +121,13 @@ export const getBiasInteractiveLabels = (locale: Locale): BiasInteractiveLabels 
 		incorrect: m.quiz_incorrect({}, { locale }),
 		correctMark: m.answer_correct_mark({}, { locale }),
 		wrongMark: m.answer_wrong_mark({}, { locale }),
+		progress: m.quiz_progress({ current: "{current}", total: "{total}" }, { locale }),
+		runningScore: m.quiz_score({ score: "{score}", total: "{total}" }, { locale }),
+		scoreLabel: m.quiz_score_label({}, { locale }),
+		retry: m.quiz_retry({}, { locale }),
+		resultPerfect: m.quiz_result_perfect({}, { locale }),
+		resultGood: m.quiz_result_good({}, { locale }),
+		resultRetry: m.quiz_result_retry({}, { locale }),
 	},
 	score: {
 		submitting: m.score_submitting({}, { locale }),
