@@ -26,9 +26,6 @@ importers:
       '@inlang/paraglide-js':
         specifier: ^2.15.1
         version: 2.15.1
-      '@levita-js/svelte':
-        specifier: ^0.3.1
-        version: 0.3.1(svelte@5.53.2)
       '@tailwindcss/typography':
         specifier: ^0.5.19
         version: 0.5.19(tailwindcss@4.2.2)
@@ -751,11 +748,6 @@ packages:
 
   '@jridgewell/trace-mapping@0.3.9':
     resolution: {integrity: sha512-3Belt6tdc8bPgAtbcmdtNJlirVoTmEb5e2gC94PnkwEW9jI6CAHUeoG85tjWP5WquqfavoMtMwiG4P926ZKKuQ==}
-
-  '@levita-js/svelte@0.3.1':
-    resolution: {integrity: sha512-2hTAAeU1zVN7LBdYwOlnDQm0hfc5lm0ZpXyOvDSuo+Ycx0kdi4NEENEHV7rZunU3D3d+0LRUfPxfbWk/WOPrRA==}
-    peerDependencies:
-      svelte: '>=3'
 
   '@lix-js/sdk@0.4.9':
     resolution: {integrity: sha512-30mDkXpx704359oRrJI42bjfCspCiaMItngVBbPkiTGypS7xX4jYbHWQkXI8XuJ7VDB69D0MsVU6xfrBAIrM4A==}
@@ -1764,9 +1756,6 @@ packages:
   kysely@0.28.15:
     resolution: {integrity: sha512-r2clcf7HLWvDXaVUEvQymXJY4i3bSOIV3xsL/Upy3ZfSv5HeKsk9tsqbBptLvth5qHEIhxeHTA2jNLyQABkLBA==}
     engines: {node: '>=20.0.0'}
-
-  levita-js@0.3.1:
-    resolution: {integrity: sha512-c5TAsuHb3W73TjkBzBFolUwqxTHKuoxL39bA+WKB9zGrhTARcigEqGV5p/GXmgFwGRNSLjkiHzL3Bmpnfxh/FQ==}
 
   lightningcss-android-arm64@1.32.0:
     resolution: {integrity: sha512-YK7/ClTt4kAK0vo6w3X+Pnm0D2cf2vPHbhOXdoNti1Ga0al1P4TBZhwjATvjNwLEBCnKvjJc2jQgHXH0NEwlAg==}
@@ -3640,11 +3629,6 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.5
 
-  '@levita-js/svelte@0.3.1(svelte@5.53.2)':
-    dependencies:
-      levita-js: 0.3.1
-      svelte: 5.53.2
-
   '@lix-js/sdk@0.4.9':
     dependencies:
       '@lix-js/server-protocol-schema': 0.1.1
@@ -4695,8 +4679,6 @@ snapshots:
   kleur@4.1.5: {}
 
   kysely@0.28.15: {}
-
-  levita-js@0.3.1: {}
 
   lightningcss-android-arm64@1.32.0:
     optional: true

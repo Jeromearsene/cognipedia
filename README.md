@@ -9,7 +9,6 @@ Encyclopedie ludique des biais cognitifs. Decouvrez, testez et comprenez les bia
 - [Astro](https://astro.build) + [Svelte 5](https://svelte.dev) + TypeScript
 - [Tailwind CSS 4](https://tailwindcss.com)
 - [Cloudflare Pages](https://pages.cloudflare.com) + D1
-- [Levita](https://github.com/Jeromearsene/levita) pour les effets tilt/parallax
 - [Biome](https://biomejs.dev) (lint/format) + [Vitest](https://vitest.dev) (tests)
 
 ## Fonctionnalites

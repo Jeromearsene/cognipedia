@@ -1,6 +1,4 @@
 <script lang="ts">
-import { tilt } from "@levita-js/svelte";
-import "@levita-js/svelte/style.css";
 import { CheckCircle, Eye } from "lucide-svelte";
 import { fade } from "svelte/transition";
 import { difficultyBadgeStyle, difficultyDotStyle, familyBadgeStyle } from "@/lib/badges";
@@ -27,19 +25,14 @@ const {
 }: Props = $props();
 
 const status = $derived(biasProgressStore.getStatus(slug));
-
-/** Levita ignores `prefers-reduced-motion`, so only attach the tilt/glare when motion is welcome. */
-const motionSafeTilt = (node: HTMLElement, options: Parameters<typeof tilt>[1]) =>
-	prefersReducedMotion() ? undefined : tilt(node, options);
 </script>
 
 <a
   {href}
-  class="block rounded-3xl border bg-surface p-5.5 no-underline shadow-brand-sm {status === 'completed'
+  class="hoverlift block rounded-3xl border bg-surface p-5.5 no-underline shadow-brand-sm {status === 'completed'
     ? 'border-accent/40'
     : 'border-transparent'}"
   style="touch-action: manipulation"
-  use:motionSafeTilt={{ scale: 1.02, glare: true, maxGlare: 0.15 }}
   in:fade={{ duration: prefersReducedMotion() ? 0 : 300, delay: prefersReducedMotion() ? 0 : delay }}
 >
   <div class="mb-3 flex items-start justify-between gap-2">
