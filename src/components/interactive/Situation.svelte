@@ -1,4 +1,5 @@
 <script lang="ts">
+import { tick } from "svelte";
 import { cn } from "@/lib/cn";
 import type { SituationLabels } from "@/lib/labels";
 import type { Situation } from "@/lib/schemas";
@@ -15,12 +16,16 @@ interface Props {
 let { data, labels, onComplete }: Props = $props();
 let selectedIndex: number | null = $state(null);
 let revealed = $state(false);
+let revealEl = $state<HTMLElement>();
 
-const handleChoice = (index: number) => {
+/** Choosing disables the buttons, so move focus to the reveal to avoid dropping it on <body>. */
+const handleChoice = async (index: number) => {
 	if (revealed) return;
 	selectedIndex = index;
 	revealed = true;
 	onComplete?.(data.choices[index].bias);
+	await tick();
+	revealEl?.focus();
 };
 </script>
 
@@ -54,7 +59,7 @@ const handleChoice = (index: number) => {
   </div>
 
   {#if revealed}
-    <div class="mt-4.5 border-t border-border pt-4">
+    <div bind:this={revealEl} tabindex="-1" class="mt-4.5 border-t border-border pt-4">
       <span class="text-xs font-bold uppercase tracking-wide text-accent-ink">{labels.revealLabel}</span>
       <p class="mt-1.5 text-base text-text-secondary">{data.reveal}</p>
     </div>
