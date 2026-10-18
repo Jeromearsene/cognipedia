@@ -1,6 +1,6 @@
 <script lang="ts">
 import { Menu, X } from "lucide-svelte";
-import ThemeToggle from "./ThemeToggle.svelte";
+import ThemeToggle, { type ThemeLabels } from "./ThemeToggle.svelte";
 
 interface NavLink {
 	label: string;
@@ -17,9 +17,10 @@ interface LangLink {
 interface Props {
 	navLinks: NavLink[];
 	langLinks: LangLink[];
+	labels: { open: string; close: string; theme: ThemeLabels };
 }
 
-const { navLinks, langLinks }: Props = $props();
+const { navLinks, langLinks, labels }: Props = $props();
 
 let open = $state(false);
 
@@ -38,7 +39,7 @@ const close = () => {
 <button
 	onclick={toggle}
 	class="cursor-pointer rounded-lg border border-border bg-surface p-2 text-text transition-colors hover:bg-bg lg:hidden"
-	aria-label={open ? "Fermer le menu" : "Ouvrir le menu"}
+	aria-label={open ? labels.close : labels.open}
 	aria-expanded={open}
 	type="button"
 >
@@ -60,7 +61,7 @@ const close = () => {
 			<button
 				onclick={close}
 				class="cursor-pointer rounded-lg border border-border bg-surface p-2 text-text transition-colors hover:bg-bg"
-				aria-label="Fermer le menu"
+				aria-label={labels.close}
 				type="button"
 			>
 				<X size={24} />
@@ -81,7 +82,7 @@ const close = () => {
 		</nav>
 
 		<div class="flex flex-col items-center gap-6 pb-8">
-			<ThemeToggle />
+			<ThemeToggle labels={labels.theme} />
 			<div class="flex justify-center gap-4 text-sm">
 				{#each langLinks as { lang, href, active }}
 					<a
