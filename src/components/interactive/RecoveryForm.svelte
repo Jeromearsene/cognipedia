@@ -34,7 +34,7 @@ const handleSubmit = async () => {
 </script>
 
 <div>
-	<h3 class="mb-4 text-lg font-semibold">{labels.title}</h3>
+	<h2 class="mb-4 text-lg font-semibold">{labels.title}</h2>
 	<form class="flex gap-2" onsubmit={(e) => { e.preventDefault(); handleSubmit(); }}>
 		<input
 			type="text"

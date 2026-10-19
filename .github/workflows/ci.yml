@@ -120,6 +120,39 @@ jobs:
       url: /fr/biais/ancrage
       ref: ${{ github.base_ref }}
 
+  accessibility:
+    name: ♿ Accessibility (axe-core)
+    runs-on: ubuntu-latest
+    needs: [build]
+    if: github.event_name == 'pull_request'
+    steps:
+      - uses: actions/checkout@v6
+      - uses: ./.github/actions/setup
+      - uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+      - name: Install Playwright browsers
+        run: pnpm exec playwright install --with-deps chromium
+      - name: Apply D1 schema (local)
+        run: pnpm wrangler d1 execute cognipedia-db --local --file=schema.sql --config dist/server/wrangler.json
+      - name: Start server
+        run: pnpm wrangler dev --config dist/server/wrangler.json --port 8790 &
+      - name: Wait for server
+        run: npx wait-on http://localhost:8790/fr/ --timeout 30000
+      - name: Run axe-core audit
+        run: pnpm test:a11y
+        env:
+          BASE_URL: http://localhost:8790
+      - name: Upload Playwright report
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: axe-report
+          path: playwright-report/
+          retention-days: 14
+          if-no-files-found: ignore
+
   pr-comment:
     name: 💬 PR Comment
     runs-on: ubuntu-latest
