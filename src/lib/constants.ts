@@ -18,18 +18,6 @@ export type Difficulty = (typeof DIFFICULTIES)[number];
  */
 export const QUIZ_LEVELS = DIFFICULTIES;
 
-/**
- * Tailwind utility classes for difficulty badge colors.
- * Static class strings (not dynamic) so Tailwind can detect them at build time.
- * Pastel background + dark text is kept in both modes: the light badges pop
- * nicely against the dark theme background without needing dark variants.
- */
-export const DIFFICULTY_COLORS: Record<Difficulty, string> = {
-	easy: "bg-green-100 text-green-800",
-	medium: "bg-orange-100 text-orange-800",
-	hard: "bg-red-100 text-red-800",
-};
-
 /** Serializable bias card data, shared between BiasCard and BiasGrid components. */
 export interface BiasCardData {
 	/** Bias slug for status tracking (seen/completed). */
@@ -46,4 +34,8 @@ export interface BiasCardData {
 	difficulty: Difficulty;
 	/** Translated difficulty label. */
 	difficultyLabel: string;
+	/** Accessible name of the "seen" status icon. */
+	seenLabel: string;
+	/** Accessible name of the "completed" status icon. */
+	completedLabel: string;
 }

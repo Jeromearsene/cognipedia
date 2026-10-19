@@ -1,27 +1,52 @@
+/**
+ * Family and difficulty colors, as CSS custom properties rather than Tailwind
+ * `@theme` colors: both are used in gradients and dynamic (data-driven) inline
+ * styles, which `@theme` utilities can't express.
+ */
 :root {
-	--family-too-much-information: #dc2626;
-	--family-not-enough-meaning: #7c3aed;
-	--family-need-to-act-fast: #d97706;
-	--family-what-to-remember: #db2777;
+	--family-too-much-information-1: #5568e8;
+	--family-too-much-information-2: #3346d1;
+	--family-not-enough-meaning-1: #9e48ec;
+	--family-not-enough-meaning-2: #9333ea;
+	--family-need-to-act-fast-1: #d1387c;
+	--family-need-to-act-fast-2: #be185d;
+	--family-what-to-remember-1: #107e99;
+	--family-what-to-remember-2: #0e7490;
 
-	/* Text color that sits on top of family-colored backgrounds.
-	   White in light mode (saturated families), dark in dark mode (pastel families). */
+	/* Text color on top of a family gradient: white in light mode (saturated gradients),
+	   dark in dark mode (the gradients lighten, so dark text keeps contrast). */
 	--family-contrast: #ffffff;
 
-	--difficulty-easy: #166534;
-	--difficulty-medium: #9a3412;
-	--difficulty-hard: #991b1b;
+	--difficulty-easy-bg: #e7f8ef;
+	--difficulty-easy-text: #047857;
+	--difficulty-easy-dot: #22b389;
+	--difficulty-medium-bg: #fff3df;
+	--difficulty-medium-text: #b45309;
+	--difficulty-medium-dot: #f5a623;
+	--difficulty-hard-bg: #fee2e2;
+	--difficulty-hard-text: #b91c1c;
+	--difficulty-hard-dot: #dc2626;
 }
 
 .dark {
-	--family-too-much-information: #f87171;
-	--family-not-enough-meaning: #a78bfa;
-	--family-need-to-act-fast: #fbbf24;
-	--family-what-to-remember: #f472b6;
+	--family-too-much-information-1: #93a5f8;
+	--family-too-much-information-2: #6477f2;
+	--family-not-enough-meaning-1: #d4b3f8;
+	--family-not-enough-meaning-2: #b370f0;
+	--family-need-to-act-fast-1: #fbc0e0;
+	--family-need-to-act-fast-2: #f472b6;
+	--family-what-to-remember-1: #7de8f7;
+	--family-what-to-remember-2: #22d3ee;
 
-	--family-contrast: #1a1a2e;
+	--family-contrast: #15131f;
 
-	--difficulty-easy: #86efac;
-	--difficulty-medium: #fdba74;
-	--difficulty-hard: #fca5a5;
+	--difficulty-easy-bg: #133524;
+	--difficulty-easy-text: #6ee7b7;
+	--difficulty-easy-dot: #6ee7b7;
+	--difficulty-medium-bg: #3a2a10;
+	--difficulty-medium-text: #fbbf56;
+	--difficulty-medium-dot: #fbbf56;
+	--difficulty-hard-bg: #450a0a;
+	--difficulty-hard-text: #fca5a5;
+	--difficulty-hard-dot: #fca5a5;
 }

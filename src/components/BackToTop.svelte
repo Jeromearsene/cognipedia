@@ -23,7 +23,7 @@ const scrollToTop = () => {
 <button
 	onclick={scrollToTop}
 	type="button"
-	class="fixed bottom-6 right-6 z-40 flex cursor-pointer items-center justify-center rounded-full border border-border bg-surface p-3 shadow-lg transition-all hover:bg-accent hover:text-white {visible
+	class="fixed bottom-6 right-6 z-40 flex cursor-pointer items-center justify-center rounded-full border border-border bg-surface p-3 shadow-lg transition-all hover:bg-accent hover:text-on-accent {visible
 		? 'opacity-100 translate-y-0'
 		: 'pointer-events-none opacity-0 translate-y-4'}"
 	aria-label="Back to top"

@@ -1,8 +1,9 @@
 <script lang="ts">
 import { CheckCircle, Eye } from "lucide-svelte";
 import { fade } from "svelte/transition";
+import { difficultyBadgeStyle, difficultyDotStyle, familyBadgeStyle } from "@/lib/badges";
 import type { BiasCardData } from "@/lib/constants";
-import { DIFFICULTY_COLORS } from "@/lib/constants";
+import { prefersReducedMotion } from "@/lib/motion";
 import { biasProgressStore } from "@/lib/seenBiasesStore.svelte";
 
 interface Props extends BiasCardData {
@@ -18,6 +19,8 @@ const {
 	familyLabel,
 	difficulty,
 	difficultyLabel,
+	seenLabel,
+	completedLabel,
 	delay = 0,
 }: Props = $props();
 
@@ -26,41 +29,35 @@ const status = $derived(biasProgressStore.getStatus(slug));
 
 <a
   {href}
-  class="bias-card block rounded-xl border bg-surface p-5 no-underline shadow-sm {status === 'completed'
+  class="hoverlift block rounded-3xl border bg-surface p-5.5 no-underline shadow-brand-sm {status === 'completed'
     ? 'border-accent/40'
-    : 'border-border'}"
-  style="--glow-color: var(--family-{family})"
-  in:fade={{ duration: 300, delay }}
+    : 'border-transparent'}"
+  style="touch-action: manipulation"
+  in:fade={{ duration: prefersReducedMotion() ? 0 : 300, delay: prefersReducedMotion() ? 0 : delay }}
 >
-  <div class="flex items-start justify-between gap-2">
-    <h3 class="mb-3 text-lg font-semibold text-text">{title}</h3>
+  <div class="mb-3 flex items-start justify-between gap-2">
+    <h3 class="text-lg font-bold text-text">{title}</h3>
     {#if status === "completed"}
-      <CheckCircle size={18} class="shrink-0 text-accent" />
+      <CheckCircle size={18} class="shrink-0 text-accent" aria-hidden="true" />
+      <span class="sr-only">{completedLabel}</span>
     {:else if status === "seen"}
-      <Eye size={18} class="shrink-0 text-text-secondary" />
+      <Eye size={18} class="shrink-0 text-text-secondary" aria-hidden="true" />
+      <span class="sr-only">{seenLabel}</span>
     {/if}
   </div>
-  <div class="flex flex-wrap gap-2">
+  <div class="flex flex-wrap gap-1.75">
     <span
-      class="rounded-full px-2.5 py-0.5 text-xs font-medium"
-      style="background-color: var(--family-{family}); color: var(--family-contrast)"
+      class="rounded-full px-2.75 py-1.25 text-xs font-bold"
+      style={familyBadgeStyle(family)}
     >
       {familyLabel}
     </span>
-    <span class="rounded-full px-2.5 py-0.5 text-xs font-medium {DIFFICULTY_COLORS[difficulty]}">
+    <span
+      class="flex items-center gap-1.25 rounded-full py-1.25 pl-2 pr-2.75 text-xs font-bold"
+      style={difficultyBadgeStyle(difficulty)}
+    >
+      <span class="inline-block h-1.5 w-1.5 rounded-full" style={difficultyDotStyle(difficulty)}></span>
       {difficultyLabel}
     </span>
   </div>
 </a>
-
-<style>
-  .bias-card {
-    transition: transform 0.2s, box-shadow 0.3s;
-  }
-
-  /* Lift + family-colored glow on hover. --glow-color is set inline from the family CSS variable. */
-  .bias-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 20px color-mix(in srgb, var(--glow-color) 20%, transparent);
-  }
-</style>

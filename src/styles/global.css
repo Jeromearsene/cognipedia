@@ -1,6 +1,6 @@
 @import "tailwindcss";
-@import "@fontsource-variable/fraunces/index.css";
-@import "@fontsource-variable/space-grotesk/index.css";
+@import "@fontsource-variable/baloo-2/index.css";
+@import "@fontsource-variable/figtree/index.css";
 @import "./families.css";
 @plugin "@tailwindcss/typography";
 
@@ -8,24 +8,67 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-	--color-bg: #fafafa;
-	--color-text: #1a1a2e;
-	--color-text-secondary: #64748b;
+	--color-bg: #f8f6fc;
+	--color-text: #1e1b2e;
+	--color-text-secondary: #6f6b85;
 	--color-surface: #ffffff;
-	--color-border: #e2e8f0;
-	--color-accent: #0f766e;
-	--color-accent-subtle: #e6f5f3;
+	--color-border: #e7e3f0;
+	--color-accent: #4f46e5;
+	--color-accent-ink: #3730a3;
+	/* Text/icon color to use on top of `bg-accent` (white in light, near-black in dark to stay >= 4.5:1). */
+	--color-on-accent: #ffffff;
+	--color-accent-2: #f5a623;
 
-	--font-body: "Space Grotesk Variable", system-ui, sans-serif;
-	--font-heading: "Fraunces Variable", Georgia, serif;
+	--font-body: "Figtree Variable", system-ui, -apple-system, sans-serif;
+	--font-heading: "Baloo 2 Variable", system-ui, -apple-system, sans-serif;
 	--font-mono: ui-monospace, monospace;
 }
 
 @layer base {
+	:root {
+		--btn-gradient-start: #6d5ef0;
+		--shadow-sm: 0 1px 2px rgba(79, 70, 229, 0.07), 0 1px 1px rgba(30, 27, 46, 0.05);
+		--shadow-md: 0 6px 16px rgba(79, 70, 229, 0.12), 0 2px 5px rgba(30, 27, 46, 0.06);
+		--shadow-lg: 0 16px 34px rgba(79, 70, 229, 0.18), 0 6px 12px rgba(30, 27, 46, 0.09);
+		--grain: url("/grain.svg");
+
+		--success-bg: #e7f8ef;
+		--success-text: #047857;
+		--success-border: #22b389;
+	}
+
+	.dark {
+		--color-bg: #15131f;
+		--color-text: #f3f1fa;
+		--color-text-secondary: #a9a3c2;
+		--color-surface: #201c30;
+		--color-border: #332d49;
+		--color-accent: #8b7cf6;
+		--color-accent-ink: #c7bbfc;
+		--color-on-accent: #15131f;
+		--btn-gradient-start: #a89cf9;
+
+		--shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.35);
+		--shadow-md: 0 6px 16px rgba(0, 0, 0, 0.4);
+		--shadow-lg: 0 16px 34px rgba(0, 0, 0, 0.45);
+
+		--success-bg: #133524;
+		--success-text: #6ee7b7;
+		--success-border: #6ee7b7;
+	}
+
 	html {
 		font-family: var(--font-body);
 		color: var(--color-text);
-		background: var(--color-bg);
+		background-color: var(--color-bg);
+		background-image: var(--grain);
+		background-blend-mode: overlay;
+	}
+
+	/* Visible keyboard focus everywhere; offset keeps the ring off accent-filled buttons. */
+	:focus-visible {
+		outline: 2px solid var(--color-accent);
+		outline-offset: 2px;
 	}
 
 	h1,
@@ -40,18 +83,102 @@
 	}
 
 	a:hover {
-		text-decoration: underline;
+		color: var(--color-accent-ink);
+	}
+
+	::selection {
+		background-color: var(--color-accent);
+		color: var(--color-on-accent);
 	}
 }
 
-@layer base {
-	.dark {
-		--color-bg: #0f1117;
-		--color-text: #e8e8ed;
-		--color-text-secondary: #94a3b8;
-		--color-surface: #1a1c25;
-		--color-border: #2d3748;
-		--color-accent: #2dd4bf;
-		--color-accent-subtle: #132825;
+@layer utilities {
+	/* Lift + shadow micro-interaction used on cards and other hoverable surfaces. */
+	.hoverlift {
+		transition:
+			transform 0.18s ease,
+			box-shadow 0.18s ease;
+	}
+
+	.hoverlift:hover {
+		transform: translateY(-5px);
+		box-shadow: var(--shadow-lg);
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.hoverlift,
+		.btn-primary {
+			transition: none;
+		}
+
+		.hoverlift:hover,
+		.btn-primary:hover {
+			transform: none;
+		}
+	}
+
+	/* Typography plugin colors follow the theme tokens, so `prose` content reads in both light and dark. */
+	.prose {
+		--tw-prose-body: var(--color-text);
+		--tw-prose-headings: var(--color-text);
+		--tw-prose-lead: var(--color-text-secondary);
+		--tw-prose-links: var(--color-accent);
+		--tw-prose-bold: var(--color-text);
+		--tw-prose-counters: var(--color-text-secondary);
+		--tw-prose-bullets: var(--color-text-secondary);
+		--tw-prose-hr: var(--color-border);
+		--tw-prose-quotes: var(--color-text);
+		--tw-prose-quote-borders: var(--color-border);
+		--tw-prose-captions: var(--color-text-secondary);
+		--tw-prose-code: var(--color-text);
+		--tw-prose-th-borders: var(--color-border);
+		--tw-prose-td-borders: var(--color-border);
+	}
+
+	.shadow-brand-sm {
+		box-shadow: var(--shadow-sm);
+	}
+
+	.shadow-brand-md {
+		box-shadow: var(--shadow-md);
+	}
+
+	.shadow-brand-lg {
+		box-shadow: var(--shadow-lg);
+	}
+
+	/* Primary call-to-action: indigo gradient, lifts on hover. */
+	.btn-primary {
+		font-weight: 700;
+		color: var(--color-on-accent);
+		background: linear-gradient(135deg, var(--btn-gradient-start), var(--color-accent));
+		border: none;
+		border-radius: var(--radius-2xl);
+		box-shadow: var(--shadow-sm);
+		transition:
+			transform 0.15s ease,
+			box-shadow 0.15s ease;
+	}
+
+	.btn-primary:hover {
+		transform: translateY(-2px);
+		box-shadow: var(--shadow-md);
+	}
+
+	/* Secondary / outline action. */
+	.btn-secondary {
+		font-weight: 700;
+		color: var(--color-accent-ink);
+		background: var(--color-surface);
+		border: 2px solid var(--color-border);
+		border-radius: var(--radius-2xl);
+		transition:
+			background 0.15s ease,
+			border-color 0.15s ease;
+	}
+
+	.btn-secondary:hover {
+		background: color-mix(in srgb, var(--color-accent) 6%, transparent);
+		border-color: var(--color-accent);
 	}
 }

@@ -58,7 +58,7 @@ const handleKeydown = (e: KeyboardEvent) => {
 				onkeydown={handleKeydown}
 			/>
 			<button
-				class="cursor-pointer rounded bg-accent px-3 py-1.5 text-sm text-white disabled:opacity-50"
+				class="cursor-pointer rounded bg-accent px-3 py-1.5 text-sm text-on-accent disabled:opacity-50"
 				disabled={saving}
 				onclick={save}
 			>

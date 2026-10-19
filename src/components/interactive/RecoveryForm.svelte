@@ -34,7 +34,7 @@ const handleSubmit = async () => {
 </script>
 
 <div>
-	<h3 class="mb-4 text-lg font-semibold">{labels.title}</h3>
+	<h2 class="mb-4 text-lg font-semibold">{labels.title}</h2>
 	<form class="flex gap-2" onsubmit={(e) => { e.preventDefault(); handleSubmit(); }}>
 		<input
 			type="text"
@@ -45,7 +45,7 @@ const handleSubmit = async () => {
 		/>
 		<button
 			type="submit"
-			class="cursor-pointer rounded-lg bg-accent px-4 py-2 text-white transition-colors hover:opacity-80 disabled:opacity-50"
+			class="cursor-pointer rounded-lg bg-accent px-4 py-2 text-on-accent transition-colors hover:opacity-80 disabled:opacity-50"
 			disabled={status === "loading"}
 		>
 			{labels.submit}

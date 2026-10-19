@@ -72,7 +72,7 @@ const handleRecoveryDismiss = () => {
 {#if situation}
 	<section class="mt-12" id="situation">
 		<h2 class="mb-4 text-2xl font-bold">{labels.situationTitle}</h2>
-		<Situation data={situation} onComplete={handleSituationComplete} />
+		<Situation data={situation} labels={labels.situation} onComplete={handleSituationComplete} />
 	</section>
 {/if}
 

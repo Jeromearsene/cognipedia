@@ -23,7 +23,7 @@ const copy = async () => {
 </script>
 
 <button
-	class="cursor-pointer rounded px-4 py-1.5 text-sm text-white transition-all duration-300 hover:opacity-80 {copied ? 'bg-emerald-500 scale-105' : 'bg-accent'} {className}"
+	class="cursor-pointer rounded px-4 py-1.5 text-sm transition-all duration-300 hover:opacity-80 {copied ? 'bg-emerald-500 text-white scale-105' : 'bg-accent text-on-accent'} {className}"
 	onclick={copy}
 >
 	{#if copied}
