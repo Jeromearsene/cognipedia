@@ -16,6 +16,10 @@ sources:
       urls:
         - label: "DOI"
           url: "https://doi.org/10.1037/0022-3514.75.4.887"
+  videos:
+    - title: "Pourquoi se souvient-on plus du négatif que du positif ? — RTS"
+      url: "https://www.youtube.com/watch?v=isuQxO116-w"
+      lang: "fr"
 relatedBiases: ["loss-aversion", "availability"]
 situation:
   type: "choice"
