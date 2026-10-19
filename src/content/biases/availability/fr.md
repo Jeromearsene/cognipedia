@@ -35,6 +35,7 @@ situation:
 quiz:
   questions:
     - question: "Le biais de disponibilité nous fait..."
+      level: easy
       choices:
         - "Surestimer la probabilité d'événements faciles à se rappeler"
         - "Oublier les événements récents"
@@ -42,12 +43,21 @@ quiz:
       correct: 0
       explanation: "Plus un événement est facile à se rappeler (médiatisé, spectaculaire, récent), plus on surestime sa probabilité."
     - question: "Pourquoi les gens surestiment-ils le risque d'attaque de requin ?"
+      level: medium
       choices:
         - "Parce que les médias en parlent beaucoup"
         - "Parce que c'est statistiquement fréquent"
         - "Parce qu'ils vivent près de la mer"
       correct: 0
       explanation: "Les attaques de requin sont extrêmement rares mais très médiatisées. Leur disponibilité mentale est disproportionnée par rapport au risque réel."
+    - question: "Que s'est-il passé sur les routes américaines après le 11 septembre 2001, selon l'étude de Gigerenzer (2004) ?"
+      level: hard
+      choices:
+        - "Environ 1 600 morts supplémentaires dans l'année suivante, car beaucoup ont délaissé l'avion pour la voiture"
+        - "Le nombre de morts sur la route a baissé, car les gens ont moins voyagé"
+        - "Rien de notable : le trafic routier n'a pas changé"
+      correct: 0
+      explanation: "Le trafic aérien a chuté d'environ 20 % et beaucoup d'Américains ont pris la voiture, bien plus dangereuse : Gigerenzer estime à environ 1 600 le nombre de morts supplémentaires sur la route en un an, soit plus que le nombre de passagers des avions détournés."
 ---
 
 ## Définition

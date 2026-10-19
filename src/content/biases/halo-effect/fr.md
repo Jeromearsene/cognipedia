@@ -33,6 +33,7 @@ situation:
 quiz:
   questions:
     - question: "L'effet de halo se produit quand..."
+      level: easy
       choices:
         - "Une qualité positive influence notre jugement global sur une personne"
         - "On voit un halo lumineux autour des gens qu'on admire"
@@ -40,12 +41,21 @@ quiz:
       correct: 0
       explanation: "Une seule caractéristique positive (beauté, charisme, célébrité) colore notre perception de toutes les autres qualités de la personne."
     - question: "Quel domaine exploite le plus l'effet de halo ?"
+      level: medium
       choices:
         - "La publicité avec des célébrités"
         - "La recherche scientifique"
         - "L'éducation"
       correct: 0
       explanation: "Les marques utilisent des célébrités admirées pour que leur image positive se transfère au produit."
+    - question: "Qui a mis en évidence l'effet de halo en 1920, en étudiant la façon dont des officiers notaient leurs soldats ?"
+      level: hard
+      choices:
+        - "Edward Thorndike"
+        - "Solomon Asch"
+        - "Daniel Kahneman"
+      correct: 0
+      explanation: "Le psychologue américain Edward Thorndike a constaté que les officiers donnaient des notes étonnamment corrélées pour des qualités sans rapport (allure physique, intelligence, leadership, caractère) : une bonne impression sur un trait « rayonnait » sur les autres. Il a appelé ce phénomène « effet de halo »."
 ---
 
 ## Définition

@@ -29,6 +29,7 @@ situation:
 quiz:
   questions:
     - question: "The halo effect occurs when..."
+      level: easy
       choices:
         - "One positive quality influences our overall judgment of a person"
         - "We see a glowing halo around people we admire"
@@ -36,12 +37,21 @@ quiz:
       correct: 0
       explanation: "A single positive trait (beauty, charisma, fame) colors our perception of all of a person's other qualities."
     - question: "Which field exploits the halo effect most?"
+      level: medium
       choices:
         - "Celebrity advertising"
         - "Scientific research"
         - "Education"
       correct: 0
       explanation: "Brands use admired celebrities so that their positive image transfers to the product."
+    - question: "Who identified the halo effect in 1920 by studying how officers rated their soldiers?"
+      level: hard
+      choices:
+        - "Edward Thorndike"
+        - "Solomon Asch"
+        - "Daniel Kahneman"
+      correct: 0
+      explanation: "American psychologist Edward Thorndike found that officers' ratings of unrelated qualities (physique, intelligence, leadership, character) were surprisingly correlated: a good impression on one trait 'radiated' onto the others. He named this the 'halo effect'."
 ---
 
 ## Definition

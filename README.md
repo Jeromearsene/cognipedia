@@ -51,6 +51,28 @@ src/content/biases/
 
 Le frontmatter definit le titre, la famille, la difficulte, les sources, la situation interactive et le quiz.
 
+### Regles du quiz
+
+Chaque biais a un quiz de **3 questions**, une par niveau, toujours dans cet ordre. On entre par la definition, on finit par l'application ou le detail d'une etude :
+
+| # | `level` | Role de la question |
+| :--- | :--- | :--- |
+| 1 | `easy` | Definition : reconnaitre le biais |
+| 2 | `medium` | Application : mecanisme, exemple concret ou facon de s'en proteger |
+| 3 | `hard` | Etude ou nuance : detail d'une experience, d'un chiffre, difference avec un biais voisin |
+
+```yaml
+quiz:
+  questions:
+    - question: "..."
+      level: easy
+      choices: ["...", "...", "..."]
+      correct: 0
+      explanation: "..."
+```
+
+Le `level` d'une question est independant de la `difficulty` du biais. Le schema (`src/lib/schemas.ts`) et `bias-quiz.test.ts` refusent un quiz qui n'a pas 3 questions ou dont les niveaux ne vont pas de `easy` a `hard`. Les fichiers `fr` et `en` doivent garder la meme structure (niveaux, nombre de choix, bonne reponse).
+
 ## Licence
 
 MIT

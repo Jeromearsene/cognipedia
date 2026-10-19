@@ -33,26 +33,29 @@ situation:
 quiz:
   questions:
     - question: "L'effet de désinformation désigne le fait que..."
+      level: easy
       choices:
         - "Une information trompeuse reçue après un événement peut modifier le souvenir qu'on en a"
         - "On refuse de croire les informations qui contredisent nos opinions"
         - "On retient mieux les informations qui nous arrangent"
       correct: 0
       explanation: "Le souvenir original n'est pas figé : une information suggestive ou erronée reçue après coup s'y intègre, et on s'en souvient ensuite comme d'un détail de l'événement lui-même."
-    - question: "Dans l'étude de Loftus et Palmer (1974), qu'est-ce qui faisait varier l'estimation de la vitesse des voitures par les participants ?"
-      choices:
-        - "La couleur des véhicules"
-        - "Le verbe utilisé dans la question (« fracassées » plutôt que « touchées »)"
-        - "La durée de la vidéo"
-      correct: 1
-      explanation: "Un seul mot de la question suffisait à changer la mémoire : les participants à qui l'on parlait de voitures qui s'étaient « fracassées » estimaient une vitesse nettement plus élevée que ceux à qui l'on disait qu'elles s'étaient « touchées »."
     - question: "Comment limiter l'effet de désinformation lors d'un témoignage ?"
+      level: medium
       choices:
         - "En relisant plusieurs fois les articles de presse sur l'événement"
         - "En comparant sa version avec celles des autres témoins avant de la donner"
         - "En recueillant le récit le plus tôt possible, avec des questions ouvertes et non suggestives"
       correct: 2
       explanation: "Chaque information reçue après l'événement risque de s'intégrer au souvenir. Recueillir le récit tôt, avant les articles, les discussions et les questions orientées, limite la contamination."
+    - question: "Dans l'étude de Loftus et Palmer (1974), qu'est-ce qui faisait varier l'estimation de la vitesse des voitures par les participants ?"
+      level: hard
+      choices:
+        - "La couleur des véhicules"
+        - "Le verbe utilisé dans la question (« fracassées » plutôt que « touchées »)"
+        - "La durée de la vidéo"
+      correct: 1
+      explanation: "Un seul mot de la question suffisait à changer la mémoire : les participants à qui l'on parlait de voitures qui s'étaient « fracassées » estimaient une vitesse nettement plus élevée que ceux à qui l'on disait qu'elles s'étaient « touchées »."
 ---
 
 ## Définition

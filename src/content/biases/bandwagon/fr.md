@@ -33,19 +33,29 @@ situation:
 quiz:
   questions:
     - question: "L'effet de groupe nous pousse à..."
+      level: easy
       choices:
         - "Adopter une opinion parce que beaucoup de gens la partagent"
         - "Rejeter systématiquement l'avis de la majorité"
         - "Former notre propre opinion indépendamment"
       correct: 0
       explanation: "Plus une idée est populaire, plus nous sommes enclins à l'adopter, indépendamment de sa véracité."
-    - question: "L'expérience d'Asch (1951) a montré que..."
+    - question: "Pourquoi les sondages politiques peuvent-ils influencer le vote ?"
+      level: medium
       choices:
-        - "Les gens donnent une réponse fausse pour se conformer au groupe"
-        - "Les gens résistent toujours à la pression sociale"
-        - "Les experts sont immunisés contre la pression de groupe"
+        - "Parce qu'on est tenté de se ranger du côté du candidat qui semble gagner"
+        - "Parce que les électeurs cherchent à voter pour le candidat le moins populaire"
+        - "Parce que les sondages donnent toujours le bon résultat"
       correct: 0
-      explanation: "Dans l'expérience d'Asch, 75% des participants ont donné au moins une réponse manifestement fausse pour se conformer à un groupe unanime."
+      explanation: "Voir un candidat donné gagnant pousse certains électeurs à le rejoindre : la popularité apparente devient un argument en soi."
+    - question: "Dans l'expérience d'Asch (1951), quelle proportion des participants a donné au moins une réponse manifestement fausse pour se conformer au groupe ?"
+      level: hard
+      choices:
+        - "Environ 5 %"
+        - "Environ 25 %"
+        - "Environ 75 %"
+      correct: 2
+      explanation: "Environ 75 % des participants se sont conformés au groupe unanime au moins une fois, alors que la bonne réponse était évidente ; environ 25 % ont résisté à chaque essai."
 ---
 
 ## Définition
