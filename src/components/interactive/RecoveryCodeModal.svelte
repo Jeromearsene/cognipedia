@@ -65,7 +65,7 @@ const dismiss = () => {
 		</div>
 
 		<p class="mb-6 text-sm text-text-secondary">
-			{labels.profileHint} <a href={profileUrl} class="text-accent hover:underline">{labels.profileLink}</a>.
+			{labels.profileHint} <a href={profileUrl} class="text-accent underline hover:no-underline">{labels.profileLink}</a>.
 		</p>
 
 		<button
