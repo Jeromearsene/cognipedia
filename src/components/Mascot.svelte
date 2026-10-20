@@ -1,3 +1,7 @@
+<script lang="ts" module>
+let nextGradientId = 0;
+</script>
+
 <script lang="ts">
 /**
  * Cogni, Cognipedia's mascot: a single reusable SVG character with a few
@@ -29,11 +33,14 @@ interface Props {
 
 const { pose = "idle", size = 84, label, class: className = "" }: Props = $props();
 
-// Each instance needs its own gradient id — reusing one across multiple mascots on
-// the same page would make later instances point at the first one's <defs>.
-// `$props.id()` is stable between SSR and hydration, unlike Math.random().
+// Each instance needs its own gradient id. `$props.id()` is not enough on its own: Astro
+// renders every non-hydrated component in a separate Svelte render call, so all the
+// server-rendered mascots of a page get the same id ("s1"). Browsers resolve `url(#id)`
+// to the first match in the document, so if that first <defs> sits in a hidden subtree
+// (display: none) the body gradient fails and the whole mascot body disappears.
+// A per-module counter makes the id unique across render calls.
 const uid = $props.id();
-const gradientId = `cogni-gradient-${uid}`;
+const gradientId = `cogni-gradient-${uid}-${nextGradientId++}`;
 
 /** The "happy" pose closes its eyes; every other pose shares the same white eyes. */
 const hasOpenEyes = $derived(pose !== "happy");
