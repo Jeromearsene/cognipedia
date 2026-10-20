@@ -1,0 +1,211 @@
+/**
+ * Cogni, the mascot (see src/components/Mascot.svelte).
+ *
+ * These styles live in a global stylesheet rather than in the component's scoped
+ * `<style>`: Cogni is rendered client-side inside the quiz island, and in the
+ * production build the CSS of a component that is only ever rendered on the client
+ * is not shipped to the page, which left the mascot unstyled (black body, no face).
+ * Selectors are all under `.mascot` so they cannot leak.
+ *
+ * Colors: face and body stay fixed in both themes (they sit on the purple gradient),
+ * but can be overridden through the --cogni-* properties; only the props drawn on the
+ * page background follow the theme tokens.
+ */
+
+/* Layout: the wrapper carries the size, is never squashed by a flex parent (e.g. next to
+   a line of text on a narrow screen) and never wider than its container; its height follows
+   the width. The <svg> simply fills it. */
+.mascot {
+	display: block;
+	flex: none;
+	max-width: 100%;
+	aspect-ratio: 1;
+}
+
+.mascot-svg {
+	display: block;
+	width: 100%;
+	height: 100%;
+}
+
+.mascot .body-from {
+	stop-color: var(--cogni-body-from, #8b7cf6);
+}
+
+.mascot .body-to {
+	stop-color: var(--cogni-body-to, #4f46e5);
+}
+
+.mascot .brow {
+	fill: none;
+	stroke: var(--cogni-shade, #2a2470);
+	opacity: 0.3;
+}
+
+.mascot .eye {
+	fill: var(--cogni-eye, #ffffff);
+}
+
+.mascot .ink {
+	fill: var(--cogni-ink, #1e1b2e);
+}
+
+.mascot .ink-stroke {
+	fill: none;
+	stroke: var(--cogni-ink, #1e1b2e);
+}
+
+.mascot .sweat {
+	fill: var(--cogni-sweat, #5b8def);
+	opacity: 0.85;
+}
+
+.mascot .spark {
+	fill: var(--color-accent-2, #f5a623);
+}
+
+.mascot .thought-dot {
+	fill: var(--color-text-secondary, #6f6b85);
+}
+
+.mascot .swirl,
+.mascot .sparkle {
+	transform-box: fill-box;
+	transform-origin: center;
+}
+
+/* Motion. The pose motion is applied to the `.motion` group inside the <svg>, not to the
+   wrapper element or the <svg> root. Moving or scaling an element sends an already
+   rasterized bitmap through the compositor, which snaps it to whole device pixels: a small,
+   slow movement (a few px over a second or more) then advances in visible steps instead of
+   gliding. A group inside the SVG is re-drawn from the vector at every frame, with
+   anti-aliasing, so the same movement stays smooth at any speed.
+
+   Distances are in viewBox units (160 across), so they scale with the mascot's size. Only
+   `transform` and `opacity` are animated, so there is no layout work.
+
+   Opt-out for reduced motion (not opt-in): the animation runs unless the system explicitly
+   asks for reduced motion, so a browser that does not report the preference keeps the
+   animated mascot. */
+.mascot .motion {
+	transform-box: view-box;
+	transform-origin: center;
+}
+
+.mascot-idle .motion {
+	animation: cogni-idle 2s ease-in-out infinite;
+}
+
+.mascot-happy .motion {
+	animation: cogni-pulse 1.8s ease-in-out infinite;
+}
+
+.mascot-confused .motion {
+	animation: cogni-wobble 1.1s ease-in-out infinite;
+}
+
+.mascot .swirl-a {
+	animation: cogni-spin 1.6s linear infinite;
+}
+
+.mascot .swirl-b {
+	animation: cogni-spin 1.6s linear infinite reverse;
+}
+
+.mascot .sparkle {
+	animation: cogni-sparkle 1.4s ease-in-out infinite;
+}
+
+.mascot .sparkle-2 {
+	animation-delay: 0.3s;
+}
+
+.mascot .sparkle-3 {
+	animation-delay: 0.6s;
+}
+
+.mascot .thought-dot {
+	animation: cogni-thought-dot 1.8s ease-in-out infinite;
+}
+
+.mascot .thought-dot-2 {
+	animation-delay: 0.2s;
+}
+
+.mascot .thought-dot-3 {
+	animation-delay: 0.4s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.mascot .motion,
+	.mascot .swirl,
+	.mascot .sparkle,
+	.mascot .thought-dot {
+		animation: none;
+	}
+}
+
+@keyframes cogni-idle {
+	0%,
+	100% {
+		transform: translateY(0);
+	}
+	50% {
+		transform: translateY(-11px);
+	}
+}
+
+@keyframes cogni-pulse {
+	0%,
+	100% {
+		transform: scale(1);
+	}
+	50% {
+		transform: scale(1.06);
+	}
+}
+
+@keyframes cogni-wobble {
+	0%,
+	100% {
+		transform: rotate(-5deg);
+	}
+	50% {
+		transform: rotate(5deg);
+	}
+}
+
+@keyframes cogni-spin {
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+@keyframes cogni-sparkle {
+	0%,
+	100% {
+		opacity: 0.3;
+		transform: scale(0.7) rotate(0deg);
+	}
+	50% {
+		opacity: 1;
+		transform: scale(1.15) rotate(20deg);
+	}
+}
+
+@keyframes cogni-thought-dot {
+	0%,
+	30% {
+		opacity: 0.2;
+	}
+	50% {
+		opacity: 1;
+	}
+	70%,
+	100% {
+		opacity: 0.2;
+	}
+}
