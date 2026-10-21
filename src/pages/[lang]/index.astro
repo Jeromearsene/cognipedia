@@ -72,7 +72,7 @@ const hasFilters = filterFamily !== null || filterDifficulty !== null;
 <BaseLayout title={title} description={description} lang={locale}>
   <!-- Hero -->
   <section class="flex flex-col items-center gap-4.5 py-10 text-center sm:py-16">
-    <Mascot pose="idle" size={84} />
+    <Mascot pose="idle" size={84} client:visible />
     <h1 class="text-4xl font-bold text-balance sm:text-5xl">{title}</h1>
     <p class="max-w-[34ch] text-lg text-text-secondary">{description}</p>
   </section>
@@ -118,7 +118,7 @@ const hasFilters = filterFamily !== null || filterDifficulty !== null;
             </div>
           ) : (
             <div class="flex items-center justify-center gap-4 rounded-3xl border-2 border-dashed border-border p-7">
-              <Mascot pose="confused" size={44} />
+              <Mascot pose="confused" size={44} client:visible />
               <span class="text-base font-semibold text-text-secondary">{m.home_empty()}</span>
             </div>
           )}

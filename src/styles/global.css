@@ -2,6 +2,7 @@
 @import "@fontsource-variable/baloo-2/index.css";
 @import "@fontsource-variable/figtree/index.css";
 @import "./families.css";
+@import "./mascot.css";
 @plugin "@tailwindcss/typography";
 
 /* Make `dark:` utilities follow the `.dark` class set by ThemeToggle (not only the OS preference). */
