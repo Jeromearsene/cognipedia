@@ -1,7 +1,8 @@
 import { defineConfig, devices } from "@playwright/test";
 
 /**
- * Playwright config for the accessibility (axe-core) audit.
+ * Playwright config for the end-to-end checks in `e2e/`: the accessibility (axe-core) audit and
+ * the mascot canvas check.
  * Expects a server already running at `BASE_URL` (see `.github/workflows/ci.yml`,
  * job "accessibility", or run `pnpm wrangler dev` locally and set BASE_URL yourself).
  */
