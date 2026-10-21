@@ -3,6 +3,10 @@ let nextGradientId = 0;
 </script>
 
 <script lang="ts">
+import { onMount } from "svelte";
+import { mountMascotCanvas } from "@/lib/mascotCanvas";
+import { prefersReducedMotion } from "@/lib/motion";
+
 /**
  * Cogni, Cognipedia's mascot: a single reusable SVG character with a few
  * animated poses, standing in for per-bias illustration. See the "Cogni, la
@@ -47,11 +51,23 @@ const gradientId = `cogni-gradient-${uid}-${nextGradientId++}`;
 
 /** The "happy" pose closes its eyes; every other pose shares the same white eyes. */
 const hasOpenEyes = $derived(pose !== "happy");
+
+let root: HTMLDivElement | undefined = $state();
+
+// Once the component runs in the browser, a canvas takes over the drawing (Firefox shows small
+// slow movements of SVG content in steps, see src/lib/mascotCanvas.ts). The SVG below remains
+// the source of the shapes, colors and motion, and is what is shown without JavaScript or with
+// reduced motion.
+onMount(() => {
+	if (!root || prefersReducedMotion()) return;
+	return mountMascotCanvas(root);
+});
 </script>
 
-<!-- The wrapper <div> only carries the size. The pose motion is applied to the <g class="motion">
-     inside the <svg> (see src/styles/mascot.css), so the vector is re-drawn at every frame. -->
+<!-- The wrapper <div> only carries the size. The pose motion is defined by the CSS animations on
+     the <g class="motion"> inside the <svg> (src/styles/mascot.css); the canvas mirrors them. -->
 <div
+  bind:this={root}
   class="mascot mascot-{pose} {className}"
   style="width: {size}px"
   role={label ? "img" : undefined}

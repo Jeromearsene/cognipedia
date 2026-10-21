@@ -16,6 +16,7 @@
    a line of text on a narrow screen) and never wider than its container; its height follows
    the width. The <svg> simply fills it. */
 .mascot {
+	position: relative;
 	display: block;
 	flex: none;
 	max-width: 100%;
@@ -26,6 +27,20 @@
 	display: block;
 	width: 100%;
 	height: 100%;
+}
+
+/* Once the canvas (src/lib/mascotCanvas.ts) is showing, the SVG is only kept to describe what to
+   draw: its CSS animations keep running, so the canvas can read the current values. */
+.mascot-canvas {
+	position: absolute;
+	inset: 0;
+	display: block;
+	width: 100%;
+	height: 100%;
+}
+
+.mascot[data-canvas] .mascot-svg {
+	visibility: hidden;
 }
 
 .mascot .body-from {
