@@ -16,6 +16,10 @@ sources:
       urls:
         - label: "DOI"
           url: "https://doi.org/10.1126/science.1091721"
+  videos:
+    - title: "Status Quo Bias: Why You Always Choose the Default Option — Quik Economics"
+      url: "https://www.youtube.com/watch?v=J8-v4BPAlWg"
+      lang: "en"
 relatedBiases: ["loss-aversion", "sunk-cost"]
 situation:
   type: "choice"
