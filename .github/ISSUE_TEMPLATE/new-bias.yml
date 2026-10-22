@@ -1,0 +1,29 @@
+name: New Bias
+description: Propose adding a new cognitive bias
+labels: ['content', 'new-bias']
+body:
+  - type: input
+    id: name
+    attributes:
+      label: Bias name
+      placeholder: e.g. Confirmation bias
+    validations:
+      required: true
+  - type: dropdown
+    id: family
+    attributes:
+      label: Family
+      options:
+        - Too much information
+        - Not enough meaning
+        - Need to act fast
+        - What to remember
+    validations:
+      required: true
+  - type: textarea
+    id: sources
+    attributes:
+      label: Sources
+      placeholder: Wikipedia link, papers, etc.
+    validations:
+      required: true

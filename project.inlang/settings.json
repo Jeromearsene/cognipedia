@@ -1,0 +1,13 @@
+{
+	"$schema": "https://inlang.com/schema/project-settings",
+	"baseLocale": "fr",
+	"locales": ["fr", "en"],
+	"modules": [
+		"https://cdn.jsdelivr.net/npm/@inlang/plugin-message-format@4.4.0/dist/index.js",
+		"https://cdn.jsdelivr.net/npm/@inlang/message-lint-rule-empty-pattern@1.4.8/dist/index.js",
+		"https://cdn.jsdelivr.net/npm/@inlang/message-lint-rule-missing-translation@1.4.8/dist/index.js"
+	],
+	"plugin.inlang.messageFormat": {
+		"pathPattern": "./project.inlang/messages/{locale}.json"
+	}
+}

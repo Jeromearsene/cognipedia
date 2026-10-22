@@ -1,0 +1,85 @@
+---
+import { m } from "@/paraglide/messages";
+import BookOpenIcon from "~icons/lucide/book-open";
+import FileTextIcon from "~icons/lucide/file-text";
+import PlayCircleIcon from "~icons/lucide/play-circle";
+
+interface PaperLink {
+	label: string;
+	url: string;
+}
+
+interface Paper {
+	title: string;
+	urls: PaperLink[];
+}
+
+interface Video {
+	title: string;
+	url: string;
+	lang: string;
+}
+
+interface Props {
+	wikipedia: string;
+	papers?: Paper[];
+	videos?: Video[];
+}
+
+const { wikipedia, papers, videos } = Astro.props;
+---
+
+<section class="mt-12 rounded-3xl bg-surface p-6 shadow-brand-sm">
+  <h2 class="mb-4 text-lg font-bold">{m.sources_title()}</h2>
+
+  <div class="space-y-4">
+    <div class="flex items-center gap-2">
+      <BookOpenIcon class="h-4 w-4 text-text-secondary" />
+      <a href={wikipedia} target="_blank" rel="noopener noreferrer">
+        {m.sources_wikipedia()}
+      </a>
+    </div>
+
+    {papers && papers.length > 0 && (
+      <div>
+        <h3 class="mb-2 flex items-center gap-2 text-sm font-medium text-text-secondary">
+          <FileTextIcon class="h-4 w-4" />
+          {m.sources_papers()}
+        </h3>
+        <ul class="list-none space-y-1 pl-6">
+          {papers.map((paper) => (
+            <li class="text-sm">
+              <span>{paper.title}</span>
+              <span class="ml-1">
+                — {paper.urls.map((link, i) => (
+                  <>{i > 0 && ", "}<a href={link.url} target="_blank" rel="noopener noreferrer">{link.label}</a></>
+                ))}
+              </span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    )}
+
+    {videos && videos.length > 0 && (
+      <div>
+        <h3 class="mb-2 flex items-center gap-2 text-sm font-medium text-text-secondary">
+          <PlayCircleIcon class="h-4 w-4" />
+          {m.sources_videos()}
+        </h3>
+        <ul class="list-none space-y-1 pl-6">
+          {videos.map((video) => (
+            <li class="flex items-center gap-2">
+              <a href={video.url} target="_blank" rel="noopener noreferrer" class="text-sm">
+                {video.title}
+              </a>
+              <span class="rounded bg-border px-1.5 py-0.5 text-xs uppercase text-text">
+                {video.lang}
+              </span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    )}
+  </div>
+</section>

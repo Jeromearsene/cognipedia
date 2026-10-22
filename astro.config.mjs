@@ -1,0 +1,33 @@
+// @ts-check
+
+import cloudflare from "@astrojs/cloudflare";
+import svelte from "@astrojs/svelte";
+import { paraglideVitePlugin } from "@inlang/paraglide-js";
+import tailwindcss from "@tailwindcss/vite";
+import { defineConfig } from "astro/config";
+import Icons from "unplugin-icons/vite";
+export default defineConfig({
+	site: "https://cognipedia.org",
+	integrations: [svelte()],
+	vite: {
+		plugins: [
+			tailwindcss(),
+			Icons({ compiler: "astro" }),
+			paraglideVitePlugin({
+				project: "./project.inlang",
+				outdir: "./src/paraglide",
+			}),
+		],
+	},
+	output: "server",
+	adapter: cloudflare({
+		imageService: "compile",
+	}),
+	i18n: {
+		defaultLocale: "fr",
+		locales: ["fr", "en"],
+		routing: {
+			prefixDefaultLocale: true,
+		},
+	},
+});

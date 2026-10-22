@@ -1,0 +1,54 @@
+---
+/**
+ * Displays related biases as links. Biases that exist in the content
+ * collection are clickable links; others are shown as grayed-out text.
+ */
+import { getBiasesForLocale } from "@/lib/biases";
+import { m } from "@/paraglide/messages";
+
+interface Props {
+	relatedBiases: string[];
+}
+
+const { relatedBiases } = Astro.props;
+const { locale } = Astro.locals;
+
+if (relatedBiases.length === 0) return;
+
+/** Resolve each related bias ID to a title and URL, or mark as missing. */
+const { localized } = await getBiasesForLocale(locale);
+
+const resolved = relatedBiases.map((biasId) => {
+	const found = localized.find((entry) => entry.filePath?.includes(`/${biasId}/`));
+	if (found) {
+		return {
+			exists: true,
+			title: found.data.title,
+			href: `/${locale}/${m.slug_bias()}/${found.data.slug}`,
+		};
+	}
+	return { exists: false, title: biasId, href: null };
+});
+---
+
+<section class="mt-8">
+  <h2 class="mb-3 text-lg font-bold">{m.bias_related()}</h2>
+  <ul class="flex flex-wrap gap-2">
+    {resolved.map((bias) => (
+      <li>
+        {bias.exists ? (
+          <a
+            href={bias.href}
+            class="rounded-full border border-border bg-surface px-4.5 py-2.25 text-sm font-semibold no-underline shadow-brand-sm transition-colors hover:border-accent hover:text-accent"
+          >
+            {bias.title}
+          </a>
+        ) : (
+          <span class="rounded-full border border-border/50 bg-surface px-4.5 py-2.25 text-sm text-text-secondary">
+            {bias.title}
+          </span>
+        )}
+      </li>
+    ))}
+  </ul>
+</section>

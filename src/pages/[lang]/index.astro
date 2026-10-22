@@ -1,0 +1,194 @@
+---
+/**
+ * Homepage — hero section + dual-view bias catalogue.
+ * Default view: grouped by cognitive bias family.
+ * Flat view: filterable grid (Svelte island).
+ */
+import BiasCard from "@/components/BiasCard.svelte";
+import BiasGrid from "@/components/BiasGrid.svelte";
+import Mascot from "@/components/Mascot.svelte";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { familyDotStyle } from "@/lib/badges";
+import { getBiasesForLocale } from "@/lib/biases";
+import { DIFFICULTIES, type Difficulty, FAMILIES, type Family } from "@/lib/constants";
+import { m } from "@/paraglide/messages";
+
+const { locale } = Astro.locals;
+const { localized: biases } = await getBiasesForLocale(locale);
+
+/** Map family/difficulty keys to their Paraglide message functions. */
+const familyLabel: Record<Family, () => string> = {
+	"too-much-information": m.bias_family_too_much_information,
+	"not-enough-meaning": m.bias_family_not_enough_meaning,
+	"need-to-act-fast": m.bias_family_need_to_act_fast,
+	"what-to-remember": m.bias_family_what_to_remember,
+};
+const difficultyLabel: Record<Difficulty, () => string> = {
+	easy: m.bias_difficulty_easy,
+	medium: m.bias_difficulty_medium,
+	hard: m.bias_difficulty_hard,
+};
+
+/** Serialize a bias entry into the shape BiasCard/BiasGrid expects. */
+const toBiasItem = (entry: (typeof biases)[number]) => ({
+	slug: entry.data.slug,
+	href: `/${locale}/${m.slug_bias()}/${entry.data.slug}`,
+	title: entry.data.title,
+	family: entry.data.family,
+	familyLabel: familyLabel[entry.data.family](),
+	difficulty: entry.data.difficulty,
+	difficultyLabel: difficultyLabel[entry.data.difficulty](),
+	seenLabel: m.bias_status_seen(),
+	completedLabel: m.bias_status_completed(),
+});
+
+const biasItems = biases.map(toBiasItem);
+
+/** Biases grouped by family, preserving FAMILIES order. */
+const groupedByFamily = FAMILIES.map((family) => ({
+	key: family,
+	label: familyLabel[family](),
+	biases: biasItems.filter((bias) => bias.family === family),
+}));
+
+const familyOptions = FAMILIES.map((family) => ({
+	key: family,
+	label: familyLabel[family](),
+}));
+const difficultyOptions = DIFFICULTIES.map((difficulty) => ({
+	key: difficulty,
+	label: difficultyLabel[difficulty](),
+}));
+
+const title = m.site_title();
+const description = m.site_description();
+
+/** Detect filter query params to render the correct initial view (SSR, no flash). */
+const filterFamily = Astro.url.searchParams.get("family");
+const filterDifficulty = Astro.url.searchParams.get("difficulty");
+const hasFilters = filterFamily !== null || filterDifficulty !== null;
+---
+
+<BaseLayout title={title} description={description} lang={locale}>
+  <!-- Hero -->
+  <section class="flex flex-col items-center gap-4.5 py-10 text-center sm:py-16">
+    <Mascot pose="idle" size={84} />
+    <h1 class="text-4xl font-bold text-balance sm:text-5xl">{title}</h1>
+    <p class="max-w-[34ch] text-lg text-text-secondary">{description}</p>
+  </section>
+
+  <!-- Catalogue -->
+  <section id="catalogue" class="scroll-mt-8">
+    <!-- View toggle tabs -->
+    <div class="mb-8 flex gap-2" id="view-tabs">
+      <button
+        class={`cursor-pointer rounded-lg border px-5 py-2.5 text-sm font-semibold transition-colors ${hasFilters ? "border-border bg-surface text-text hover:border-accent hover:text-accent" : "border-accent bg-accent text-on-accent"}`}
+        data-view="grouped"
+        aria-pressed={hasFilters ? "false" : "true"}
+        aria-controls="view-grouped"
+      >
+        {m.home_view_grouped()}
+      </button>
+      <button
+        class={`cursor-pointer rounded-lg border px-5 py-2.5 text-sm font-semibold transition-colors ${hasFilters ? "border-accent bg-accent text-on-accent" : "border-border bg-surface text-text hover:border-accent hover:text-accent"}`}
+        data-view="flat"
+        aria-pressed={hasFilters ? "true" : "false"}
+        aria-controls="view-flat"
+      >
+        {m.home_view_flat()}
+      </button>
+    </div>
+
+    <!-- Grouped view (hidden when filters are active) -->
+    <div id="view-grouped" class={hasFilters ? "hidden" : ""}>
+      {groupedByFamily.map(({ key, label, biases: familyBiases }) => (
+        <div class="mb-10">
+          <div class="mb-4 flex items-center gap-2.5">
+            <span class="inline-block size-3.25 rounded-full" style={familyDotStyle(key)} />
+            <h2 class="text-2xl font-bold">{label}</h2>
+            <span class="text-sm text-text-secondary">
+              {m.home_family_count({ count: familyBiases.length })}
+            </span>
+          </div>
+          {familyBiases.length > 0 ? (
+            <div class="grid grid-cols-1 gap-4.5 sm:grid-cols-2 lg:grid-cols-3">
+              {familyBiases.map((bias, index) => (
+                <BiasCard {...bias} delay={Math.min(index * 40, 400)} client:visible />
+              ))}
+            </div>
+          ) : (
+            <div class="flex items-center justify-center gap-4 rounded-3xl border-2 border-dashed border-border p-7">
+              <Mascot pose="confused" size={44} />
+              <span class="text-base font-semibold text-text-secondary">{m.home_empty()}</span>
+            </div>
+          )}
+        </div>
+      ))}
+    </div>
+
+    <!-- Flat view (Svelte island, hidden by default) -->
+    <div id="view-flat" class={hasFilters ? "" : "hidden"}>
+      <BiasGrid
+        biases={biasItems}
+        locale={locale}
+        families={familyOptions}
+        difficulties={difficultyOptions}
+        initialFamily={filterFamily}
+        initialDifficulty={filterDifficulty}
+        labels={{
+          family: m.home_filter_family(),
+          difficulty: m.home_filter_difficulty(),
+          search: m.home_filter_search(),
+          searchPlaceholder: m.home_filter_search_placeholder(),
+          reset: m.home_filter_reset(),
+          noResults: m.home_no_results(),
+          status: m.home_filter_status(),
+          statusOptions: [
+            { key: "all", label: m.home_filter_status_all() },
+            { key: "new", label: m.home_filter_status_new() },
+            { key: "seen", label: m.home_filter_status_seen() },
+            { key: "completed", label: m.home_filter_status_completed() },
+          ],
+        }}
+        client:visible
+      />
+    </div>
+  </section>
+
+  <!-- View toggle script (minimal inline JS for tab switching) -->
+  <script>
+    const switchView = (view: string) => {
+      const grouped = document.getElementById("view-grouped");
+      const flat = document.getElementById("view-flat");
+      const buttons = document.querySelectorAll<HTMLButtonElement>("[data-view]");
+
+      grouped?.classList.toggle("hidden", view !== "grouped");
+      flat?.classList.toggle("hidden", view !== "flat");
+
+      buttons.forEach((btn) => {
+        const isActive = btn.dataset.view === view;
+        btn.setAttribute("aria-pressed", String(isActive));
+        btn.classList.toggle("bg-accent", isActive);
+        btn.classList.toggle("text-on-accent", isActive);
+        btn.classList.toggle("border-accent", isActive);
+        btn.classList.toggle("bg-surface", !isActive);
+        btn.classList.toggle("text-text", !isActive);
+        btn.classList.toggle("border-border", !isActive);
+        btn.classList.toggle("hover:border-accent", !isActive);
+        btn.classList.toggle("hover:text-accent", !isActive);
+      });
+    };
+
+    // Re-attach listeners on every page load (initial + Astro client-side navigations).
+    const attachTabListener = () => {
+      document.getElementById("view-tabs")?.addEventListener("click", (event) => {
+        if (!(event.target instanceof Element)) return;
+        const button = event.target.closest<HTMLButtonElement>("[data-view]");
+        if (!button?.dataset.view) return;
+        switchView(button.dataset.view);
+      });
+    };
+
+    document.addEventListener("astro:page-load", attachTabListener);
+  </script>
+</BaseLayout>

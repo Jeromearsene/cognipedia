@@ -1,0 +1,163 @@
+<script lang="ts">
+import autoAnimate from "@formkit/auto-animate";
+import type { Locale } from "@/i18n/i18n";
+import type { BiasCardData, Difficulty, Family } from "@/lib/constants";
+import { biasProgressStore } from "@/lib/seenBiasesStore.svelte";
+import { isDifficulty, isFamily } from "@/lib/utils";
+import { home_results_count } from "@/paraglide/messages";
+import BiasCard from "./BiasCard.svelte";
+import FilterBar from "./FilterBar.svelte";
+import ResultsHeader from "./ResultsHeader.svelte";
+
+/** Svelte action wrapping @formkit/auto-animate for smooth list transitions. */
+const autoAnimateAction = (node: HTMLElement) => {
+	autoAnimate(node, { duration: 250, easing: "ease-in-out" });
+};
+
+interface FamilyOption {
+	key: Family;
+	label: string;
+}
+
+interface DifficultyOption {
+	key: Difficulty;
+	label: string;
+}
+
+interface Props {
+	biases: BiasCardData[];
+	families: FamilyOption[];
+	difficulties: DifficultyOption[];
+	/** Page locale: islands resolve to the base locale on the client, so message calls must pass it. */
+	locale: Locale;
+	/** Pre-selected family filter from query params (passed by Astro SSR). */
+	initialFamily?: string | null;
+	/** Pre-selected difficulty filter from query params (passed by Astro SSR). */
+	initialDifficulty?: string | null;
+	labels: {
+		family: string;
+		difficulty: string;
+		search: string;
+		searchPlaceholder: string;
+		reset: string;
+		noResults: string;
+		status: string;
+		statusOptions: { key: string; label: string }[];
+	};
+}
+
+const { biases, families, difficulties, locale, initialFamily, initialDifficulty, labels }: Props =
+	$props();
+
+// svelte-ignore state_referenced_locally — props are static (from Astro), won't change after mount
+const familyKeys = families.map((family) => family.key);
+// svelte-ignore state_referenced_locally
+const difficultyKeys = difficulties.map((difficulty) => difficulty.key);
+
+/** Active family filters — narrowed to initial filter if provided, otherwise all enabled. */
+// svelte-ignore state_referenced_locally — intentional: initialFamily is a static SSR prop, not reactive
+let activeFamilies = $state(
+	initialFamily && isFamily(initialFamily) ? new Set<Family>([initialFamily]) : new Set(familyKeys),
+);
+/** Active difficulty filters — narrowed to initial filter if provided, otherwise all enabled. */
+// svelte-ignore state_referenced_locally — intentional: initialDifficulty is a static SSR prop, not reactive
+let activeDifficulties = $state(
+	initialDifficulty && isDifficulty(initialDifficulty)
+		? new Set<Difficulty>([initialDifficulty])
+		: new Set(difficultyKeys),
+);
+
+/** Text search query — matches against bias title (case-insensitive). */
+let searchQuery = $state("");
+
+/** Active status filter — "all" shows everything, others filter by progression. */
+let activeStatus = $state("all");
+
+const toggleFamily = (key: Family) => {
+	const next = new Set(activeFamilies);
+	if (next.has(key)) next.delete(key);
+	else next.add(key);
+	activeFamilies = next;
+};
+
+const toggleDifficulty = (key: Difficulty) => {
+	const next = new Set(activeDifficulties);
+	if (next.has(key)) next.delete(key);
+	else next.add(key);
+	activeDifficulties = next;
+};
+
+const filtered = $derived.by(() => {
+	const normalizedQuery = searchQuery.trim().toLowerCase();
+	return biases.filter((bias) => {
+		if (!activeFamilies.has(bias.family)) return false;
+		if (!activeDifficulties.has(bias.difficulty)) return false;
+		if (normalizedQuery && !bias.title.toLowerCase().includes(normalizedQuery)) return false;
+		if (activeStatus !== "all") {
+			const status = biasProgressStore.getStatus(bias.slug);
+			if (activeStatus === "seen" && status === "new") return false;
+			if (activeStatus === "new" && status !== "new") return false;
+			if (activeStatus === "completed" && status !== "completed") return false;
+		}
+		return true;
+	});
+});
+
+/** Formatted result count — Paraglide ICU plural, in the page locale. */
+const resultsLabel = $derived(home_results_count({ count: filtered.length }, { locale }));
+
+/** True when any filter is narrowed (at least one family/difficulty disabled or search active). */
+const hasActiveFilters = $derived(
+	activeFamilies.size < familyKeys.length ||
+		activeDifficulties.size < difficultyKeys.length ||
+		searchQuery.trim().length > 0 ||
+		activeStatus !== "all",
+);
+
+/** Restore all filters to their default state: everything enabled, search cleared. */
+const resetFilters = () => {
+	activeFamilies = new Set(familyKeys);
+	activeDifficulties = new Set(difficultyKeys);
+	searchQuery = "";
+	activeStatus = "all";
+};
+</script>
+
+<FilterBar
+  {families}
+  {difficulties}
+  {activeFamilies}
+  {activeDifficulties}
+  {searchQuery}
+  onToggleFamily={toggleFamily}
+  onToggleDifficulty={toggleDifficulty}
+  onSearchChange={(value) => { searchQuery = value; }}
+  {activeStatus}
+  onStatusChange={(value) => { activeStatus = value; }}
+  labels={{
+    family: labels.family,
+    difficulty: labels.difficulty,
+    search: labels.search,
+    searchPlaceholder: labels.searchPlaceholder,
+    status: labels.status,
+    statusOptions: labels.statusOptions,
+  }}
+/>
+
+<ResultsHeader
+  {resultsLabel}
+  hasResults={filtered.length > 0}
+  {hasActiveFilters}
+  onReset={resetFilters}
+  label={labels.reset}
+/>
+
+{#if filtered.length === 0}
+  <p class="py-12 text-center text-text-secondary">{labels.noResults}</p>
+{:else}
+  <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3" use:autoAnimateAction>
+    {#each filtered as bias, index (bias.href)}
+      <BiasCard {...bias} delay={Math.min(index * 40, 400)} />
+    {/each}
+  </div>
+{/if}

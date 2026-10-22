@@ -1,0 +1,27 @@
+---
+import { m } from "@/paraglide/messages";
+import GithubIcon from "~icons/lucide/github";
+
+const { locale } = Astro.locals;
+---
+
+<footer class="border-t border-border bg-surface">
+  <div class="mx-auto flex w-full max-w-6xl items-center justify-between px-4 py-4 text-sm text-text-secondary sm:px-8">
+    <span>Cognipedia &copy; {new Date().getFullYear()}</span>
+    <a
+      href={`/${locale}/${m.slug_profile()}`}
+      class="text-text-secondary hover:text-text no-underline hover:underline"
+    >
+      {m.footer_existing_account()}
+    </a>
+    <a
+      href="https://github.com/Jeromearsene/cognipedia"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="GitHub"
+      class="text-text-secondary hover:text-text no-underline hover:underline"
+    >
+      <GithubIcon class="inline-block h-5 w-5 align-text-bottom" />
+    </a>
+  </div>
+</footer>

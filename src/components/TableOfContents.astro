@@ -1,0 +1,78 @@
+---
+/**
+ * Table of contents for bias pages.
+ * Generated from markdown headings + hardcoded interactive sections (situation/quiz).
+ */
+import { m } from "@/paraglide/messages";
+import BookOpenIcon from "~icons/lucide/book-open";
+import CircleHelpIcon from "~icons/lucide/circle-help";
+import HashIcon from "~icons/lucide/hash";
+import LightbulbIcon from "~icons/lucide/lightbulb";
+import ListIcon from "~icons/lucide/list";
+import CogIcon from "~icons/lucide/settings";
+import SparklesIcon from "~icons/lucide/sparkles";
+import TextIcon from "~icons/lucide/text";
+
+interface Heading {
+	depth: number;
+	slug: string;
+	text: string;
+}
+
+interface Props {
+	headings: Heading[];
+}
+
+const { headings } = Astro.props;
+
+/** Map icon → heading slugs for the TOC. */
+const iconBySlugs = new Map<typeof BookOpenIcon, string[]>([
+	[BookOpenIcon, ["définition", "definition"]],
+	[CogIcon, ["mécanisme", "mechanism"]],
+	[TextIcon, ["exemples", "examples"]],
+	[SparklesIcon, ["le-saviez-vous-", "did-you-know-"]],
+]);
+
+/** Reverse lookup: slug → icon. */
+const headingIcons = new Map<string, typeof BookOpenIcon>();
+for (const [icon, slugs] of iconBySlugs) {
+	for (const slug of slugs) headingIcons.set(slug, icon);
+}
+
+/** Pre-resolve icons for each heading. */
+const entries = headings
+	.filter((h) => h.depth <= 3)
+	.map((h) => ({
+		...h,
+		Icon: headingIcons.get(h.slug) ?? HashIcon,
+	}));
+---
+
+<nav aria-label="Table of contents" class="mb-8 rounded-lg border border-border bg-surface p-4 sm:p-5">
+  <p class="mb-3 flex items-center gap-2 font-heading text-base font-semibold text-text">
+    <ListIcon class="inline-block h-5 w-5" aria-hidden="true" />
+    {m.bias_toc_title()}
+  </p>
+  <ol class="list-none space-y-1.5" role="list">
+    {entries.map(({ slug, text, Icon }) => (
+      <li>
+        <a href={`#${slug}`} class="flex items-center gap-1.5 text-sm text-text-secondary no-underline hover:text-accent">
+          <Icon class="inline-block h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+          {text}
+        </a>
+      </li>
+    ))}
+    <li>
+      <a href="#situation" class="flex items-center gap-1.5 text-sm text-text-secondary no-underline hover:text-accent">
+        <LightbulbIcon class="inline-block h-3.5 w-3.5" aria-hidden="true" />
+        {m.situation_title()}
+      </a>
+    </li>
+    <li>
+      <a href="#quiz" class="flex items-center gap-1.5 text-sm text-text-secondary no-underline hover:text-accent">
+        <CircleHelpIcon class="inline-block h-3.5 w-3.5" aria-hidden="true" />
+        {m.quiz_title()}
+      </a>
+    </li>
+  </ol>
+</nav>

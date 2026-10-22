@@ -1,0 +1,63 @@
+---
+export const prerender = true;
+
+import type { GetStaticPaths } from "astro";
+import BiasPage from "@/components/BiasPage.astro";
+import { getSlug, SUPPORTED_LOCALES } from "@/i18n/i18n";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { getBiasesForLocale } from "@/lib/biases";
+import type { Family } from "@/lib/constants";
+import { m } from "@/paraglide/messages";
+
+export const getStaticPaths: GetStaticPaths = async () => {
+	const { localized } = await getBiasesForLocale("en");
+	return localized.map((bias) => ({
+		params: { lang: "en", slug: bias.data.slug },
+	}));
+};
+
+const { locale } = Astro.locals;
+const { slug } = Astro.params;
+
+// Fetch all biases, then filter to current locale and find by slug
+const { all: allBiases, localized: biases } = await getBiasesForLocale(locale);
+const entry = biases.find((bias) => bias.data.slug === slug);
+
+if (!entry) {
+	return new Response(null, { status: 404, statusText: "Not Found" });
+}
+
+/**
+ * Build alternate-language URLs for the Header language switcher.
+ * Derives the bias folder from the current entry's filePath (e.g. "anchoring/fr.md"
+ * → "anchoring"), then finds the same bias in other locales.
+ */
+const biasFolder = entry.filePath?.replace(`/${locale}.md`, "").split("/").pop() ?? "";
+Astro.locals.altLangHrefs = Object.fromEntries(
+	SUPPORTED_LOCALES.filter((otherLocale) => otherLocale !== locale)
+		.map((otherLocale) => {
+			const alternate = allBiases.find((bias) =>
+				bias.filePath?.endsWith(`${biasFolder}/${otherLocale}.md`),
+			);
+			return alternate
+				? [otherLocale, `/${otherLocale}/${getSlug("bias", otherLocale)}/${alternate.data.slug}`]
+				: [];
+		})
+		.filter((pair) => pair.length > 0),
+);
+
+/** Map family keys to their Paraglide message functions. */
+const familyLabel: Record<Family, () => string> = {
+	"too-much-information": m.bias_family_too_much_information,
+	"not-enough-meaning": m.bias_family_not_enough_meaning,
+	"need-to-act-fast": m.bias_family_need_to_act_fast,
+	"what-to-remember": m.bias_family_what_to_remember,
+};
+
+const title = `${entry.data.title} — ${m.site_title()}`;
+const description = `${entry.data.title} — ${familyLabel[entry.data.family]()}. ${m.site_description()}`;
+---
+
+<BaseLayout title={title} description={description} lang={locale}>
+	<BiasPage entry={entry} />
+</BaseLayout>

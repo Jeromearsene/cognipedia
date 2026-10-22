@@ -1,0 +1,25 @@
+---
+import Leaderboard from "@/components/Leaderboard.svelte";
+import { buildAltLangHrefs } from "@/i18n/i18n";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { m } from "@/paraglide/messages";
+
+const { locale } = Astro.locals;
+Astro.locals.altLangHrefs = buildAltLangHrefs(locale, "leaderboard");
+
+const pageTitle = m.leaderboard_title();
+const labels = {
+	title: pageTitle,
+	rank: m.leaderboard_rank(),
+	pseudo: m.leaderboard_pseudo(),
+	score: m.leaderboard_score(),
+	loading: m.leaderboard_loading(),
+	empty: m.leaderboard_empty(),
+	error: m.leaderboard_error(),
+};
+---
+
+<BaseLayout title={`${pageTitle} — ${m.site_title()}`} description={m.site_description()} lang={locale}>
+	<h1 class="mb-8 text-3xl font-bold">{pageTitle}</h1>
+	<Leaderboard labels={labels} client:visible />
+</BaseLayout>

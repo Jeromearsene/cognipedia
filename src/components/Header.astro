@@ -1,0 +1,103 @@
+---
+import MobileMenu from "@/components/MobileMenu.svelte";
+import ThemeToggle from "@/components/ThemeToggle.svelte";
+import type { Locale } from "@/i18n/i18n";
+import { SUPPORTED_LOCALES } from "@/i18n/i18n";
+import { m } from "@/paraglide/messages";
+
+const { locale, currentPath, altLangHrefs } = Astro.locals;
+
+const navLinks = [
+	{ label: m.nav_home(), href: `/${locale}/` },
+	{ label: m.nav_leaderboard(), href: `/${locale}/${m.slug_leaderboard()}` },
+	{ label: m.nav_about(), href: `/${locale}/${m.slug_about()}` },
+	{ label: m.nav_profile(), href: `/${locale}/${m.slug_profile()}` },
+];
+
+/**
+ * Builds the URL for switching to another locale.
+ * Uses `altLangHrefs` when available (content pages with localized slugs),
+ * otherwise swaps the locale prefix in the current path.
+ */
+const switchLangPath = (target: Locale) => {
+	if (altLangHrefs?.[target]) return altLangHrefs[target];
+	const segments = currentPath.split("/").filter(Boolean);
+	segments[0] = target;
+	const path = `/${segments.join("/")}`;
+	return currentPath.endsWith("/") ? `${path}/` : path;
+};
+
+const mobileNavLinks = navLinks.map(({ label, href }) => ({
+	label,
+	href,
+	active: currentPath === href,
+}));
+
+const mobileLangLinks = SUPPORTED_LOCALES.map((lang) => ({
+	lang,
+	href: switchLangPath(lang),
+	active: lang === locale,
+}));
+const themeLabels = {
+	group: m.theme_group(),
+	auto: m.theme_auto(),
+	light: m.theme_light(),
+	dark: m.theme_dark(),
+};
+---
+
+<header class="border-b border-border bg-surface">
+  <nav class="mx-auto flex w-full max-w-6xl items-center justify-between px-4 py-4 sm:px-8">
+    <a href={`/${locale}/`} class="font-heading text-xl font-bold text-text no-underline hover:no-underline hover:text-text">
+      Cognipedia
+    </a>
+
+    <!-- Desktop nav (hidden below md) -->
+    <ul class="hidden md:flex gap-6 list-none m-0 p-0">
+      {navLinks.map(({ label, href }) => (
+        <li>
+          <a
+            href={href}
+            aria-current={currentPath === href ? "page" : undefined}
+            class:list={[
+              "no-underline hover:underline",
+              currentPath === href ? "font-bold text-accent" : "text-text-secondary",
+            ]}
+          >
+            {label}
+          </a>
+        </li>
+      ))}
+    </ul>
+
+    <!-- Desktop language switcher (hidden below md) -->
+    <div class="hidden md:flex items-center gap-4">
+      <ThemeToggle labels={themeLabels} client:load />
+
+      <div class="flex gap-2 text-sm">
+        {SUPPORTED_LOCALES.map((lang) => (
+          <a
+            href={switchLangPath(lang)}
+            hreflang={lang}
+            lang={lang}
+            aria-current={lang === locale ? "true" : undefined}
+            class:list={[
+              "no-underline uppercase",
+              lang === locale ? "font-bold text-accent" : "text-text-secondary hover:underline",
+            ]}
+          >
+            {lang}
+          </a>
+        ))}
+      </div>
+    </div>
+
+    <!-- Mobile burger (hidden above md) -->
+    <MobileMenu
+      navLinks={mobileNavLinks}
+      langLinks={mobileLangLinks}
+      labels={{ title: m.menu_title(), open: m.menu_open(), close: m.menu_close(), theme: themeLabels }}
+      client:load
+    />
+  </nav>
+</header>

@@ -1,0 +1,18 @@
+name: Translation
+description: Propose a translation for a bias
+labels: ['translation']
+body:
+  - type: input
+    id: bias
+    attributes:
+      label: Bias
+      placeholder: e.g. anchoring-bias
+    validations:
+      required: true
+  - type: input
+    id: language
+    attributes:
+      label: Language code
+      placeholder: e.g. es, de, pt
+    validations:
+      required: true

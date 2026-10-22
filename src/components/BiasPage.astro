@@ -1,0 +1,105 @@
+---
+import type { CollectionEntry } from "astro:content";
+/**
+ * Full bias page layout: header with metadata badges, styled markdown content,
+ * interactive situation/quiz, sources, and related biases.
+ */
+import { render } from "astro:content";
+import BackToTop from "@/components/BackToTop.svelte";
+import BiasRelatedSection from "@/components/BiasRelatedSection.astro";
+import BiasSourcesSection from "@/components/BiasSourcesSection.astro";
+import Breadcrumb from "@/components/Breadcrumb.astro";
+import BiasInteractive from "@/components/interactive/BiasInteractive.svelte";
+import TableOfContents from "@/components/TableOfContents.astro";
+import { difficultyBadgeStyle, difficultyDotStyle, familyBadgeStyle } from "@/lib/badges";
+import type { Difficulty, Family } from "@/lib/constants";
+import { getBiasInteractiveLabels } from "@/lib/labels";
+import { m } from "@/paraglide/messages";
+
+const familyLabel: Record<Family, () => string> = {
+	"too-much-information": m.bias_family_too_much_information,
+	"not-enough-meaning": m.bias_family_not_enough_meaning,
+	"need-to-act-fast": m.bias_family_need_to_act_fast,
+	"what-to-remember": m.bias_family_what_to_remember,
+};
+
+const difficultyLabel: Record<Difficulty, () => string> = {
+	easy: m.bias_difficulty_easy,
+	medium: m.bias_difficulty_medium,
+	hard: m.bias_difficulty_hard,
+};
+
+interface Props {
+	entry: CollectionEntry<"biases">;
+}
+
+const { entry } = Astro.props;
+const { locale } = Astro.locals;
+const { data } = entry;
+const { Content, headings } = await render(entry);
+
+const showOriginalName = data.originalName !== data.title;
+---
+
+<article class="mx-auto max-w-3xl">
+  <Breadcrumb family={data.family} title={data.title} />
+
+  <!-- Header: title, original name, badges -->
+  <header class="mb-10 flex flex-col gap-2.5">
+    <h1 class="text-4xl font-bold text-balance">{data.title}</h1>
+    {showOriginalName && (
+      <p class="italic text-text-secondary">{data.originalName}</p>
+    )}
+    <div class="flex flex-wrap gap-2.5 text-xs text-text-secondary">
+      {data.tags.map((tag) => (
+        <span>#{tag}</span>
+      ))}
+    </div>
+    <div class="mt-1.5 flex flex-wrap items-center gap-2">
+      <a
+        href={`/${locale}/?family=${data.family}`}
+        class="rounded-full px-3 py-1.25 text-xs font-bold no-underline transition-shadow hover:shadow-brand-md motion-reduce:transition-none"
+        style={familyBadgeStyle(data.family)}
+      >
+        {familyLabel[data.family]()}
+      </a>
+      <a
+        href={`/${locale}/?difficulty=${data.difficulty}`}
+        class="flex items-center gap-1.25 rounded-full py-1.25 pl-2 pr-3 text-xs font-bold no-underline transition-shadow hover:shadow-brand-md motion-reduce:transition-none"
+        style={difficultyBadgeStyle(data.difficulty)}
+      >
+        <span class="inline-block h-1.5 w-1.5 rounded-full" style={difficultyDotStyle(data.difficulty)}></span>
+        {difficultyLabel[data.difficulty]()}
+      </a>
+    </div>
+  </header>
+
+  <TableOfContents headings={headings} />
+
+  <!-- Markdown content with typography styles -->
+  <div class="prose max-w-none prose-headings:font-heading prose-headings:font-bold prose-a:text-accent">
+    <Content />
+  </div>
+
+  <!-- Interactive section: situation + quiz orchestrator -->
+  <BiasInteractive
+    biasSlug={data.slug}
+    profileUrl={`/${locale}/${m.slug_profile()}`}
+    situation={data.situation}
+    quiz={data.quiz}
+    labels={getBiasInteractiveLabels(locale)}
+    client:visible
+  />
+
+  <!-- Sources -->
+  <BiasSourcesSection
+    wikipedia={data.sources.wikipedia}
+    papers={data.sources.papers}
+    videos={data.sources.videos}
+  />
+
+  <!-- Related biases -->
+  <BiasRelatedSection relatedBiases={data.relatedBiases} />
+</article>
+
+<BackToTop client:load />
