@@ -118,6 +118,7 @@
 	"profile_pseudo_save": "Sauver",
 	"profile_pseudo_saving": "Sauvegarde...",
 	"profile_pseudo_edit": "modifier",
+	"profile_pseudo_error": "Erreur lors de la sauvegarde",
 	"profile_recovery_code": "Code de récupération",
 	"profile_progression": "Progression",
 	"profile_progression_biases": "{count}/{total} biais complétés",
