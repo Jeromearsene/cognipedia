@@ -118,6 +118,7 @@
 	"profile_pseudo_save": "Save",
 	"profile_pseudo_saving": "Saving...",
 	"profile_pseudo_edit": "edit",
+	"profile_pseudo_error": "Could not save your username",
 	"profile_recovery_code": "Recovery code",
 	"profile_progression": "Progression",
 	"profile_progression_biases": "{count}/{total} biases completed",

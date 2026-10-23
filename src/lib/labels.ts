@@ -66,6 +66,7 @@ export interface PseudoEditorLabels {
 	saving: string;
 	placeholder: string;
 	edit: string;
+	error: string;
 }
 
 /** Labels for the Situation component. */
@@ -154,6 +155,7 @@ export const getProfileLabels = (locale: Locale): ProfilePageLabels => ({
 		saving: m.profile_pseudo_saving({}, { locale }),
 		placeholder: m.user_pseudo_placeholder({}, { locale }),
 		edit: m.profile_pseudo_edit({}, { locale }),
+		error: m.profile_pseudo_error({}, { locale }),
 	},
 	recoveryCodeLabel: m.profile_recovery_code({}, { locale }),
 	recoveryHint: m.profile_recovery_hint({}, { locale }),
