@@ -1,0 +1,82 @@
+---
+/** Legal notice (mentions légales). Content is provided in each supported locale. */
+import { LEGAL } from "@/lib/legal";
+
+const { locale } = Astro.locals;
+---
+
+{locale === "fr" ? (
+  <div class="prose max-w-none prose-headings:font-heading prose-headings:font-bold prose-a:text-accent">
+    <h2>Éditeur du site</h2>
+    <p>
+      Cognipedia est édité par {LEGAL.publisherName} ({LEGAL.publisherStatus}), {LEGAL.registrationNumber}.
+    </p>
+    <p>Adresse : {LEGAL.publisherAddress}</p>
+    <p>Contact : {LEGAL.contactEmail}</p>
+    <p>Directeur de la publication : {LEGAL.publicationDirector}</p>
+
+    <h2>Hébergement</h2>
+    <p>
+      Le site est hébergé par <a href={LEGAL.host.url} rel="noopener noreferrer">{LEGAL.host.name}</a>,
+      {" "}{LEGAL.host.address}.
+    </p>
+
+    <h2>Propriété intellectuelle</h2>
+    <p>
+      Les textes, illustrations et le code de Cognipedia sont la propriété de l'éditeur, sauf mention
+      contraire. Le code source est consultable sur
+      {" "}<a href="https://github.com/Jeromearsene/cognipedia" rel="noopener noreferrer">GitHub</a>.
+      Les œuvres et études citées restent la propriété de leurs auteurs respectifs.
+    </p>
+
+    <h2>Contenu</h2>
+    <p>
+      Cognipedia est un site d'apprentissage. Il est encore en construction : des biais cognitifs
+      seront ajoutés et les contenus peuvent évoluer. Malgré le soin apporté aux sources, des erreurs
+      peuvent subsister ; n'hésitez pas à les signaler à l'adresse de contact ci-dessus.
+    </p>
+
+    <h2>Liens externes</h2>
+    <p>
+      Le site renvoie vers des sites tiers (Wikipédia, publications scientifiques, vidéos). Leur
+      contenu n'engage pas l'éditeur.
+    </p>
+  </div>
+) : (
+  <div class="prose max-w-none prose-headings:font-heading prose-headings:font-bold prose-a:text-accent">
+    <h2>Publisher</h2>
+    <p>
+      Cognipedia is published by {LEGAL.publisherName} ({LEGAL.publisherStatus}), {LEGAL.registrationNumber}.
+    </p>
+    <p>Address: {LEGAL.publisherAddress}</p>
+    <p>Contact: {LEGAL.contactEmail}</p>
+    <p>Director of publication: {LEGAL.publicationDirector}</p>
+
+    <h2>Hosting</h2>
+    <p>
+      The site is hosted by <a href={LEGAL.host.url} rel="noopener noreferrer">{LEGAL.host.name}</a>,
+      {" "}{LEGAL.host.address}.
+    </p>
+
+    <h2>Intellectual property</h2>
+    <p>
+      Unless stated otherwise, Cognipedia's texts, illustrations and code belong to the publisher. The
+      source code is available on
+      {" "}<a href="https://github.com/Jeromearsene/cognipedia" rel="noopener noreferrer">GitHub</a>.
+      The works and studies cited remain the property of their respective authors.
+    </p>
+
+    <h2>Content</h2>
+    <p>
+      Cognipedia is a learning site. It is still under construction: more cognitive biases will be
+      added and content may change. Despite the care taken with sources, mistakes may remain; please
+      report them to the contact address above.
+    </p>
+
+    <h2>External links</h2>
+    <p>
+      The site links to third-party sites (Wikipedia, scientific publications, videos). Their content
+      is not the publisher's responsibility.
+    </p>
+  </div>
+)}

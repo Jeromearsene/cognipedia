@@ -40,7 +40,7 @@ export const getLocaleFromAcceptLanguage = (header: string | null): Locale => {
 };
 
 /** Stable key names for localized slugs, used for slug-to-slug redirects across locales. */
-export type SlugKey = "leaderboard" | "about" | "profile" | "bias";
+export type SlugKey = "leaderboard" | "about" | "profile" | "bias" | "legal" | "privacy";
 
 /** Maps each slug key to its Paraglide message function. */
 const SLUG_MESSAGES: Record<SlugKey, typeof m.slug_leaderboard> = {
@@ -48,6 +48,8 @@ const SLUG_MESSAGES: Record<SlugKey, typeof m.slug_leaderboard> = {
 	about: m.slug_about,
 	profile: m.slug_profile,
 	bias: m.slug_bias,
+	legal: m.slug_legal,
+	privacy: m.slug_privacy,
 };
 
 /** Returns the localized slug for a key and locale (e.g. "leaderboard" + "fr" → "classement"). */
