@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { biasSchema, quizSchema, situationSchema } from "./schemas";
+import { biasSchema, quizSchema, scoreBodySchema, situationSchema } from "./schemas";
 
 describe("biasSchema", () => {
 	const validFrontmatter = {
@@ -142,5 +142,58 @@ describe("quizSchema", () => {
 			questions: [question("easy", { choices: ["A"] }), question("medium"), question("hard")],
 		});
 		expect(result.success).toBe(false);
+	});
+});
+
+describe("scoreBodySchema", () => {
+	const valid = {
+		userUuid: "6f1f5c1e-3b8a-4f0e-9d62-0c2a6d6b1a11",
+		biasSlug: "anchoring",
+		situationScore: 1,
+		quizCorrect: 2,
+		quizTotal: 3,
+	};
+
+	it("accepts a valid submission", () => {
+		expect(scoreBodySchema.safeParse(valid).success).toBe(true);
+	});
+
+	it("accepts a perfect and a zero score", () => {
+		expect(scoreBodySchema.safeParse({ ...valid, quizCorrect: 3 }).success).toBe(true);
+		expect(scoreBodySchema.safeParse({ ...valid, situationScore: 0, quizCorrect: 0 }).success).toBe(
+			true,
+		);
+	});
+
+	it("rejects a situation score other than 0 or 1", () => {
+		expect(scoreBodySchema.safeParse({ ...valid, situationScore: 2 }).success).toBe(false);
+		expect(scoreBodySchema.safeParse({ ...valid, situationScore: -1 }).success).toBe(false);
+		expect(scoreBodySchema.safeParse({ ...valid, situationScore: 0.5 }).success).toBe(false);
+		expect(scoreBodySchema.safeParse({ ...valid, situationScore: 1_000_000 }).success).toBe(false);
+	});
+
+	it("rejects more correct answers than questions", () => {
+		expect(scoreBodySchema.safeParse({ ...valid, quizCorrect: 4, quizTotal: 3 }).success).toBe(
+			false,
+		);
+		expect(scoreBodySchema.safeParse({ ...valid, quizCorrect: 999, quizTotal: 1 }).success).toBe(
+			false,
+		);
+	});
+
+	it("rejects out-of-range or non-integer quiz counts", () => {
+		expect(scoreBodySchema.safeParse({ ...valid, quizCorrect: -1 }).success).toBe(false);
+		expect(scoreBodySchema.safeParse({ ...valid, quizTotal: 0, quizCorrect: 0 }).success).toBe(
+			false,
+		);
+		expect(scoreBodySchema.safeParse({ ...valid, quizTotal: 1000, quizCorrect: 1 }).success).toBe(
+			false,
+		);
+		expect(scoreBodySchema.safeParse({ ...valid, quizCorrect: 1.5 }).success).toBe(false);
+	});
+
+	it("rejects an empty or oversized bias id", () => {
+		expect(scoreBodySchema.safeParse({ ...valid, biasSlug: "" }).success).toBe(false);
+		expect(scoreBodySchema.safeParse({ ...valid, biasSlug: "a".repeat(101) }).success).toBe(false);
 	});
 });

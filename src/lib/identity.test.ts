@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import {
 	generatePseudo,
 	generateRecoveryCode,
@@ -29,6 +29,26 @@ describe("generateRecoveryCode", () => {
 	it("returns a code in format COGNI-XXXX-XXXX", () => {
 		const code = generateRecoveryCode();
 		expect(code).toMatch(/^COGNI-[A-Z0-9]{4}-[A-Z0-9]{4}$/);
+	});
+
+	it("only uses unambiguous characters (no I, O, 0 or 1)", () => {
+		for (let i = 0; i < 200; i++) {
+			expect(generateRecoveryCode().replace("COGNI-", "")).not.toMatch(/[IO01]/);
+		}
+	});
+
+	it("draws its randomness from crypto.getRandomValues, not Math.random", () => {
+		const mathRandom = vi.spyOn(Math, "random");
+		const cryptoRandom = vi.spyOn(crypto, "getRandomValues");
+		generateRecoveryCode();
+		expect(cryptoRandom).toHaveBeenCalled();
+		expect(mathRandom).not.toHaveBeenCalled();
+		vi.restoreAllMocks();
+	});
+
+	it("generates different codes", () => {
+		const codes = new Set(Array.from({ length: 50 }, () => generateRecoveryCode()));
+		expect(codes.size).toBe(50);
 	});
 });
 

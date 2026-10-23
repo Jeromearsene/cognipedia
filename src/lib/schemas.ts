@@ -103,13 +103,22 @@ export const registerBodySchema = z.object({
 	recoveryCode: recoveryCodeSchema,
 });
 
-export const scoreBodySchema = z.object({
-	userUuid: z.uuid(),
-	biasSlug: z.string().min(1),
-	situationScore: z.number(),
-	quizCorrect: z.number().int().min(0),
-	quizTotal: z.number().int().min(1),
-});
+/**
+ * Score submission. Bounds are enforced server-side because the client is untrusted:
+ * the situation is worth 0 or 1 point, and a quiz cannot have more correct answers than questions.
+ */
+export const scoreBodySchema = z
+	.object({
+		userUuid: z.uuid(),
+		biasSlug: z.string().min(1).max(100),
+		situationScore: z.number().int().min(0).max(1),
+		quizCorrect: z.number().int().min(0).max(50),
+		quizTotal: z.number().int().min(1).max(50),
+	})
+	.refine((body) => body.quizCorrect <= body.quizTotal, {
+		message: "quizCorrect cannot exceed quizTotal",
+		path: ["quizCorrect"],
+	});
 
 export const recoverBodySchema = z.object({
 	recoveryCode: recoveryCodeSchema,
