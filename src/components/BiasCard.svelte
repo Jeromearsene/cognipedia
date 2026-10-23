@@ -12,7 +12,7 @@ interface Props extends BiasCardData {
 }
 
 const {
-	slug,
+	id,
 	href,
 	title,
 	family,
@@ -24,7 +24,7 @@ const {
 	delay = 0,
 }: Props = $props();
 
-const status = $derived(biasProgressStore.getStatus(slug));
+const status = $derived(biasProgressStore.getStatus(id));
 </script>
 
 <a

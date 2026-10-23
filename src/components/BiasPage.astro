@@ -14,6 +14,7 @@ import TableOfContents from "@/components/TableOfContents.astro";
 import { difficultyBadgeStyle, difficultyDotStyle, familyBadgeStyle } from "@/lib/badges";
 import type { Difficulty, Family } from "@/lib/constants";
 import { getBiasInteractiveLabels } from "@/lib/labels";
+import { getBiasId } from "@/lib/utils";
 import { m } from "@/paraglide/messages";
 
 const familyLabel: Record<Family, () => string> = {
@@ -83,7 +84,7 @@ const showOriginalName = data.originalName !== data.title;
 
   <!-- Interactive section: situation + quiz orchestrator -->
   <BiasInteractive
-    biasSlug={data.slug}
+    biasId={getBiasId(entry)}
     profileUrl={`/${locale}/${m.slug_profile()}`}
     situation={data.situation}
     quiz={data.quiz}

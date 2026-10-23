@@ -8,21 +8,22 @@ import RecoveryCodeModal from "./RecoveryCodeModal.svelte";
 import Situation from "./Situation.svelte";
 
 interface Props {
-	biasSlug: string;
+	/** Locale-independent bias id (content folder name), shared by all translations. */
+	biasId: string;
 	profileUrl: string;
 	situation?: SituationData;
 	quiz?: QuizData;
 	labels: BiasInteractiveLabels;
 }
 
-let { biasSlug, profileUrl, situation, quiz, labels }: Props = $props();
+let { biasId, profileUrl, situation, quiz, labels }: Props = $props();
 
 let situationScore: number | null = $state(null);
 let submitState = $state<"idle" | "submitting" | "submitted" | "error">("idle");
 
 /* Mark this bias as seen when the page loads (client-side only). */
 $effect(() => {
-	biasProgressStore.markSeen(biasSlug);
+	biasProgressStore.markSeen(biasId);
 });
 let showRecoveryModal = $state(false);
 
@@ -43,7 +44,8 @@ const handleQuizComplete = async (correct: number, total: number) => {
 			headers: { "Content-Type": "application/json" },
 			body: JSON.stringify({
 				userUuid: userStore.uuid,
-				biasSlug,
+				// The API/D1 column is still named `bias_slug`; it now stores the bias id.
+				biasSlug: biasId,
 				situationScore: situationScore ?? 0,
 				quizCorrect: correct,
 				quizTotal: total,
@@ -53,7 +55,7 @@ const handleQuizComplete = async (correct: number, total: number) => {
 		if (!response.ok) throw new Error("Score submission failed");
 
 		submitState = "submitted";
-		biasProgressStore.markCompleted(biasSlug);
+		biasProgressStore.markCompleted(biasId);
 
 		if (!userStore.recoveryCodeSeen) {
 			showRecoveryModal = true;
