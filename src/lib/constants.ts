@@ -20,8 +20,8 @@ export const QUIZ_LEVELS = DIFFICULTIES;
 
 /** Serializable bias card data, shared between BiasCard and BiasGrid components. */
 export interface BiasCardData {
-	/** Bias slug for status tracking (seen/completed). */
-	slug: string;
+	/** Locale-independent bias id for status tracking (seen/completed). */
+	id: string;
 	/** URL to the bias page. */
 	href: string;
 	/** Display title of the bias. */
