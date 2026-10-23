@@ -41,7 +41,7 @@ const fallbackMessage = buildMessages(defaultLocale)[0];
 const fallbackBack = error_404_back({}, { locale: defaultLocale });
 ---
 
-<BaseLayout title="404" lang={defaultLocale}>
+<BaseLayout title="404" lang={defaultLocale} noindex>
   <div class="flex flex-col items-center justify-center gap-6 py-24 text-center">
     <h1 class="text-8xl font-bold text-accent">404</h1>
     <p class="max-w-md text-lg text-text-secondary" id="error-message">{fallbackMessage}</p>

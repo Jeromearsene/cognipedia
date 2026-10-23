@@ -2,7 +2,7 @@
 import MobileMenu from "@/components/MobileMenu.svelte";
 import ThemeToggle from "@/components/ThemeToggle.svelte";
 import type { Locale } from "@/i18n/i18n";
-import { SUPPORTED_LOCALES } from "@/i18n/i18n";
+import { getAlternatePath, SUPPORTED_LOCALES } from "@/i18n/i18n";
 import { m } from "@/paraglide/messages";
 
 const { locale, currentPath, altLangHrefs } = Astro.locals;
@@ -14,18 +14,8 @@ const navLinks = [
 	{ label: m.nav_profile(), href: `/${locale}/${m.slug_profile()}` },
 ];
 
-/**
- * Builds the URL for switching to another locale.
- * Uses `altLangHrefs` when available (content pages with localized slugs),
- * otherwise swaps the locale prefix in the current path.
- */
-const switchLangPath = (target: Locale) => {
-	if (altLangHrefs?.[target]) return altLangHrefs[target];
-	const segments = currentPath.split("/").filter(Boolean);
-	segments[0] = target;
-	const path = `/${segments.join("/")}`;
-	return currentPath.endsWith("/") ? `${path}/` : path;
-};
+/** URL for switching to another locale (see `getAlternatePath`). */
+const switchLangPath = (target: Locale) => getAlternatePath(currentPath, target, altLangHrefs);
 
 const mobileNavLinks = navLinks.map(({ label, href }) => ({
 	label,

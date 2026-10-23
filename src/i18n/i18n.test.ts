@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
 	DEFAULT_LOCALE,
+	getAlternatePath,
 	getLocaleFromAcceptLanguage,
 	getLocaleFromUrl,
 	getLocalizedPath,
@@ -101,5 +102,25 @@ describe("slugToLocaleMap", () => {
 		expect(slugToLocaleMap.get("leaderboard")).toEqual({ key: "leaderboard", locale: "en" });
 		expect(slugToLocaleMap.get("about")).toEqual({ key: "about", locale: "en" });
 		expect(slugToLocaleMap.get("bias")).toEqual({ key: "bias", locale: "en" });
+	});
+});
+
+describe("getAlternatePath", () => {
+	it("prefers the explicit alternate href when the page provides one", () => {
+		expect(getAlternatePath("/fr/biais/ancrage", "en", { en: "/en/bias/anchoring" })).toBe(
+			"/en/bias/anchoring",
+		);
+	});
+
+	it("swaps the locale prefix otherwise", () => {
+		expect(getAlternatePath("/fr/classement", "en")).toBe("/en/classement");
+	});
+
+	it("keeps the trailing slash of the home page", () => {
+		expect(getAlternatePath("/fr/", "en")).toBe("/en/");
+	});
+
+	it("returns the current path for the current locale", () => {
+		expect(getAlternatePath("/en/", "en")).toBe("/en/");
 	});
 });
