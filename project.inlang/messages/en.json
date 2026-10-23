@@ -141,5 +141,12 @@
 	"quiz_progress": "Question {current} of {total}",
 	"quiz_result_perfect": "Perfect score, well done!",
 	"quiz_result_good": "Nicely done, you have the essentials down.",
-	"quiz_result_retry": "No worries: reread the page, then give it another go."
+	"quiz_result_retry": "No worries: reread the page, then give it another go.",
+	"slug_legal": "legal-notice",
+	"slug_privacy": "privacy",
+	"footer_legal": "Legal notice",
+	"footer_privacy": "Privacy",
+	"legal_title": "Legal notice",
+	"privacy_title": "Privacy policy",
+	"footer_nav_label": "Legal information"
 }
