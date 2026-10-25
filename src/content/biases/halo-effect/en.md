@@ -16,7 +16,7 @@ sources:
     - title: "What is the Halo Effect? (Easy Explanation) — Helpful Professor Explains!"
       url: "https://www.youtube.com/watch?v=Yo53lCtJTXw"
       lang: "en"
-relatedBiases: ["confirmation"]
+relatedBiases: ["confirmation", "barnum-effect"]
 situation:
   type: "choice"
   scenario: "You need to choose between two candidates for a position. The first is well-dressed, smiling, with a firm handshake. The second is quieter and more reserved. Both have equivalent résumés. Who do you lean toward?"

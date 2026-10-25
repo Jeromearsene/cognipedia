@@ -22,7 +22,7 @@ sources:
     - title: "Le biais de confirmation — Hygiène Mentale"
       url: "https://www.youtube.com/watch?v=6cFKyIvNMg4"
       lang: "fr"
-relatedBiases: ["anchoring"]
+relatedBiases: ["anchoring", "barnum-effect"]
 situation:
   type: "choice"
   scenario: "Vous êtes convaincu qu'un nouveau régime alimentaire est efficace. Vous tombez sur un article qui le critique. Que faites-vous ?"
