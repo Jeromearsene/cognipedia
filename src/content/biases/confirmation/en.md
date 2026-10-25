@@ -16,7 +16,7 @@ sources:
     - title: "Confirmation Bias — Veritasium"
       url: "https://www.youtube.com/watch?v=vKA4w2O61Xo"
       lang: "en"
-relatedBiases: ["anchoring"]
+relatedBiases: ["anchoring", "barnum-effect"]
 situation:
   type: "choice"
   scenario: "You are convinced a new diet works. You come across an article criticizing it. What do you do?"
