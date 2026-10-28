@@ -142,5 +142,12 @@
 	"quiz_progress": "Question {current} sur {total}",
 	"quiz_result_perfect": "Sans faute, bravo !",
 	"quiz_result_good": "Bien joué, vous maîtrisez l'essentiel.",
-	"quiz_result_retry": "Pas de souci : relisez la fiche, puis retentez votre chance."
+	"quiz_result_retry": "Pas de souci : relisez la fiche, puis retentez votre chance.",
+	"slug_legal": "mentions-legales",
+	"slug_privacy": "confidentialite",
+	"footer_legal": "Mentions légales",
+	"footer_privacy": "Confidentialité",
+	"legal_title": "Mentions légales",
+	"privacy_title": "Politique de confidentialité",
+	"footer_nav_label": "Informations légales"
 }

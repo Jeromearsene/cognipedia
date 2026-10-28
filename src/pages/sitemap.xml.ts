@@ -12,6 +12,8 @@ const STATIC_PAGES: { slug: typeof m.slug_leaderboard | null }[] = [
 	{ slug: m.slug_leaderboard },
 	{ slug: m.slug_about },
 	{ slug: m.slug_profile },
+	{ slug: m.slug_legal },
+	{ slug: m.slug_privacy },
 ];
 
 export const GET: APIRoute = async () => {
