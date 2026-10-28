@@ -94,7 +94,7 @@ const filtered = $derived.by(() => {
 		if (!activeDifficulties.has(bias.difficulty)) return false;
 		if (normalizedQuery && !bias.title.toLowerCase().includes(normalizedQuery)) return false;
 		if (activeStatus !== "all") {
-			const status = biasProgressStore.getStatus(bias.slug);
+			const status = biasProgressStore.getStatus(bias.id);
 			if (activeStatus === "seen" && status === "new") return false;
 			if (activeStatus === "new" && status !== "new") return false;
 			if (activeStatus === "completed" && status !== "completed") return false;

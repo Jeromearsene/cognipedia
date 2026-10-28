@@ -11,6 +11,7 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 import { familyDotStyle } from "@/lib/badges";
 import { getBiasesForLocale } from "@/lib/biases";
 import { DIFFICULTIES, type Difficulty, FAMILIES, type Family } from "@/lib/constants";
+import { getBiasId } from "@/lib/utils";
 import { m } from "@/paraglide/messages";
 
 const { locale } = Astro.locals;
@@ -31,7 +32,7 @@ const difficultyLabel: Record<Difficulty, () => string> = {
 
 /** Serialize a bias entry into the shape BiasCard/BiasGrid expects. */
 const toBiasItem = (entry: (typeof biases)[number]) => ({
-	slug: entry.data.slug,
+	id: getBiasId(entry),
 	href: `/${locale}/${m.slug_bias()}/${entry.data.slug}`,
 	title: entry.data.title,
 	family: entry.data.family,
