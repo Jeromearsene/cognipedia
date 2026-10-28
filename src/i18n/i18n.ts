@@ -84,6 +84,24 @@ export const buildAltLangHrefs = (
 	);
 
 /**
+ * Returns the path of the current page in another locale.
+ * Uses `altLangHrefs` when the page provides it (localized slugs), otherwise swaps the locale
+ * prefix of `currentPath`, e.g. `/fr/` → `/en/`.
+ */
+export const getAlternatePath = (
+	currentPath: string,
+	target: Locale,
+	altLangHrefs?: Partial<Record<Locale, string>>,
+): string => {
+	const known = altLangHrefs?.[target];
+	if (known) return known;
+	const segments = currentPath.split("/").filter(Boolean);
+	segments[0] = target;
+	const path = `/${segments.join("/")}`;
+	return currentPath.endsWith("/") ? `${path}/` : path;
+};
+
+/**
  * Validates a route `lang` param and returns the locale.
  * Returns `null` if the param is missing or not a supported locale,
  * along with a fallback redirect URL based on Accept-Language.
