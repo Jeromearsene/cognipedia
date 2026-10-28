@@ -53,11 +53,15 @@ export const generateUUID = (): string => crypto.randomUUID();
 
 const RECOVERY_CHARS = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
 
+/**
+ * The recovery code is the only credential protecting an account, so it must come from a
+ * CSPRNG (`Math.random` is predictable). `RECOVERY_CHARS` has exactly 32 characters, so keeping
+ * the low 5 bits of a random byte maps uniformly onto it, with no modulo bias.
+ */
 const randomSegment = (len: number): string =>
-	Array.from(
-		{ length: len },
-		() => RECOVERY_CHARS[Math.floor(Math.random() * RECOVERY_CHARS.length)],
-	).join("");
+	Array.from(crypto.getRandomValues(new Uint8Array(len)), (byte) => RECOVERY_CHARS[byte & 31]).join(
+		"",
+	);
 
 /** Generates a recovery code (e.g. `COGNI-X7K2-M9PL`) to restore an account on another device. */
 export const generateRecoveryCode = (): string => `COGNI-${randomSegment(4)}-${randomSegment(4)}`;
