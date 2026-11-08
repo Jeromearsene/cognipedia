@@ -149,7 +149,10 @@ test.describe("Cogni mascot canvas", () => {
 			await page.goto("/fr/biais/ancrage");
 			const quiz = page.locator("#quiz");
 
-			// The quiz is a client:load island: a click made before hydration is lost, so retry it.
+			// The quiz is a client:visible island: its choice buttons stay disabled until it
+			// scrolls into view and Svelte hydrates, so bring it into view first, then retry
+			// the click in case it still lands before hydration finishes.
+			await quiz.scrollIntoViewIfNeeded();
 			const feedback = quiz.locator(".mascot");
 			await expect(async () => {
 				await quiz.locator("button:not(:disabled)").nth(choice).click({ timeout: 1_000 });
