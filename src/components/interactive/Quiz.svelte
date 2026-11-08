@@ -1,10 +1,11 @@
 <script lang="ts">
-import { tick } from "svelte";
+import { onMount, tick } from "svelte";
 import Mascot from "@/components/Mascot.svelte";
 import { cn } from "@/lib/cn";
 import { fillLabel, type QuizLabels } from "@/lib/labels";
 import type { Quiz } from "@/lib/schemas";
 import { computeQuizScore } from "@/lib/scoring";
+import { shuffledIndices } from "@/lib/shuffle";
 
 interface Props {
 	/** Quiz data parsed from the bias markdown. */
@@ -24,6 +25,22 @@ let finished = $state(false);
 let questionEl = $state<HTMLElement>();
 let feedbackEl = $state<HTMLElement>();
 let resultEl = $state<HTMLElement>();
+
+/**
+ * Display order of the choices, one permutation per question. Holds *original* choice indices,
+ * so `selectedAnswer`, `answers` and `correct` keep referring to the frontmatter order and the
+ * scoring is untouched. Starts in content order (what the server renders) and is shuffled on
+ * mount: shuffling during render would make the server and client markup disagree.
+ */
+const identityOrder = () => data.questions.map((q) => q.choices.map((_, i) => i));
+const shuffledOrder = () => data.questions.map((q) => shuffledIndices(q.choices.length));
+let choiceOrder = $state(identityOrder());
+let ready = $state(false);
+
+onMount(() => {
+	choiceOrder = shuffledOrder();
+	ready = true;
+});
 
 const currentQuestion = $derived(data.questions[currentIndex]);
 const isCorrect = $derived(selectedAnswer === currentQuestion?.correct);
@@ -92,6 +109,7 @@ const handleRetry = async () => {
 	showExplanation = false;
 	finished = false;
 	currentIndex = 0;
+	choiceOrder = shuffledOrder();
 	await tick();
 	questionEl?.focus();
 };
@@ -123,8 +141,10 @@ const handleRetry = async () => {
 
     <p bind:this={questionEl} tabindex="-1" class="mb-4.5 text-base font-semibold">{currentQuestion.question}</p>
 
-    <div class="flex flex-col gap-2.5">
-      {#each currentQuestion.choices as choice, i}
+    <!-- Hidden (but laid out) until the choices are shuffled on mount, to avoid a visible reorder. -->
+    <div class={cn("flex flex-col gap-2.5", !ready && "invisible")} aria-hidden={!ready}>
+      {#each choiceOrder[currentIndex] as i (i)}
+        {@const choice = currentQuestion.choices[i]}
         <button
           class={cn(
             "flex cursor-pointer items-center justify-between gap-3 rounded-2xl border-2 border-border bg-surface px-4.5 py-3.5 text-left text-base transition-colors",
@@ -136,7 +156,7 @@ const handleRetry = async () => {
           style={showExplanation && i === currentQuestion.correct
             ? "background-color: var(--success-bg); color: var(--success-text)"
             : ""}
-          disabled={showExplanation}
+          disabled={showExplanation || !ready}
           onclick={() => handleAnswer(i)}
         >
           <span>{choice}</span>

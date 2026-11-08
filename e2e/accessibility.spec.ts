@@ -44,17 +44,32 @@ const expectNoViolations = (violations: Result[]) => {
  * Clicks the first enabled button inside `quiz` and waits for it to actually
  * take effect, retrying the click if needed.
  *
- * The quiz is a `client:load` Astro/Svelte island: its markup is present
- * (and "clickable" as far as Playwright's actionability checks go) before
- * Svelte has finished hydrating and attaching event listeners, so a single
- * click can silently no-op. Re-clicking until the enabled-button count
- * changes rides out that hydration window without a fixed sleep.
+ * The quiz is a `client:visible` Astro/Svelte island: its choice buttons stay
+ * `disabled` (and the group `invisible`) until Svelte hydrates and shuffles
+ * them on mount, and that hydration only starts once the island intersects
+ * the viewport. Scrolling it into view first is what makes that happen —
+ * without it, no `button:not(:disabled)` ever appears and the retry below
+ * would just time out.
+ *
+ * "Took effect" is checked on the exact button that was clicked, not on the
+ * overall enabled-button count: picking an answer disables that button, and
+ * clicking "Next"/"See results" unmounts it (it lives inside the `{#if
+ * showExplanation}` block). A count-based check doesn't distinguish those
+ * from "nothing happened" reliably — e.g. the results screen can show a
+ * single "Retry" button, which keeps the overall count unchanged across the
+ * final click even though the quiz plainly moved on — so track the clicked
+ * element itself instead.
  */
 const clickAndAdvance = async (quiz: Locator) => {
-	const before = await quiz.locator("button:not(:disabled)").count();
+	await quiz.scrollIntoViewIfNeeded();
 	await expect(async () => {
-		await quiz.locator("button:not(:disabled)").first().click();
-		expect(await quiz.locator("button:not(:disabled)").count()).not.toBe(before);
+		const target = await quiz
+			.locator("button:not(:disabled)")
+			.first()
+			.elementHandle({ timeout: 1_000 });
+		await target.click({ timeout: 1_000 });
+		const stillLive = await target.evaluate((el) => el.isConnected && !el.hasAttribute("disabled"));
+		expect(stillLive).toBe(false);
 	}).toPass({ timeout: 10_000 });
 };
 
