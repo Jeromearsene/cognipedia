@@ -96,12 +96,16 @@ describe("slugToLocaleMap", () => {
 		expect(slugToLocaleMap.get("classement")).toEqual({ key: "leaderboard", locale: "fr" });
 		expect(slugToLocaleMap.get("a-propos")).toEqual({ key: "about", locale: "fr" });
 		expect(slugToLocaleMap.get("biais")).toEqual({ key: "bias", locale: "fr" });
+		expect(slugToLocaleMap.get("mentions-legales")).toEqual({ key: "legal", locale: "fr" });
+		expect(slugToLocaleMap.get("confidentialite")).toEqual({ key: "privacy", locale: "fr" });
 	});
 
 	it("maps English slugs to their key and locale", () => {
 		expect(slugToLocaleMap.get("leaderboard")).toEqual({ key: "leaderboard", locale: "en" });
 		expect(slugToLocaleMap.get("about")).toEqual({ key: "about", locale: "en" });
 		expect(slugToLocaleMap.get("bias")).toEqual({ key: "bias", locale: "en" });
+		expect(slugToLocaleMap.get("legal-notice")).toEqual({ key: "legal", locale: "en" });
+		expect(slugToLocaleMap.get("privacy")).toEqual({ key: "privacy", locale: "en" });
 	});
 });
 

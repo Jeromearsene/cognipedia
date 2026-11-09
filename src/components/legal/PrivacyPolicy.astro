@@ -1,0 +1,99 @@
+---
+/** Privacy policy. Describes exactly what the app stores, see `schema.sql` and `userStore`. */
+import { LEGAL } from "@/lib/legal";
+
+const { locale } = Astro.locals;
+---
+
+{locale === "fr" ? (
+  <div class="prose max-w-none prose-headings:font-heading prose-headings:font-bold prose-a:text-accent">
+    <p>
+      Cognipedia ne demande ni adresse e-mail, ni mot de passe, et n'utilise ni cookie, ni outil de
+      mesure d'audience, ni publicité. Voici précisément ce qui est enregistré.
+    </p>
+
+    <h2>Données enregistrées dans votre navigateur</h2>
+    <p>
+      Votre navigateur conserve (stockage local) un identifiant aléatoire, votre pseudo, votre code de
+      récupération, les biais que vous avez consultés ou terminés, et votre préférence de thème
+      (clair/sombre). Ces données restent sur votre appareil et sont nécessaires au fonctionnement du
+      site ; vous pouvez les effacer à tout moment en vidant les données du site dans votre navigateur.
+    </p>
+
+    <h2>Données enregistrées sur nos serveurs</h2>
+    <p>
+      Lorsque vous terminez un premier quiz, un compte anonyme est créé : identifiant aléatoire, pseudo
+      (généré, modifiable), code de récupération et date de création, puis vos scores par biais. Ces
+      données servent à conserver votre progression, à restaurer votre compte sur un autre appareil
+      avec votre code, et à alimenter le classement.
+    </p>
+    <p>
+      Votre <strong>pseudo et votre score total sont publics</strong> dans le classement. Choisissez un
+      pseudo qui ne vous identifie pas.
+    </p>
+    <p>Base légale : l'intérêt légitime de l'éditeur à fournir ce service (article 6.1.f du RGPD).</p>
+
+    <h2>Durée de conservation</h2>
+    <p>
+      Les comptes et scores sont conservés tant que le site est en ligne, ou jusqu'à votre demande de
+      suppression.
+    </p>
+
+    <h2>Sous-traitant</h2>
+    <p>
+      Le site et sa base de données sont hébergés par {LEGAL.host.name} ({LEGAL.host.address}), qui
+      traite les requêtes techniques (adresse IP, journaux) nécessaires à la diffusion du site.
+    </p>
+
+    <h2>Vos droits</h2>
+    <p>
+      Vous pouvez demander l'accès, la rectification ou la suppression de vos données en écrivant à
+      {" "}{LEGAL.contactEmail}, en indiquant votre pseudo ou votre code de récupération. Vous pouvez
+      aussi introduire une réclamation auprès de la CNIL (<a href="https://www.cnil.fr" rel="noopener noreferrer">cnil.fr</a>).
+    </p>
+  </div>
+) : (
+  <div class="prose max-w-none prose-headings:font-heading prose-headings:font-bold prose-a:text-accent">
+    <p>
+      Cognipedia asks for no email address or password, and uses no cookies, analytics or ads. Here is
+      exactly what is stored.
+    </p>
+
+    <h2>Data stored in your browser</h2>
+    <p>
+      Your browser keeps (local storage) a random identifier, your username, your recovery code, the
+      biases you have viewed or completed, and your theme preference (light/dark). This data stays on
+      your device and is needed for the site to work; you can erase it at any time by clearing the
+      site's data in your browser.
+    </p>
+
+    <h2>Data stored on our servers</h2>
+    <p>
+      When you finish a first quiz, an anonymous account is created: random identifier, username
+      (generated, editable), recovery code and creation date, then your scores per bias. This data is
+      used to keep your progress, restore your account on another device with your code, and power the
+      leaderboard.
+    </p>
+    <p>
+      Your <strong>username and total score are public</strong> on the leaderboard. Pick a username that
+      does not identify you.
+    </p>
+    <p>Legal basis: the publisher's legitimate interest in providing this service (GDPR, art. 6.1.f).</p>
+
+    <h2>Retention</h2>
+    <p>Accounts and scores are kept while the site is online, or until you ask for deletion.</p>
+
+    <h2>Processor</h2>
+    <p>
+      The site and its database are hosted by {LEGAL.host.name} ({LEGAL.host.address}), which handles
+      the technical requests (IP address, logs) needed to serve the site.
+    </p>
+
+    <h2>Your rights</h2>
+    <p>
+      You can request access to, correction of, or deletion of your data by writing to
+      {" "}{LEGAL.contactEmail}, stating your username or recovery code. You may also lodge a complaint
+      with your data protection authority (in France, the CNIL: <a href="https://www.cnil.fr" rel="noopener noreferrer">cnil.fr</a>).
+    </p>
+  </div>
+)}

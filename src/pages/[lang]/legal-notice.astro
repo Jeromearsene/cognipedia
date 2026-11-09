@@ -1,0 +1,22 @@
+---
+export const prerender = true;
+
+import type { GetStaticPaths } from "astro";
+
+export const getStaticPaths: GetStaticPaths = () => [{ params: { lang: "en" } }];
+
+import LegalNoticeContent from "@/components/legal/LegalNotice.astro";
+import { buildAltLangHrefs } from "@/i18n/i18n";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { m } from "@/paraglide/messages";
+
+const { locale } = Astro.locals;
+Astro.locals.altLangHrefs = buildAltLangHrefs(locale, "legal");
+
+const pageTitle = m.legal_title();
+---
+
+<BaseLayout title={`${pageTitle} — ${m.site_title()}`} description={m.site_description()} lang={locale}>
+	<h1 class="mb-8 text-3xl font-bold">{pageTitle}</h1>
+	<LegalNoticeContent />
+</BaseLayout>
