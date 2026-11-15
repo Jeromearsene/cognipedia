@@ -16,7 +16,7 @@ sources:
     - title: "The Sunk-Cost Fallacy Explained — JFlo Education"
       url: "https://www.youtube.com/watch?v=5FTNO8qsBPU"
       lang: "en"
-relatedBiases: ["loss-aversion", "confirmation"]
+relatedBiases: ["loss-aversion", "confirmation", "gamblers-fallacy"]
 situation:
   type: "choice"
   scenario: "You paid $15 for a movie ticket. Thirty minutes in, you're bored stiff. What do you do?"
