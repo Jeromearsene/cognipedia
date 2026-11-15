@@ -16,7 +16,7 @@ sources:
     - title: "What is the Availability Heuristic? (Easy Explanation) — Social Science Explainer"
       url: "https://www.youtube.com/watch?v=UUSB1VsJs4M"
       lang: "en"
-relatedBiases: ["anchoring", "survivorship"]
+relatedBiases: ["anchoring", "survivorship", "gamblers-fallacy"]
 situation:
   type: "choice"
   scenario: "After watching several news reports about plane crashes, you need to take a flight. How do you feel?"

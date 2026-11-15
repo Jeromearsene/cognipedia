@@ -22,7 +22,7 @@ sources:
     - title: "Les biais cognitifs — ScienceÉtonnante"
       url: "https://www.youtube.com/watch?v=oFEOoEqW3bE"
       lang: "fr"
-relatedBiases: ["anchoring", "survivorship"]
+relatedBiases: ["anchoring", "survivorship", "gamblers-fallacy"]
 situation:
   type: "choice"
   scenario: "Après avoir vu plusieurs reportages sur des accidents d'avion, vous devez prendre un vol. Que ressentez-vous ?"

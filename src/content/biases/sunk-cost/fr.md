@@ -16,7 +16,7 @@ sources:
     - title: "Le biais des coûts irrécupérables [Vite Fait] — La Tronche en Biais"
       url: "https://www.youtube.com/watch?v=tPN7Tw5J5Z8"
       lang: "fr"
-relatedBiases: ["loss-aversion", "confirmation"]
+relatedBiases: ["loss-aversion", "confirmation", "gamblers-fallacy"]
 situation:
   type: "choice"
   scenario: "Vous avez payé 15 € votre place de cinéma. Après 30 minutes, le film vous ennuie profondément. Que faites-vous ?"
