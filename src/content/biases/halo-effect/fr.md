@@ -20,7 +20,7 @@ sources:
     - title: "L'effet de halo — Horizon Gull"
       url: "https://www.youtube.com/watch?v=TBpRqEjHTbU"
       lang: "fr"
-relatedBiases: ["confirmation"]
+relatedBiases: ["confirmation", "barnum-effect"]
 situation:
   type: "choice"
   scenario: "Vous devez choisir entre deux candidats pour un poste. Le premier est élégant, souriant et a une poignée de main ferme. Le second est plus discret et réservé. Les deux ont des CV équivalents. Vers qui penchez-vous ?"
